@@ -215,53 +215,25 @@ export const features: Feature[] = [
 
 export const testimonials: Testimonial[] = [
   {
-    name: "Sophie Martin",
-    role: "Voyageuse régulière",
-    avatar: "SM",
+    name: "Hicham Altit",
+    role: "Voyageur régulier",
+    avatar: "HA",
     rating: 5,
     text: "Service exceptionnel ! Réservation simple et rapide. Le véhicule était comme neuf. Je recommande vivement DriveEase.",
   },
   {
-    name: "Thomas Dubois",
+    name: "Anwar Moumen",
     role: "Homme d'affaires",
-    avatar: "TD",
+    avatar: "AM",
     rating: 5,
     text: "Je loue régulièrement pour mes déplacements pros. Voitures impeccables, service client réactif. Un gain de temps énorme.",
   },
   {
-    name: "Marie Lambert",
-    role: "Famille nombreuse",
-    avatar: "ML",
+    name: "Rania Altit",
+    role: "Voyageuse familiale",
+    avatar: "RA",
     rating: 4,
-    text: "Parfait pour les vacances ! SUV spacieux, sièges bébé inclus sans frais. Le rapport qualité-prix est imbattable.",
-  },
-  {
-    name: "Sarah Johnson",
-    role: "Regular traveler",
-    avatar: "SJ",
-    rating: 5,
-    text: "The booking process was incredibly smooth. I picked up the car at the airport and was on the road in minutes. Will definitely use again!",
-  },
-  {
-    name: "Michael Brown",
-    role: "Business executive",
-    avatar: "MB",
-    rating: 5,
-    text: "I use DriveEase for all my corporate travel. Their fleet is well-maintained and the service is consistently excellent.",
-  },
-  {
-    name: "Jessica Williams",
-    role: "Family traveler",
-    avatar: "JW",
-    rating: 4,
-    text: "Rented an SUV for our family road trip through Morocco. Spacious, comfortable, and the kids loved it. Great value!",
-  },
-  {
-    name: "David Miller",
-    role: "Solo adventurer",
-    avatar: "DM",
-    rating: 5,
-    text: "Exploring Morocco by car was the best decision. DriveEase made it easy with flexible pickup and great rates.",
+    text: "Parfait pour les vacances en famille ! SUV spacieux, sièges bébé inclus sans frais. Le rapport qualité-prix est imbattable.",
   },
 ]
 

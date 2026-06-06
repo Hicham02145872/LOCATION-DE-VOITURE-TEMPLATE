@@ -105,9 +105,9 @@ function VehiculeDetail() {
         </Link>
         <nav className="hidden items-center gap-1 md:flex">
           {[
+            { key: "accueil", href: "/" },
             { key: "vehicules", href: "/vehicules" },
-            { key: "tarifs", href: "/#tarifs" },
-            { key: "agences", href: "/#contact" },
+            { key: "testimonials", href: "/#testimonials" },
             { key: "contact", href: "/#contact" },
           ].map((link) => (
             <a

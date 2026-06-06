@@ -64,9 +64,9 @@ const brands = [
 ]
 
 const navLinks = [
+  { key: "accueil", href: "/" },
   { key: "vehicules", href: "/vehicules" },
-  { key: "tarifs", href: "/#tarifs" },
-  { key: "agences", href: "/#contact" },
+  { key: "testimonials", href: "/#testimonials" },
   { key: "contact", href: "/#contact" },
 ]
 
@@ -594,7 +594,7 @@ function App() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden border-t bg-background py-24">
+      <section id="testimonials" className="relative overflow-hidden border-t bg-background py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <Badge
@@ -610,16 +610,12 @@ function App() {
               {t("testimonials.subtitle")}
             </p>
           </div>
-           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+           <div className="mt-12 grid gap-6 sm:grid-cols-3">
             {testimonials.map((item, i) => {
               const tKeys: Record<string, { name: string; role: string; text: string }> = {
-                "Sophie Martin": { name: "testimonials.sophie.name", role: "testimonials.sophie.role", text: "testimonials.sophie.text" },
-                "Thomas Dubois": { name: "testimonials.thomas.name", role: "testimonials.thomas.role", text: "testimonials.thomas.text" },
-                "Marie Lambert": { name: "testimonials.marie.name", role: "testimonials.marie.role", text: "testimonials.marie.text" },
-                "Sarah Johnson": { name: "testimonials.sarah.name", role: "testimonials.sarah.role", text: "testimonials.sarah.text" },
-                "Michael Brown": { name: "testimonials.michael.name", role: "testimonials.michael.role", text: "testimonials.michael.text" },
-                "Jessica Williams": { name: "testimonials.jessica.name", role: "testimonials.jessica.role", text: "testimonials.jessica.text" },
-                "David Miller": { name: "testimonials.david.name", role: "testimonials.david.role", text: "testimonials.david.text" },
+                "Hicham Altit": { name: "testimonials.hicham.name", role: "testimonials.hicham.role", text: "testimonials.hicham.text" },
+                "Anwar Moumen": { name: "testimonials.anwar.name", role: "testimonials.anwar.role", text: "testimonials.anwar.text" },
+                "Rania Altit": { name: "testimonials.rania.name", role: "testimonials.rania.role", text: "testimonials.rania.text" },
               }
               const tk = tKeys[item.name] ?? { name: "", role: "", text: "" }
               return (

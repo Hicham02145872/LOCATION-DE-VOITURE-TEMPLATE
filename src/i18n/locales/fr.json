@@ -3,9 +3,9 @@
     "name": "DriveEase"
   },
   "nav": {
+    "accueil": "Accueil",
     "vehicules": "Véhicules",
-    "tarifs": "Tarifs",
-    "agences": "Agences",
+    "testimonials": "Témoignages",
     "contact": "Contact",
     "dashboard": "Dashboard",
     "connexion": "Connexion",
@@ -112,40 +112,20 @@
     "badge": "Témoignages",
     "title": "Ils nous font confiance",
     "subtitle": "Des milliers de clients satisfaits à travers le Maroc.",
-    "sophie": {
-      "name": "Sophie Martin",
-      "role": "Voyageuse régulière",
+    "hicham": {
+      "name": "Hicham Altit",
+      "role": "Voyageur régulier",
       "text": "Service exceptionnel ! Réservation simple et rapide. Le véhicule était comme neuf. Je recommande vivement DriveEase."
     },
-    "thomas": {
-      "name": "Thomas Dubois",
+    "anwar": {
+      "name": "Anwar Moumen",
       "role": "Homme d'affaires",
       "text": "Je loue régulièrement pour mes déplacements pros. Voitures impeccables, service client réactif. Un gain de temps énorme."
     },
-    "marie": {
-      "name": "Marie Lambert",
-      "role": "Famille nombreuse",
-      "text": "Parfait pour les vacances ! SUV spacieux, sièges bébé inclus sans frais. Le rapport qualité-prix est imbattable."
-    },
-    "sarah": {
-      "name": "Sarah Johnson",
-      "role": "Voyageuse régulière",
-      "text": "Le processus de réservation était incroyablement fluide. J'ai récupéré la voiture à l'aéroport et j'étais sur la route en quelques minutes. À refaire absolument !"
-    },
-    "michael": {
-      "name": "Michael Brown",
-      "role": "Cadre d'entreprise",
-      "text": "J'utilise DriveEase pour tous mes déplacements professionnels. Leur flotte est bien entretenue et le service est toujours excellent."
-    },
-    "jessica": {
-      "name": "Jessica Williams",
-      "role": "Voyageuse en famille",
-      "text": "J'ai loué un SUV pour notre voyage familial à travers le Maroc. Spacieux, confortable, et les enfants ont adoré. Excellent rapport qualité-prix !"
-    },
-    "david": {
-      "name": "David Miller",
-      "role": "Aventurier solitaire",
-      "text": "Explorer le Maroc en voiture a été la meilleure décision. DriveEase a facilité les choses avec des options de prise en charge flexibles et d'excellents tarifs."
+    "rania": {
+      "name": "Rania Altit",
+      "role": "Voyageuse familiale",
+      "text": "Parfait pour les vacances en famille ! SUV spacieux, sièges bébé inclus sans frais. Le rapport qualité-prix est imbattable."
     }
   },
   "pricing": {

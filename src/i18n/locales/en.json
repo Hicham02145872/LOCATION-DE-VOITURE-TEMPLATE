@@ -3,9 +3,9 @@
     "name": "DriveEase"
   },
   "nav": {
+    "accueil": "Home",
     "vehicules": "Vehicles",
-    "tarifs": "Pricing",
-    "agences": "Agencies",
+    "testimonials": "Testimonials",
     "contact": "Contact",
     "dashboard": "Dashboard",
     "connexion": "Sign in",
@@ -112,40 +112,20 @@
     "badge": "Testimonials",
     "title": "Trusted by our customers",
     "subtitle": "Thousands of satisfied customers across Morocco.",
-    "sophie": {
-      "name": "Sophie Martin",
+    "hicham": {
+      "name": "Hicham Altit",
       "role": "Regular traveler",
       "text": "Exceptional service! Simple and fast booking. The vehicle was like new. I highly recommend DriveEase."
     },
-    "thomas": {
-      "name": "Thomas Dubois",
+    "anwar": {
+      "name": "Anwar Moumen",
       "role": "Businessman",
       "text": "I rent regularly for business trips. Impeccable cars, responsive customer service. A huge time saver."
     },
-    "marie": {
-      "name": "Marie Lambert",
-      "role": "Large family",
-      "text": "Perfect for vacations! Spacious SUV, baby seats included at no extra cost. Unbeatable value for money."
-    },
-    "sarah": {
-      "name": "Sarah Johnson",
-      "role": "Regular traveler",
-      "text": "The booking process was incredibly smooth. I picked up the car at the airport and was on the road in minutes. Will definitely use again!"
-    },
-    "michael": {
-      "name": "Michael Brown",
-      "role": "Business executive",
-      "text": "I use DriveEase for all my corporate travel. Their fleet is well-maintained and the service is consistently excellent."
-    },
-    "jessica": {
-      "name": "Jessica Williams",
+    "rania": {
+      "name": "Rania Altit",
       "role": "Family traveler",
-      "text": "Rented an SUV for our family road trip through Morocco. Spacious, comfortable, and the kids loved it. Great value!"
-    },
-    "david": {
-      "name": "David Miller",
-      "role": "Solo adventurer",
-      "text": "Exploring Morocco by car was the best decision. DriveEase made it easy with flexible pickup and great rates."
+      "text": "Perfect for family vacations! Spacious SUV, baby seats included at no extra cost. Unbeatable value for money."
     }
   },
   "pricing": {
