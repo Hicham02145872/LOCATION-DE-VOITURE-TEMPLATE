@@ -800,18 +800,22 @@ function App() {
               {t("cta.subtitle")}
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button size="lg" className="w-full rounded-lg sm:w-auto">
-                <Car className="mr-2 h-4 w-4" />
-                {t("cta.reserver")}
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="w-full rounded-lg border-border/50 sm:w-auto"
-              >
-                <Check className="mr-2 h-4 w-4" />
-                {t("cta.voirOffres")}
-              </Button>
+              <Link to="/vehicules">
+                <Button size="lg" className="w-full rounded-lg sm:w-auto">
+                  <Car className="mr-2 h-4 w-4" />
+                  {t("cta.reserver")}
+                </Button>
+              </Link>
+              <Link to="/vehicules">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full rounded-lg border-border/50 sm:w-auto"
+                >
+                  <Check className="mr-2 h-4 w-4" />
+                  {t("cta.voirOffres")}
+                </Button>
+              </Link>
             </div>
           </motion.div>
         </div>
