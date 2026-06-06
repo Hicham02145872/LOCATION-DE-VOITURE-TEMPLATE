@@ -1,0 +1,461 @@
+{
+  "app": {
+    "name": "DriveEase"
+  },
+  "nav": {
+    "vehicules": "Vehicles",
+    "tarifs": "Pricing",
+    "agences": "Agencies",
+    "contact": "Contact",
+    "dashboard": "Dashboard",
+    "connexion": "Sign in",
+    "reserver": "Book"
+  },
+  "hero": {
+    "badge": "New prices available",
+    "title": "Rent the perfect car for every journey",
+    "subtitle": "Hundreds of recent vehicles across Morocco. Book online in 2 minutes, free cancellation, insurance included.",
+    "search": {
+      "lieu": "Location",
+      "lieuPlaceholder": "City or airport",
+      "debut": "Start",
+      "fin": "End",
+      "vehicule": "Vehicle",
+      "tousTypes": "All types",
+      "populaire": "Popular",
+      "premium": "Premium",
+      "suv": "SUV",
+      "economique": "Economy",
+      "sport": "Sport",
+      "luxe": "Luxury",
+      "trouver": "Find my vehicle"
+    },
+    "typed": ["Explore Morocco freely", "Travel with peace of mind", "Go on an adventure", "Discover our vehicles"],
+    "stats": {
+      "rating": "4.8",
+      "avis": "(2,400 reviews)",
+      "vehicules": "200+ vehicles",
+      "annulation": "Free cancellation"
+    }
+  },
+  "stats": {
+    "vehicules": "Vehicles",
+    "satisfaction": "Satisfaction",
+    "agences": "Agencies",
+    "experience": "of experience",
+    "vehiculesValue": "200+",
+    "satisfactionValue": "98%",
+    "agencesValue": "50+",
+    "experienceValue": "10 years"
+  },
+  "brands": {
+    "title": "Our partners"
+  },
+  "vehicules": {
+    "badge": "Our fleet",
+    "title": "Popular vehicles",
+    "subtitle": "Recent, well-maintained cars for every budget.",
+    "places": "seats",
+    "climatisation": "Air conditioning",
+    "aPartirDe": "From",
+    "septJours": "/ 7 days",
+    "reserver": "Book",
+    "voirTout": "View all vehicles",
+    "tousNosVehicules": "All our vehicles",
+    "disponibles": "vehicles available for rent",
+    "retourAccueil": "Back to home",
+    "rechercher": "Search for a vehicle...",
+    "aucunResultat": "No vehicles found for",
+    "essayezAutre": "Try different search terms.",
+    "aucunVehicule": "No vehicles",
+    "parJour": "/day"
+  },
+  "commentCaMarche": {
+    "badge": "Simplicity",
+    "title": "How it works",
+    "subtitle": "Three simple steps to hit the road.",
+    "step1": {
+      "title": "Choose",
+      "desc": "Browse our selection and find the ideal vehicle for your trip."
+    },
+    "step2": {
+      "title": "Book",
+      "desc": "Select dates and location, finalize in 2 minutes with no commitment."
+    },
+    "step3": {
+      "title": "Drive",
+      "desc": "Pick up your keys and enjoy the road in complete freedom."
+    }
+  },
+  "features": {
+    "badge": "Why us",
+    "title": "A premium experience",
+    "subtitle": "Everything you need for a worry-free rental.",
+    "assurance": {
+      "title": "Full coverage insurance",
+      "desc": "Comprehensive coverage with no deductible included in every rental."
+    },
+    "support": {
+      "title": "24/7 Support",
+      "desc": "A team available day and night, 7 days a week."
+    },
+    "annulation": {
+      "title": "Free cancellation",
+      "desc": "Modify or cancel free of charge up to 48h before."
+    },
+    "paiement": {
+      "title": "Secure payment",
+      "desc": "100% secure transactions, multiple payment methods."
+    }
+  },
+  "testimonials": {
+    "badge": "Testimonials",
+    "title": "Trusted by our customers",
+    "subtitle": "Thousands of satisfied customers across Morocco.",
+    "sophie": {
+      "name": "Sophie Martin",
+      "role": "Regular traveler",
+      "text": "Exceptional service! Simple and fast booking. The vehicle was like new. I highly recommend DriveEase."
+    },
+    "thomas": {
+      "name": "Thomas Dubois",
+      "role": "Businessman",
+      "text": "I rent regularly for business trips. Impeccable cars, responsive customer service. A huge time saver."
+    },
+    "marie": {
+      "name": "Marie Lambert",
+      "role": "Large family",
+      "text": "Perfect for vacations! Spacious SUV, baby seats included at no extra cost. Unbeatable value for money."
+    },
+    "sarah": {
+      "name": "Sarah Johnson",
+      "role": "Regular traveler",
+      "text": "The booking process was incredibly smooth. I picked up the car at the airport and was on the road in minutes. Will definitely use again!"
+    },
+    "michael": {
+      "name": "Michael Brown",
+      "role": "Business executive",
+      "text": "I use DriveEase for all my corporate travel. Their fleet is well-maintained and the service is consistently excellent."
+    },
+    "jessica": {
+      "name": "Jessica Williams",
+      "role": "Family traveler",
+      "text": "Rented an SUV for our family road trip through Morocco. Spacious, comfortable, and the kids loved it. Great value!"
+    },
+    "david": {
+      "name": "David Miller",
+      "role": "Solo adventurer",
+      "text": "Exploring Morocco by car was the best decision. DriveEase made it easy with flexible pickup and great rates."
+    }
+  },
+  "pricing": {
+    "badge": "Pricing",
+    "title": "Adapted plans",
+    "subtitle": "Choose the plan that suits your needs.",
+    "mensuel": "Monthly",
+    "annuel": "Annual",
+    "recommande": "Recommended",
+    "essentiel": {
+      "name": "Essential",
+      "desc": "For short trips and city driving",
+      "price": "290",
+      "priceAnnuel": "230",
+      "features": [
+        "1 driver included",
+        "100 km/day included",
+        "Basic insurance",
+        "Email support",
+        "Free cancellation D-2"
+      ],
+      "cta": "Choose Essential"
+    },
+    "confort": {
+      "name": "Comfort",
+      "desc": "For travel and everyday use",
+      "price": "590",
+      "priceAnnuel": "470",
+      "features": [
+        "2 drivers included",
+        "200 km/day included",
+        "Full coverage insurance",
+        "Priority 24/7 support",
+        "Free cancellation D-1",
+        "Unlimited mileage on weekends"
+      ],
+      "cta": "Choose Comfort"
+    },
+    "premium": {
+      "name": "Premium",
+      "desc": "For luxury and special occasions",
+      "price": "990",
+      "priceAnnuel": "790",
+      "features": [
+        "3 drivers included",
+        "Unlimited mileage",
+        "Full coverage insurance +",
+        "Dedicated 24/7 support",
+        "Free cancellation D-1",
+        "Replacement vehicle",
+        "Home delivery"
+      ],
+      "cta": "Choose Premium"
+    }
+  },
+  "faq": {
+    "badge": "FAQ",
+    "title": "Frequently asked questions",
+    "subtitle": "Everything you need to know before booking.",
+    "questions": [
+      {
+        "q": "What documents are required to rent?",
+        "a": "A valid driver's license held for over a year, a valid ID, and a credit card for the security deposit."
+      },
+      {
+        "q": "How does insurance work?",
+        "a": "All our rentals include basic insurance. You can also purchase enhanced coverage at booking for complete peace of mind."
+      },
+      {
+        "q": "Can I change or cancel my reservation?",
+        "a": "Yes, cancellation is free up to 48h before the rental starts. Changes are possible subject to availability."
+      },
+      {
+        "q": "Are there extra mileage fees?",
+        "a": "Each plan includes a certain number of kilometers per day. Beyond that, a fee of 5 DH/km applies. Premium plans include unlimited mileage."
+      },
+      {
+        "q": "How do I pick up and return the vehicle?",
+        "a": "You can pick up your vehicle at one of our 50+ agencies or have it delivered. Return is at the same location unless otherwise specified."
+      }
+    ]
+  },
+  "cta": {
+    "badge": "Ready to go?",
+    "title": "Book your vehicle now",
+    "subtitle": "Free cancellation up to 48h before. No hidden fees.",
+    "reserver": "Book a vehicle",
+    "voirOffres": "View our offers"
+  },
+  "footer": {
+    "description": "Car rental in Morocco. Recent vehicles, unbeatable prices, exceptional customer service.",
+    "villes": ["Casablanca", "Rabat", "Marrakech", "Agadir"],
+    "columns": {
+      "vehicules": "Vehicles",
+      "company": "Company",
+      "assistance": "Support"
+    },
+    "links": {
+      "citadines": "City cars",
+      "berlines": "Sedans",
+      "suv": "SUV",
+      "luxe": "Luxury",
+      "utilitaires": "Utility",
+      "aPropos": "About",
+      "agences": "Agencies",
+      "carrieres": "Careers",
+      "presse": "Press",
+      "centreAide": "Help center",
+      "contact": "Contact",
+      "cgv": "Terms",
+      "confidentialite": "Privacy"
+    },
+    "droits": "All rights reserved.",
+    "mentionsLegales": "Legal notice",
+    "cgu": "Terms of use",
+    "cookies": "Cookies"
+  },
+  "detail": {
+    "chargement": "Loading...",
+    "introuvable": "Vehicle not found",
+    "introuvableDesc": "The vehicle you are looking for does not exist.",
+    "voirTout": "View all vehicles",
+    "caracteristiques": "Features",
+    "boiteAuto": "Automatic",
+    "gpsInclus": "GPS included",
+    "annulationJ2": "Cancel D-2",
+    "description": "Description",
+    "ceQuiEstInclus": "What's included",
+    "assuranceTousRisques": "Full coverage insurance",
+    "kilometrageInclus": "Mileage included",
+    "gpsIntegre": "Built-in GPS",
+    "support247": "24/7 support",
+    "annulationGratuite": "Free cancellation",
+    "propreteGarantie": "Cleanliness guaranteed",
+    "ceQueDisentClients": "What our customers say",
+    "telephone": "Phone *",
+    "telephonePlaceholder": "06 12 34 56 78",
+    "emailOptionnel": "Email (optional)",
+    "emailPlaceholder": "you@example.com",
+    "total": "Total",
+    "reservationEnCours": "Booking...",
+    "reserverMaintenant": "Book now",
+    "pasFraisCaches": "No hidden fees · Secure payment",
+    "reservationConfirmee": "Booking confirmed!",
+    "reservationDesc": "Your {{carName}} is booked from {{start}} to {{end}}.",
+    "pourquoiReserver": "Why book with us?",
+    "autresVehicules": "Other similar vehicles",
+    "dateFinError": "End date must be after start date",
+    "telephoneRequis": "Phone number is required",
+    "baseDonneesError": "Database not connected"
+  },
+  "dashboard": {
+    "sidebar": {
+      "tableauDeBord": "Dashboard",
+      "reservations": "Reservations",
+      "vehicules": "Vehicles",
+      "deconnexion": "Log out",
+      "rechercher": "Search...",
+      "site": "Site",
+      "voirLeSite": "View site"
+    },
+    "home": {
+      "revenuTotal": "Total revenue",
+      "revenuValeur": "12,500 DH",
+      "hausse": "+12.5%",
+      "hausseDesc": "Up this month",
+      "reservations": "Reservations",
+      "reservationsDesc": "Total reservations",
+      "vehiculesActifs": "Active vehicles",
+      "flotteDisponible": "Available fleet",
+      "croissance": "Growth rate",
+      "croissanceValeur": "4.5%",
+      "hausseValeur": "+4.5%",
+      "performanceStable": "Stable performance",
+      "apercuReservations": "Reservations overview",
+      "aucuneReservation": "No recent reservations",
+      "aucuneReservationDesc": "Reservations will appear here once the database is connected."
+    },
+    "cars": {
+      "title": "Vehicles",
+      "desc": "Manage your vehicle fleet",
+      "ajouter": "Add a vehicle",
+      "rechercher": "Search for a vehicle...",
+      "supprimerConfirm": "Delete this vehicle?",
+      "aucunResultat": "No results for",
+      "aucunVehicule": "No vehicles",
+      "essayezAutre": "Try different search terms.",
+      "ajoutezPremier": "Add your first vehicle or connect the Supabase database.",
+      "modifier": "Edit"
+    },
+    "carForm": {
+      "modifier": "Edit vehicle",
+      "ajouter": "Add vehicle",
+      "modifierDesc": "Edit vehicle information",
+      "ajouterDesc": "Fill in the new vehicle information",
+      "infosGenerales": "General information",
+      "nom": "Name",
+      "nomPlaceholder": "e.g. Mercedes C-Class",
+      "nomRequis": "Name is required",
+      "slug": "Slug:",
+      "prixParJour": "Price per day (DH)",
+      "prixRequis": "Price must be greater than 0",
+      "places": "Seats",
+      "placesRequis": "Number of seats must be at least 1",
+      "carburant": "Fuel",
+      "carburantPlaceholder": "Select...",
+      "essence": "Petrol",
+      "diesel": "Diesel",
+      "electrique": "Electric",
+      "hybride": "Hybrid",
+      "gpl": "LPG",
+      "hydrogene": "Hydrogen",
+      "carburantRequis": "Select a fuel type",
+      "categorie": "Category",
+      "categoriePlaceholder": "Select...",
+      "populaire": "Popular",
+      "premium": "Premium",
+      "suv": "SUV",
+      "economique": "Economy",
+      "sport": "Sport",
+      "luxe": "Luxury",
+      "categorieRequis": "Select a category",
+      "transmission": "Transmission",
+      "automatique": "Automatic",
+      "manuelle": "Manual",
+      "descriptionSection": "Description",
+      "descriptionPlaceholder": "Describe the vehicle (optional)...",
+      "imagePrincipale": "Main image",
+      "deposezImage": "Drop the main image here",
+      "ouCliquez": "or click to browse",
+      "imagePrincipaleRequis": "Add a main image",
+      "imagesSlider": "Slider images",
+      "deposezImages": "Drop your images here",
+      "couleur": "Vehicle color",
+      "apercu": "Preview",
+      "nomVehicule": "Vehicle name",
+      "annuler": "Cancel",
+      "enregistrement": "Saving...",
+      "enregistrer": "Save",
+      "ajouterBtn": "Add",
+      "supabaseError": "Supabase is not configured. Check your .env file",
+      "introuvable": "Vehicle not found",
+      "modifieSucces": "Vehicle updated successfully"
+    },
+    "reservations": {
+      "title": "Reservations",
+      "desc": "Manage your vehicle reservations",
+      "aucune": "No reservations",
+      "aucuneDesc": "Reservations made on the site will appear here.",
+      "calendrier": "Calendar",
+      "selectionnezDate": "Select a date",
+      "reservationsDu": "Reservations for {{date}}",
+      "aucuneDate": "No reservations on this date",
+      "duAu": "From {{start}} to {{end}}",
+      "confirmee": "Confirmed",
+      "terminee": "Completed",
+      "annulee": "Cancelled",
+      "jour": "day",
+      "jours": "days",
+      "aujourdhui": "Today",
+      "vehicule": "Vehicle",
+      "tous": "All"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "desc": "Sign in to your admin dashboard",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "motDePasse": "Password",
+      "mdpPlaceholder": "••••••••",
+      "connecter": "Sign in",
+      "connecterEnCours": "Signing in...",
+      "pasDeCompte": "Don't have an account?",
+      "creerCompte": "Create an account",
+      "supabaseError": "Supabase not configured. Check your environment variables."
+    },
+    "signup": {
+      "title": "Create an account",
+      "desc": "Sign up to access the dashboard",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "motDePasse": "Password",
+      "mdpPlaceholder": "••••••••",
+      "inscrire": "Sign up",
+      "inscrireEnCours": "Signing up...",
+      "dejaCompte": "Already have an account?",
+      "connecter": "Sign in",
+      "supabaseError": "Supabase not configured. Check your environment variables."
+    }
+  },
+  "theme": {
+    "light": "Switch to light mode",
+    "dark": "Switch to dark mode"
+  },
+  "gallery": {
+    "parJour": "per day",
+    "photoPrecedente": "Previous photo",
+    "photoSuivante": "Next photo",
+    "photo": "Photo {{index}}"
+  },
+  "carCard": {
+    "photoPrecedente": "Previous photo",
+    "photoSuivante": "Next photo",
+    "selectionPhoto": "Photo selection",
+    "photo": "Photo {{index}}"
+  },
+  "carousel": {
+    "precedent": "Previous slide",
+    "suivant": "Next slide"
+  }
+}

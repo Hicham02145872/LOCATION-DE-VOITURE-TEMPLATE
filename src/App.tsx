@@ -1,0 +1,954 @@
+import { useState, useEffect } from "react"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Input } from "@/components/ui/input"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
+import { Separator } from "@/components/ui/separator"
+import {
+  Car,
+  MapPin,
+  Fuel,
+  Users,
+  Snowflake,
+  Star,
+  ArrowRight,
+  Check,
+  Search,
+  ChevronDown,
+  Phone,
+  Mail,
+  Clock,
+} from "lucide-react"
+import { howItWorks, features, testimonials, stats } from "@/data/cars"
+import { useCars } from "@/hooks/useCars"
+import { CarCardCarousel } from "@/components/CarCardCarousel"
+import { ThemeToggle } from "@/components/ThemeToggle"
+import { useAuthModal } from "@/lib/auth-modal"
+import { useAuth } from "@/lib/auth"
+import { useReducedMotion } from "@/hooks/useReducedMotion"
+import { TypewriterText } from "@/hooks/useTypewriter"
+import { useTranslation } from "react-i18next"
+import { useDirection } from "@/hooks/useDirection"
+import { LanguageSwitcher } from "@/components/LanguageSwitcher"
+import { ParticlesBackground } from "@/components/ParticlesBackground"
+import teslaLogo from "@/assets/brands/tesla.svg"
+import bmwLogo from "@/assets/brands/bmw.svg"
+import mercedesLogo from "@/assets/brands/mercedes.svg"
+import audiLogo from "@/assets/brands/audi.svg"
+import porscheLogo from "@/assets/brands/porsche.svg"
+import toyotaLogo from "@/assets/brands/toyota.svg"
+import hondaLogo from "@/assets/brands/honda.svg"
+import volkswagenLogo from "@/assets/brands/volkswagen.svg"
+import "./App.css"
+
+const brands = [
+  { name: "Tesla", logo: teslaLogo },
+  { name: "BMW", logo: bmwLogo },
+  { name: "Mercedes", logo: mercedesLogo },
+  { name: "Audi", logo: audiLogo },
+  { name: "Porsche", logo: porscheLogo },
+  { name: "Toyota", logo: toyotaLogo },
+  { name: "Honda", logo: hondaLogo },
+  { name: "Volkswagen", logo: volkswagenLogo },
+  { name: "Tesla", logo: teslaLogo },
+  { name: "BMW", logo: bmwLogo },
+  { name: "Mercedes", logo: mercedesLogo },
+  { name: "Audi", logo: audiLogo },
+  { name: "Porsche", logo: porscheLogo },
+  { name: "Toyota", logo: toyotaLogo },
+  { name: "Honda", logo: hondaLogo },
+  { name: "Volkswagen", logo: volkswagenLogo },
+]
+
+const navLinks = [
+  { key: "vehicules", href: "/vehicules" },
+  { key: "tarifs", href: "/#tarifs" },
+  { key: "agences", href: "/#contact" },
+  { key: "contact", href: "/#contact" },
+]
+
+const ease = [0.25, 0.4, 0.25, 1] as const
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay: i * 0.12, ease },
+  }),
+}
+
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+}
+
+function App() {
+  const { cars } = useCars()
+  const { user } = useAuth()
+  const { open: openAuth } = useAuthModal()
+  const navigate = useNavigate()
+  const [searchLocation, setSearchLocation] = useState("")
+  const [searchStart, setSearchStart] = useState("")
+  const [searchEnd, setSearchEnd] = useState("")
+  const [searchType] = useState("all")
+  const [openFaq, setOpenFaq] = useState<number | null>(null)
+  const [scrolled, setScrolled] = useState(false)
+  const reduced = useReducedMotion()
+  const { scrollYProgress } = useScroll()
+  const heroY = useTransform(scrollYProgress, [0, 0.3], [0, 80])
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.6])
+  const { hash, pathname } = useLocation()
+  const { t } = useTranslation()
+  useDirection()
+  const isHome = pathname === "/"
+
+  useEffect(() => {
+    if (hash) {
+      const el = document.querySelector(hash)
+      if (el) el.scrollIntoView({ behavior: "smooth" })
+    }
+  }, [hash])
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
+  return (
+    <div className="min-h-screen">
+      <header className={`fixed top-0 right-0 left-0 z-50 flex items-center justify-between border-b px-6 py-3 shadow-xs backdrop-blur-xl transition-all duration-300 sm:px-8 ${
+          isHome && !scrolled
+            ? "border-transparent bg-transparent"
+            : "border-border/40 bg-background/80"
+        }`}>
+          <Link to="/" className="flex items-center gap-2">
+          <div className="flex size-8 items-center justify-center rounded-lg bg-primary">
+            <Car className="h-4 w-4 text-primary-foreground" />
+          </div>
+          <span className="text-base font-bold tracking-tight">{t("app.name")}</span>
+        </Link>
+        <nav className="hidden items-center gap-1 md:flex">
+          {navLinks.map((link) => {
+            const isActive = link.href.startsWith("/") && pathname.startsWith(link.href)
+            return (
+              <a
+                key={link.key}
+                href={link.href}
+                className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-foreground ${
+                  isActive ? "bg-muted text-foreground" : "text-muted-foreground"
+                }`}
+              >
+                {t(`nav.${link.key}`)}
+              </a>
+            )
+          })}
+        </nav>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          {user ? (
+            <Link to="/dashboard">
+              <Button variant="ghost" size="sm" className="hidden md:inline-flex">
+                {t("nav.dashboard")}
+              </Button>
+            </Link>
+          ) : (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="hidden md:inline-flex"
+              onClick={() => openAuth("login")}
+            >
+              {t("nav.connexion")}
+            </Button>
+          )}
+          <Link to="/vehicules">
+            <Button size="sm" className="rounded-lg">
+              {t("nav.reserver")}
+            </Button>
+          </Link>
+          <LanguageSwitcher />
+        </div>
+      </header>
+
+      <section className="relative min-h-dvh overflow-hidden">
+        {/* Mobile background (< lg) */}
+        <div className="absolute inset-0 lg:hidden">
+          <div
+            className="h-full w-full bg-cover bg-center"
+            style={{
+              backgroundImage:
+                "url(https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=85)",
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
+        </div>
+
+        <div className="relative z-10 grid min-h-dvh lg:grid-cols-2">
+          {/* Left: Content */}
+          <div className="flex flex-col justify-center px-6 pt-28 pb-16 sm:px-10 lg:px-14">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={stagger}
+              className="mx-auto w-full max-w-xl lg:mx-0"
+            >
+              {/* Badge */}
+              <motion.div
+                variants={fadeUp}
+                className="group mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm text-white backdrop-blur-sm lg:border-primary/20 lg:bg-primary/5 lg:text-primary"
+              >
+                <span className="relative flex size-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+                </span>
+                {t("hero.badge")}
+              </motion.div>
+
+              {/* Headline */}
+              <motion.h1
+                variants={fadeUp}
+                className="text-[clamp(2.2rem,5vw,4rem)] font-bold leading-[1.1] tracking-tighter text-white lg:text-foreground"
+              >
+                <TypewriterText text={t("hero.title")} />
+              </motion.h1>
+
+              {/* Subtitle */}
+              <motion.p
+                variants={fadeUp}
+                className="mt-4 max-w-lg text-balance text-lg leading-relaxed text-gray-300 lg:text-muted-foreground"
+              >
+                {t("hero.subtitle")}
+              </motion.p>
+
+              {/* Search Card */}
+              <motion.div variants={fadeUp} className="mt-8">
+                <Card className="border-0 bg-white/95 shadow-2xl shadow-black/20 backdrop-blur-xl lg:border-border/50 lg:bg-card lg:shadow-lg lg:shadow-black/5">
+                  <CardContent className="p-4 sm:p-5">
+                    <div className="space-y-3">
+                      <div className="relative">
+                        <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                        <Input className="rounded-lg pl-9" placeholder={t("hero.search.lieuPlaceholder")} value={searchLocation} onChange={(e) => setSearchLocation(e.target.value)} />
+                      </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-medium text-muted-foreground">{t("hero.search.debut")}</label>
+                          <Input type="date" className="rounded-lg" value={searchStart} onChange={(e) => setSearchStart(e.target.value)} />
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-xs font-medium text-muted-foreground">{t("hero.search.fin")}</label>
+                          <Input type="date" className="rounded-lg" value={searchEnd} onChange={(e) => setSearchEnd(e.target.value)} />
+                        </div>
+                      </div>
+                      <Button className="w-full rounded-lg" size="lg" onClick={() => navigate(`/vehicules?search=${encodeURIComponent(searchLocation)}&type=${searchType}`)}>
+                        <Search className="mr-2 h-4 w-4" />
+                        {t("hero.search.trouver")}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              {/* Social proof */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 1.6, ease }}
+                className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm"
+              >
+                <span className="inline-flex items-center gap-1.5 text-white lg:text-foreground">
+                  <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                  <span className="font-medium">{t("hero.stats.rating")}</span>
+                  <span className="text-gray-400 lg:text-muted-foreground">{t("hero.stats.avis")}</span>
+                </span>
+                <span className="hidden h-3 w-px bg-white/20 lg:block" />
+                <span className="text-gray-400 lg:text-muted-foreground">{t("hero.stats.vehicules")}</span>
+                <span className="hidden h-3 w-px bg-white/20 lg:block" />
+                <span className="text-gray-400 lg:text-muted-foreground">{t("hero.stats.annulation")}</span>
+              </motion.div>
+
+              {/* Stats */}
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                variants={stagger}
+                className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4"
+              >
+                {stats.map((stat, i) => {
+                  const labelKey: Record<string, string> = {
+                    "Véhicules": "stats.vehicules",
+                    "Satisfaction": "stats.satisfaction",
+                    "Agences": "stats.agences",
+                    "d'expérience": "stats.experience",
+                  }
+                  return (
+                    <motion.div
+                      key={stat.label}
+                      variants={fadeUp}
+                      custom={i}
+                      className="text-center"
+                    >
+                      <div className="text-xl font-bold tracking-tight text-white sm:text-2xl lg:text-foreground">
+                        {stat.value}
+                      </div>
+                      <div className="mt-0.5 text-xs text-gray-400 lg:text-muted-foreground">
+                        {t(labelKey[stat.label] ?? stat.label)}
+                      </div>
+                    </motion.div>
+                  )
+                })}
+              </motion.div>
+            </motion.div>
+          </div>
+
+          {/* Right: Image section - Desktop only */}
+          <div className="relative hidden lg:block">
+            <motion.div
+              initial={{ scale: 1.15 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: reduced ? 0 : 1.5, ease }}
+              className="absolute inset-0 overflow-hidden"
+              style={{ y: heroY, opacity: heroOpacity }}
+            >
+              <div
+                className="h-full w-full bg-cover bg-center"
+                style={{
+                  backgroundImage:
+                    "url(https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=85)",
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-background/20 to-background" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+            </motion.div>
+
+            {/* Floating promo card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.4, ease }}
+              className="absolute bottom-8 right-8 rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur-xl"
+            >
+              <p className="text-2xl font-bold text-white">-20%</p>
+              <p className="text-sm text-white/70">sur votre première réservation</p>
+              <div className="mt-2 flex items-center gap-1.5 text-xs text-white/50">
+                <Check className="h-3 w-3" />
+                Code: BIENVENUE20
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden border-t bg-background py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="mb-8 text-center text-sm font-medium uppercase tracking-widest text-muted-foreground">
+            {t("brands.title")}
+          </p>
+          <div className="marquee-wrapper relative overflow-hidden">
+            <div className="marquee-track flex items-center gap-16">
+              {brands.map((brand, i) => (
+                <span
+                  key={`${brand.name}-${i}`}
+                  className="inline-flex items-center gap-3 text-lg font-bold tracking-tight text-muted-foreground/40"
+                >
+                  <img
+                    src={brand.logo}
+                    alt={brand.name}
+                    className="h-6 w-6"
+                  />
+                  {brand.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="vehicules" className="relative overflow-hidden border-t bg-muted/30 py-24">
+        <ParticlesBackground />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <Badge
+              variant="secondary"
+              className="mb-4 rounded-full px-4 py-1 text-xs font-medium"
+            >
+              {t("vehicules.badge")}
+            </Badge>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              {t("vehicules.title")}
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              {t("vehicules.subtitle")}
+            </p>
+          </div>
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {cars.map((car, i) => (
+              <motion.div
+                key={car.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{
+                  duration: reduced ? 0 : 0.5,
+                  delay: reduced ? 0 : i * 0.08,
+                  ease,
+                }}
+              >
+                <Link to={`/vehicules/${car.slug}`}>
+                  <Card className="group cursor-pointer overflow-hidden border-border/50 pt-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5">
+                  <CardContent className="p-0">
+                    <CarCardCarousel
+                      images={car.images}
+                      gradient={car.gradient}
+                      className="h-52 sm:h-56"
+                    />
+                      <div className="space-y-3 p-5">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <div className="mb-2 flex items-center gap-2">
+                            <Badge
+                              variant="outline"
+                              className="rounded-full border-border/50 text-[11px] font-medium"
+                            >
+                              {car.badge}
+                            </Badge>
+                          </div>
+                          <h3 className="font-semibold">{car.name}</h3>
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-3 gap-2">
+                        {[
+                          { label: "1j", price: car.price },
+                          { label: "2j", price: car.price * 2 },
+                          { label: "7j", price: car.price * 7 },
+                        ].map((opt) => (
+                          <div
+                            key={opt.label}
+                            className="rounded-lg border border-border/50 bg-muted/50 p-2 text-center transition-colors hover:border-primary/30 hover:bg-primary/5"
+                          >
+                            <div className="text-[10px] font-medium text-muted-foreground">{opt.label}</div>
+                            <div className="text-sm font-bold">{opt.price}DH</div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1.5 rounded-md bg-muted px-2 py-1">
+                          <Users className="h-3.5 w-3.5" />
+                          {car.seats} {t("vehicules.places")}
+                        </span>
+                        <span className="flex items-center gap-1.5 rounded-md bg-muted px-2 py-1">
+                          <Fuel className="h-3.5 w-3.5" />
+                          {car.fuel}
+                        </span>
+                        <span className="flex items-center gap-1.5 rounded-md bg-muted px-2 py-1">
+                          <Snowflake className="h-3.5 w-3.5" />
+                          {t("vehicules.climatisation")}
+                        </span>
+                      </div>
+                      <Separator className="bg-border/50" />
+                      <div className="flex items-center justify-between">
+                        <Button size="sm" className="rounded-lg">
+                          {t("vehicules.reserver")}
+                          <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
+              </motion.div>
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <Link to="/vehicules">
+              <Button
+                variant="outline"
+                size="lg"
+                className="rounded-lg border-border/50"
+              >
+                {t("vehicules.voirTout")}
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden border-t bg-background py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <Badge
+              variant="secondary"
+              className="mb-4 rounded-full px-4 py-1 text-xs font-medium"
+            >
+              {t("commentCaMarche.badge")}
+            </Badge>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              {t("commentCaMarche.title")}
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              {t("commentCaMarche.subtitle")}
+            </p>
+          </div>
+          <div className="relative mt-16 grid gap-8 sm:grid-cols-3">
+            <div className="absolute top-8 left-[calc(16.67%+1.5rem)] right-[calc(16.67%+1.5rem)] hidden h-0.5 bg-gradient-to-r from-primary/50 via-primary/30 to-primary/50 sm:block" />
+            {howItWorks.map((step, i) => {
+              const stepKeys = [
+                { title: "commentCaMarche.step1.title", desc: "commentCaMarche.step1.desc" },
+                { title: "commentCaMarche.step2.title", desc: "commentCaMarche.step2.desc" },
+                { title: "commentCaMarche.step3.title", desc: "commentCaMarche.step3.desc" },
+              ]
+              return (
+                <motion.div
+                  key={step.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{
+                    duration: reduced ? 0 : 0.5,
+                    delay: reduced ? 0 : i * 0.15,
+                    ease,
+                  }}
+                  className="relative text-center"
+                >
+                  <div className="relative mx-auto flex size-16 items-center justify-center rounded-2xl border border-border/50 bg-background shadow-sm">
+                    <step.icon className="h-7 w-7 text-primary" />
+                  </div>
+                  <div className="mt-3 flex items-center justify-center">
+                    <span className="flex size-6 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground">
+                      {i + 1}
+                    </span>
+                  </div>
+                  <h3 className="mt-4 text-lg font-semibold">{t(stepKeys[i].title)}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {t(stepKeys[i].desc)}
+                  </p>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden border-t bg-muted/30 py-24">
+        <ParticlesBackground />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <Badge
+              variant="secondary"
+              className="mb-4 rounded-full px-4 py-1 text-xs font-medium"
+            >
+              {t("features.badge")}
+            </Badge>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              {t("features.title")}
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              {t("features.subtitle")}
+            </p>
+          </div>
+          <div className="mt-12 grid gap-4 sm:grid-cols-2">
+            {features.map((feature, i) => {
+              const featKeys: Record<string, { title: string; desc: string }> = {
+                "Assurance tous risques": { title: "features.assurance.title", desc: "features.assurance.desc" },
+                "Support 24/7": { title: "features.support.title", desc: "features.support.desc" },
+                "Annulation gratuite": { title: "features.annulation.title", desc: "features.annulation.desc" },
+                "Paiement sécurisé": { title: "features.paiement.title", desc: "features.paiement.desc" },
+              }
+              const keys = featKeys[feature.title] ?? { title: "", desc: "" }
+              return (
+                <motion.div
+                  key={feature.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-30px" }}
+                  transition={{
+                    duration: reduced ? 0 : 0.4,
+                    delay: reduced ? 0 : i * 0.08,
+                    ease,
+                  }}
+                  className="group rounded-2xl border border-border/50 p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-border hover:shadow-md hover:shadow-black/5"
+                >
+                  <div className="flex items-start gap-4">
+                    <div
+                      className={`flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${feature.gradient} ${feature.iconColor}`}
+                    >
+                      <feature.icon className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold">{t(keys.title)}</h3>
+                      <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                        {t(keys.desc)}
+                      </p>
+                    </div>
+                  </div>
+              </motion.div>
+            )
+          })}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden border-t bg-background py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <Badge
+              variant="secondary"
+              className="mb-4 rounded-full px-4 py-1 text-xs font-medium"
+            >
+              {t("testimonials.badge")}
+            </Badge>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              {t("testimonials.title")}
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              {t("testimonials.subtitle")}
+            </p>
+          </div>
+           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {testimonials.map((item, i) => {
+              const tKeys: Record<string, { name: string; role: string; text: string }> = {
+                "Sophie Martin": { name: "testimonials.sophie.name", role: "testimonials.sophie.role", text: "testimonials.sophie.text" },
+                "Thomas Dubois": { name: "testimonials.thomas.name", role: "testimonials.thomas.role", text: "testimonials.thomas.text" },
+                "Marie Lambert": { name: "testimonials.marie.name", role: "testimonials.marie.role", text: "testimonials.marie.text" },
+                "Sarah Johnson": { name: "testimonials.sarah.name", role: "testimonials.sarah.role", text: "testimonials.sarah.text" },
+                "Michael Brown": { name: "testimonials.michael.name", role: "testimonials.michael.role", text: "testimonials.michael.text" },
+                "Jessica Williams": { name: "testimonials.jessica.name", role: "testimonials.jessica.role", text: "testimonials.jessica.text" },
+                "David Miller": { name: "testimonials.david.name", role: "testimonials.david.role", text: "testimonials.david.text" },
+              }
+              const tk = tKeys[item.name] ?? { name: "", role: "", text: "" }
+              return (
+                <motion.div
+                  key={item.name}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{
+                    duration: reduced ? 0 : 0.5,
+                    delay: reduced ? 0 : i * 0.1,
+                    ease,
+                  }}
+                >
+                  <Card className="border-border/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:shadow-black/5">
+                    <CardContent className="p-6">
+                      <div className="flex gap-0.5">
+                        {Array.from({ length: 5 }).map((_, i2) => (
+                          <Star
+                            key={i2}
+                            className={`h-4 w-4 ${
+                              i2 < item.rating
+                                ? "fill-amber-400 text-amber-400"
+                                : "text-muted-foreground/30"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <div className="relative mt-4">
+                        <span className="absolute -top-1 -left-1 text-3xl leading-none text-primary/20">
+                          "
+                        </span>
+                        <p className="relative text-sm leading-relaxed text-muted-foreground">
+                          {t(tk.text)}
+                        </p>
+                      </div>
+                      <Separator className="my-4 bg-border/50" />
+                      <div className="flex items-center gap-3">
+                        <Avatar size="sm">
+                          <AvatarFallback className="bg-primary/10 text-xs font-medium text-primary">
+                            {item.avatar}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <div className="text-sm font-medium">{t(tk.name)}</div>
+                          <div className="text-xs text-muted-foreground">
+                            {t(tk.role)}
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+
+
+      <section className="relative overflow-hidden border-t bg-background py-24">
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <Badge
+              variant="secondary"
+              className="mb-4 rounded-full px-4 py-1 text-xs font-medium"
+            >
+              {t("faq.badge")}
+            </Badge>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              {t("faq.title")}
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              {t("faq.subtitle")}
+            </p>
+          </div>
+          <div className="mt-12 space-y-3">
+            {(t("faq.questions", { returnObjects: true }) as Array<{ q: string; a: string }>).map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: reduced ? 0 : 0.3, delay: reduced ? 0 : i * 0.05 }}
+              >
+                <button
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  className="flex w-full items-center justify-between rounded-xl border border-border/50 px-5 py-4 text-left transition-all duration-200 hover:border-border hover:bg-muted/50"
+                >
+                  <span className="pr-4 text-sm font-medium">{item.q}</span>
+                  <ChevronDown
+                    className={`h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-300 ${
+                      openFaq === i ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+                <div
+                  className={`overflow-hidden transition-all duration-300 ${
+                    openFaq === i
+                      ? "max-h-96 opacity-100"
+                      : "max-h-0 opacity-0"
+                  }`}
+                >
+                  <div className="rounded-b-xl border-x border-b border-border/50 px-5 py-4">
+                    <p className="text-sm leading-relaxed text-muted-foreground">
+                      {item.a}
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden border-t bg-muted/30 py-24">
+        <ParticlesBackground />
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <Badge variant="secondary" className="mb-4 rounded-full px-4 py-1 text-xs font-medium">
+              Contact
+            </Badge>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              Contactez-nous
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              Notre équipe est à votre disposition 7j/7 pour répondre à toutes vos questions.
+            </p>
+          </div>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                icon: MapPin,
+                title: "Adresse",
+                content: "Agadir, Maroc",
+                sub: "Boulevard Mohammed V",
+              },
+              {
+                icon: Phone,
+                title: "Téléphone",
+                content: "+212 5 28 00 00 00",
+                sub: "Lun-Sam 8h-20h",
+              },
+              {
+                icon: Mail,
+                title: "Email",
+                content: "contact@driveease.ma",
+                sub: "Réponse sous 24h",
+              },
+              {
+                icon: Clock,
+                title: "Horaires",
+                content: "Lun - Sam : 8h - 20h",
+                sub: "Dim : 10h - 18h",
+              },
+            ].map((item, i) => (
+              <motion.div
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-30px" }}
+                transition={{ duration: reduced ? 0 : 0.4, delay: reduced ? 0 : i * 0.08, ease }}
+                className="group rounded-2xl border border-border/50 bg-background p-6 text-center transition-all duration-300 hover:-translate-y-0.5 hover:border-border hover:shadow-md hover:shadow-black/5"
+              >
+                <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                  <item.icon className="h-5 w-5" />
+                </div>
+                <h3 className="mt-4 font-semibold">{item.title}</h3>
+                <p className="mt-1 text-sm font-medium text-foreground">{item.content}</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">{item.sub}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="relative overflow-hidden border-t bg-background py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: reduced ? 0 : 0.6, ease }}
+            className="relative overflow-hidden rounded-3xl border bg-gradient-to-br from-primary/5 via-primary/[0.02] to-background px-6 py-16 text-center shadow-lg sm:px-16"
+          >
+            <div className="absolute top-0 right-0 -z-10 h-72 w-72 translate-x-1/3 -translate-y-1/3 rounded-full bg-primary/10 blur-3xl" />
+            <div className="absolute bottom-0 left-0 -z-10 h-72 w-72 -translate-x-1/3 translate-y-1/3 rounded-full bg-primary/5 blur-3xl" />
+            <Badge className="mb-4 rounded-full px-4 py-1 text-xs font-medium">
+              {t("cta.badge")}
+            </Badge>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              {t("cta.title")}
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
+              {t("cta.subtitle")}
+            </p>
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Button size="lg" className="w-full rounded-lg sm:w-auto">
+                <Car className="mr-2 h-4 w-4" />
+                {t("cta.reserver")}
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="w-full rounded-lg border-border/50 sm:w-auto"
+              >
+                <Check className="mr-2 h-4 w-4" />
+                {t("cta.voirOffres")}
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <footer id="contact" className="relative overflow-hidden border-t bg-muted/30">
+        <ParticlesBackground />
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
+            <div className="lg:col-span-2">
+              <div className="flex items-center gap-2">
+                <div className="flex size-7 items-center justify-center rounded-lg bg-primary">
+                  <Car className="h-3.5 w-3.5 text-primary-foreground" />
+                </div>
+                <span className="text-base font-bold">{t("app.name")}</span>
+              </div>
+              <p className="mt-3 max-w-sm text-sm leading-relaxed text-muted-foreground">
+                {t("footer.description")}
+              </p>
+              <div className="mt-6 flex flex-wrap items-center gap-2">
+                {(t("footer.villes", { returnObjects: true }) as string[]).map((city: string) => (
+                  <span
+                    key={city}
+                    className="rounded-full border border-border/50 bg-background px-3 py-1 text-xs text-muted-foreground"
+                  >
+                    {city}
+                  </span>
+                ))}
+              </div>
+              <div className="mt-6 overflow-hidden rounded-xl border border-border/50">
+                <iframe
+                  title="Agence Agadir"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d110402.89831585699!2d-9.622284887441585!3d30.421104474346485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xdb3b6f8d2b7e4ef%3A0x0!2zMzDCsDI1JzE2LjAiTiA5wrAzNycwMi4wIlc!5e0!3m2!1sfr!2sma!4v1"
+                  width="100%"
+                  height="180"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="rounded-xl"
+                />
+              </div>
+            </div>
+            {[
+              {
+                key: "vehicules",
+                links: [
+                  { label: "Citadines", tKey: "footer.links.citadines" },
+                  { label: "Berlines", tKey: "footer.links.berlines" },
+                  { label: "SUV", tKey: "footer.links.suv" },
+                  { label: "Luxe", tKey: "footer.links.luxe" },
+                  { label: "Utilitaires", tKey: "footer.links.utilitaires" },
+                ],
+              },
+              {
+                key: "company",
+                links: [
+                  { label: "À propos", tKey: "footer.links.aPropos" },
+                  { label: "Agences", tKey: "footer.links.agences" },
+                  { label: "Carrières", tKey: "footer.links.carrieres" },
+                  { label: "Presse", tKey: "footer.links.presse" },
+                ],
+              },
+              {
+                key: "assistance",
+                links: [
+                  { label: "Centre d'aide", tKey: "footer.links.centreAide" },
+                  { label: "Contact", tKey: "footer.links.contact" },
+                  { label: "CGV", tKey: "footer.links.cgv" },
+                  { label: "Confidentialité", tKey: "footer.links.confidentialite" },
+                ],
+              },
+            ].map((col) => (
+              <div key={col.key}>
+                <h4 className="text-sm font-semibold">{t(`footer.columns.${col.key}`)}</h4>
+                <ul className="mt-4 space-y-3">
+                  {col.links.map((link) => (
+                    <li key={link.tKey}>
+                      <a
+                        href="#"
+                        className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+                      >
+                        {t(link.tKey)}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <Separator className="my-10 bg-border/50" />
+          <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <p className="text-sm text-muted-foreground">
+              &copy; {new Date().getFullYear()} {t("app.name")}. {t("footer.droits")}
+            </p>
+            <div className="flex items-center gap-6 text-sm text-muted-foreground">
+              <a
+                href="#"
+                className="transition-colors hover:text-foreground"
+              >
+                {t("footer.mentionsLegales")}
+              </a>
+              <a
+                href="#"
+                className="transition-colors hover:text-foreground"
+              >
+                {t("footer.cgu")}
+              </a>
+              <a
+                href="#"
+                className="transition-colors hover:text-foreground"
+              >
+                {t("footer.cookies")}
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
+}
+
+export default App

@@ -1,0 +1,461 @@
+{
+  "app": {
+    "name": "DriveEase"
+  },
+  "nav": {
+    "vehicules": "Véhicules",
+    "tarifs": "Tarifs",
+    "agences": "Agences",
+    "contact": "Contact",
+    "dashboard": "Dashboard",
+    "connexion": "Connexion",
+    "reserver": "Réserver"
+  },
+  "hero": {
+    "badge": "Nouveaux tarifs disponibles",
+    "title": "Louez la voiture idéale pour chaque voyage",
+    "subtitle": "Des centaines de véhicules récents dans tout le Maroc. Réservez en ligne en 2 minutes, annulation gratuite, assurance incluse.",
+    "search": {
+      "lieu": "Lieu",
+      "lieuPlaceholder": "Ville ou aéroport",
+      "debut": "Début",
+      "fin": "Fin",
+      "vehicule": "Véhicule",
+      "tousTypes": "Tous les types",
+      "populaire": "Populaire",
+      "premium": "Premium",
+      "suv": "SUV",
+      "economique": "Économique",
+      "sport": "Sport",
+      "luxe": "Luxe",
+      "trouver": "Trouver mon véhicule"
+    },
+    "typed": ["Explorez le Maroc en liberté", "Voyagez en toute sérénité", "Partez à l'aventure", "Découvrez nos véhicules"],
+    "stats": {
+      "rating": "4.8",
+      "avis": "(2 400 avis)",
+      "vehicules": "200+ véhicules",
+      "annulation": "Annulation gratuite"
+    }
+  },
+  "stats": {
+    "vehicules": "Véhicules",
+    "satisfaction": "Satisfaction",
+    "agences": "Agences",
+    "experience": "d'expérience",
+    "vehiculesValue": "200+",
+    "satisfactionValue": "98%",
+    "agencesValue": "50+",
+    "experienceValue": "10 ans"
+  },
+  "brands": {
+    "title": "Nos partenaires"
+  },
+  "vehicules": {
+    "badge": "Notre flotte",
+    "title": "Véhicules populaires",
+    "subtitle": "Des voitures récentes, bien entretenues, pour tous les budgets.",
+    "places": "places",
+    "climatisation": "Climatisation",
+    "aPartirDe": "À partir de",
+    "septJours": "/ 7 jours",
+    "reserver": "Réserver",
+    "voirTout": "Voir tous nos véhicules",
+    "tousNosVehicules": "Tous nos véhicules",
+    "disponibles": "véhicules disponibles à la location",
+    "retourAccueil": "Retour à l'accueil",
+    "rechercher": "Rechercher un véhicule...",
+    "aucunResultat": "Aucun véhicule trouvé pour",
+    "essayezAutre": "Essayez d'autres termes de recherche.",
+    "aucunVehicule": "Aucun véhicule",
+    "parJour": "/jour"
+  },
+  "commentCaMarche": {
+    "badge": "Simplicité",
+    "title": "Comment ça marche",
+    "subtitle": "Trois étapes simples pour prendre la route.",
+    "step1": {
+      "title": "Choisissez",
+      "desc": "Parcourez notre sélection et trouvez le véhicule idéal pour votre trajet."
+    },
+    "step2": {
+      "title": "Réservez",
+      "desc": "Sélectionnez dates et lieu, finalisez en 2 minutes sans engagement."
+    },
+    "step3": {
+      "title": "Conduisez",
+      "desc": "Récupérez votre clé et profitez de la route en toute liberté."
+    }
+  },
+  "features": {
+    "badge": "Pourquoi nous",
+    "title": "Une expérience premium",
+    "subtitle": "Tout ce dont vous avez besoin pour une location sereine.",
+    "assurance": {
+      "title": "Assurance tous risques",
+      "desc": "Couverture complète sans franchise incluse dans chaque location."
+    },
+    "support": {
+      "title": "Support 24/7",
+      "desc": "Une équipe disponible jour et nuit, 7 jours sur 7."
+    },
+    "annulation": {
+      "title": "Annulation gratuite",
+      "desc": "Modifiez ou annulez sans frais jusqu'à 48h avant."
+    },
+    "paiement": {
+      "title": "Paiement sécurisé",
+      "desc": "Transactions 100% sécurisées, plusieurs moyens de paiement."
+    }
+  },
+  "testimonials": {
+    "badge": "Témoignages",
+    "title": "Ils nous font confiance",
+    "subtitle": "Des milliers de clients satisfaits à travers le Maroc.",
+    "sophie": {
+      "name": "Sophie Martin",
+      "role": "Voyageuse régulière",
+      "text": "Service exceptionnel ! Réservation simple et rapide. Le véhicule était comme neuf. Je recommande vivement DriveEase."
+    },
+    "thomas": {
+      "name": "Thomas Dubois",
+      "role": "Homme d'affaires",
+      "text": "Je loue régulièrement pour mes déplacements pros. Voitures impeccables, service client réactif. Un gain de temps énorme."
+    },
+    "marie": {
+      "name": "Marie Lambert",
+      "role": "Famille nombreuse",
+      "text": "Parfait pour les vacances ! SUV spacieux, sièges bébé inclus sans frais. Le rapport qualité-prix est imbattable."
+    },
+    "sarah": {
+      "name": "Sarah Johnson",
+      "role": "Voyageuse régulière",
+      "text": "Le processus de réservation était incroyablement fluide. J'ai récupéré la voiture à l'aéroport et j'étais sur la route en quelques minutes. À refaire absolument !"
+    },
+    "michael": {
+      "name": "Michael Brown",
+      "role": "Cadre d'entreprise",
+      "text": "J'utilise DriveEase pour tous mes déplacements professionnels. Leur flotte est bien entretenue et le service est toujours excellent."
+    },
+    "jessica": {
+      "name": "Jessica Williams",
+      "role": "Voyageuse en famille",
+      "text": "J'ai loué un SUV pour notre voyage familial à travers le Maroc. Spacieux, confortable, et les enfants ont adoré. Excellent rapport qualité-prix !"
+    },
+    "david": {
+      "name": "David Miller",
+      "role": "Aventurier solitaire",
+      "text": "Explorer le Maroc en voiture a été la meilleure décision. DriveEase a facilité les choses avec des options de prise en charge flexibles et d'excellents tarifs."
+    }
+  },
+  "pricing": {
+    "badge": "Tarifs",
+    "title": "Des formules adaptées",
+    "subtitle": "Choisissez la formule qui correspond à vos besoins.",
+    "mensuel": "Mensuel",
+    "annuel": "Annuel",
+    "recommande": "Recommandé",
+    "essentiel": {
+      "name": "Essentiel",
+      "desc": "Pour les trajets courts et la ville",
+      "price": "290",
+      "priceAnnuel": "230",
+      "features": [
+        "1 conducteur inclus",
+        "100 km/jour inclus",
+        "Assurance de base",
+        "Support email",
+        "Annulation gratuite J-2"
+      ],
+      "cta": "Choisir Essentiel"
+    },
+    "confort": {
+      "name": "Confort",
+      "desc": "Pour les voyages et le quotidien",
+      "price": "590",
+      "priceAnnuel": "470",
+      "features": [
+        "2 conducteurs inclus",
+        "200 km/jour inclus",
+        "Assurance tous risques",
+        "Support prioritaire 24/7",
+        "Annulation gratuite J-1",
+        "Kilométrage illimité le WE"
+      ],
+      "cta": "Choisir Confort"
+    },
+    "premium": {
+      "name": "Premium",
+      "desc": "Pour le luxe et les grandes occasions",
+      "price": "990",
+      "priceAnnuel": "790",
+      "features": [
+        "3 conducteurs inclus",
+        "Kilométrage illimité",
+        "Assurance tous risques +",
+        "Support dédié 24/7",
+        "Annulation gratuite J-1",
+        "Véhicule de remplacement",
+        "Livraison à domicile"
+      ],
+      "cta": "Choisir Premium"
+    }
+  },
+  "faq": {
+    "badge": "FAQ",
+    "title": "Questions fréquentes",
+    "subtitle": "Tout ce que vous devez savoir avant de réserver.",
+    "questions": [
+      {
+        "q": "Quels documents sont nécessaires pour louer ?",
+        "a": "Un permis de conduire valide depuis plus d'un an, une pièce d'identité en cours de validité, et une carte bancaire pour le dépôt de garantie."
+      },
+      {
+        "q": "Comment fonctionne l'assurance ?",
+        "a": "Toutes nos locations incluent une assurance de base. Vous pouvez également souscrire une couverture renforcée lors de la réservation pour une tranquillité d'esprit totale."
+      },
+      {
+        "q": "Puis-je modifier ou annuler ma réservation ?",
+        "a": "Oui, l'annulation est gratuite jusqu'à 48h avant le début de la location. Les modifications sont possibles sous réserve de disponibilité."
+      },
+      {
+        "q": "Y a-t-il des frais de kilométrage supplémentaire ?",
+        "a": "Chaque formule inclut un certain nombre de kilomètres par jour. Au-delà, des frais de 5 DH/km s'appliquent. Les formules Premium incluent le kilométrage illimité."
+      },
+      {
+        "q": "Comment récupérer et rendre le véhicule ?",
+        "a": "Vous pouvez récupérer votre véhicule dans l'une de nos 50+ agences ou vous le faire livrer. Le retour s'effectue au même lieu sauf mention contraire."
+      }
+    ]
+  },
+  "cta": {
+    "badge": "Prêt à partir ?",
+    "title": "Réservez votre véhicule dès maintenant",
+    "subtitle": "Annulation gratuite jusqu'à 48h avant. Pas de frais cachés.",
+    "reserver": "Réserver un véhicule",
+    "voirOffres": "Voir nos offres"
+  },
+  "footer": {
+    "description": "Location de voitures au Maroc. Véhicules récents, prix imbattables, service client exceptionnel.",
+    "villes": ["Casablanca", "Rabat", "Marrakech", "Agadir"],
+    "columns": {
+      "vehicules": "Véhicules",
+      "company": "Company",
+      "assistance": "Assistance"
+    },
+    "links": {
+      "citadines": "Citadines",
+      "berlines": "Berlines",
+      "suv": "SUV",
+      "luxe": "Luxe",
+      "utilitaires": "Utilitaires",
+      "aPropos": "À propos",
+      "agences": "Agences",
+      "carrieres": "Carrières",
+      "presse": "Presse",
+      "centreAide": "Centre d'aide",
+      "contact": "Contact",
+      "cgv": "CGV",
+      "confidentialite": "Confidentialité"
+    },
+    "droits": "Tous droits réservés.",
+    "mentionsLegales": "Mentions légales",
+    "cgu": "CGU",
+    "cookies": "Cookies"
+  },
+  "detail": {
+    "chargement": "Chargement...",
+    "introuvable": "Véhicule introuvable",
+    "introuvableDesc": "Le véhicule que vous cherchez n'existe pas.",
+    "voirTout": "Voir tous nos véhicules",
+    "caracteristiques": "Caractéristiques",
+    "boiteAuto": "Boîte auto",
+    "gpsInclus": "GPS inclus",
+    "annulationJ2": "Annulation J-2",
+    "description": "Description",
+    "ceQuiEstInclus": "Ce qui est inclus",
+    "assuranceTousRisques": "Assurance tous risques",
+    "kilometrageInclus": "Kilométrage inclus",
+    "gpsIntegre": "GPS intégré",
+    "support247": "Support 24/7",
+    "annulationGratuite": "Annulation gratuite",
+    "propreteGarantie": "Propreté garantie",
+    "ceQueDisentClients": "Ce que disent nos clients",
+    "telephone": "Téléphone *",
+    "telephonePlaceholder": "06 12 34 56 78",
+    "emailOptionnel": "Email (optionnel)",
+    "emailPlaceholder": "vous@exemple.com",
+    "total": "Total",
+    "reservationEnCours": "Réservation...",
+    "reserverMaintenant": "Réserver maintenant",
+    "pasFraisCaches": "Pas de frais cachés · Paiement sécurisé",
+    "reservationConfirmee": "Réservation confirmée !",
+    "reservationDesc": "Votre {{carName}} est réservé du {{start}} au {{end}}.",
+    "pourquoiReserver": "Pourquoi réserver avec nous ?",
+    "autresVehicules": "Autres véhicules similaires",
+    "dateFinError": "La date de fin doit être après la date de début",
+    "telephoneRequis": "Le numéro de téléphone est obligatoire",
+    "baseDonneesError": "Base de données non connectée"
+  },
+  "dashboard": {
+    "sidebar": {
+      "tableauDeBord": "Tableau de bord",
+      "reservations": "Réservations",
+      "vehicules": "Véhicules",
+      "deconnexion": "Déconnexion",
+      "rechercher": "Rechercher...",
+      "site": "Site",
+      "voirLeSite": "Voir le site"
+    },
+    "home": {
+      "revenuTotal": "Revenu total",
+      "revenuValeur": "12 500 DH",
+      "hausse": "+12.5%",
+      "hausseDesc": "En hausse ce mois-ci",
+      "reservations": "Réservations",
+      "reservationsDesc": "Total des réservations",
+      "vehiculesActifs": "Véhicules actifs",
+      "flotteDisponible": "Flotte disponible",
+      "croissance": "Taux de croissance",
+      "croissanceValeur": "4.5%",
+      "hausseValeur": "+4.5%",
+      "performanceStable": "Performance stable",
+      "apercuReservations": "Aperçu des réservations",
+      "aucuneReservation": "Aucune réservation récente",
+      "aucuneReservationDesc": "Les réservations apparaîtront ici une fois la base de données connectée."
+    },
+    "cars": {
+      "title": "Véhicules",
+      "desc": "Gérez votre flotte de véhicules",
+      "ajouter": "Ajouter un véhicule",
+      "rechercher": "Rechercher un véhicule...",
+      "supprimerConfirm": "Supprimer ce véhicule ?",
+      "aucunResultat": "Aucun résultat pour",
+      "aucunVehicule": "Aucun véhicule",
+      "essayezAutre": "Essayez d'autres termes de recherche.",
+      "ajoutezPremier": "Ajoutez votre premier véhicule ou connectez la base de données Supabase.",
+      "modifier": "Modifier"
+    },
+    "carForm": {
+      "modifier": "Modifier le véhicule",
+      "ajouter": "Ajouter un véhicule",
+      "modifierDesc": "Modifiez les informations du véhicule",
+      "ajouterDesc": "Remplissez les informations du nouveau véhicule",
+      "infosGenerales": "Informations générales",
+      "nom": "Nom",
+      "nomPlaceholder": "ex: Mercedes Classe C",
+      "nomRequis": "Le nom est requis",
+      "slug": "Slug :",
+      "prixParJour": "Prix par jour (DH)",
+      "prixRequis": "Le prix doit être supérieur à 0",
+      "places": "Places",
+      "placesRequis": "Le nombre de places doit être au moins 1",
+      "carburant": "Carburant",
+      "carburantPlaceholder": "Sélectionnez...",
+      "essence": "Essence",
+      "diesel": "Diesel",
+      "electrique": "Électrique",
+      "hybride": "Hybride",
+      "gpl": "GPL",
+      "hydrogene": "Hydrogène",
+      "carburantRequis": "Sélectionnez un carburant",
+      "categorie": "Catégorie",
+      "categoriePlaceholder": "Sélectionnez...",
+      "populaire": "Populaire",
+      "premium": "Premium",
+      "suv": "SUV",
+      "economique": "Économique",
+      "sport": "Sport",
+      "luxe": "Luxe",
+      "categorieRequis": "Sélectionnez une catégorie",
+      "transmission": "Transmission",
+      "automatique": "Automatique",
+      "manuelle": "Manuelle",
+      "descriptionSection": "Description",
+      "descriptionPlaceholder": "Décrivez le véhicule (optionnel)...",
+      "imagePrincipale": "Image principale",
+      "deposezImage": "Déposez l'image principale ici",
+      "ouCliquez": "ou cliquez pour parcourir",
+      "imagePrincipaleRequis": "Ajoutez une image principale",
+      "imagesSlider": "Images du slider",
+      "deposezImages": "Déposez vos images ici",
+      "couleur": "Couleur du véhicule",
+      "apercu": "Aperçu",
+      "nomVehicule": "Nom du véhicule",
+      "annuler": "Annuler",
+      "enregistrement": "Enregistrement...",
+      "enregistrer": "Enregistrer",
+      "ajouterBtn": "Ajouter",
+      "supabaseError": "Supabase n'est pas configuré. Vérifiez votre fichier .env",
+      "introuvable": "Véhicule introuvable",
+      "modifieSucces": "Véhicule modifié avec succès"
+    },
+    "reservations": {
+      "title": "Réservations",
+      "desc": "Gérez les réservations de vos véhicules",
+      "aucune": "Aucune réservation",
+      "aucuneDesc": "Les réservations effectuées sur le site apparaîtront ici.",
+      "calendrier": "Calendrier",
+      "selectionnezDate": "Sélectionnez une date",
+      "reservationsDu": "Réservations du {{date}}",
+      "aucuneDate": "Aucune réservation à cette date",
+      "duAu": "Du {{start}} au {{end}}",
+      "confirmee": "Confirmée",
+      "terminee": "Terminée",
+      "annulee": "Annulée",
+      "jour": "jour",
+      "jours": "jours",
+      "aujourdhui": "Aujourd'hui",
+      "vehicule": "Véhicule",
+      "tous": "Tous"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion",
+      "desc": "Connectez-vous à votre espace administrateur",
+      "email": "Email",
+      "emailPlaceholder": "vous@exemple.com",
+      "motDePasse": "Mot de passe",
+      "mdpPlaceholder": "••••••••",
+      "connecter": "Se connecter",
+      "connecterEnCours": "Connexion...",
+      "pasDeCompte": "Pas encore de compte ?",
+      "creerCompte": "Créer un compte",
+      "supabaseError": "Supabase non configuré. Vérifiez vos variables d'environnement."
+    },
+    "signup": {
+      "title": "Créer un compte",
+      "desc": "Inscrivez-vous pour accéder au tableau de bord",
+      "email": "Email",
+      "emailPlaceholder": "vous@exemple.com",
+      "motDePasse": "Mot de passe",
+      "mdpPlaceholder": "••••••••",
+      "inscrire": "S'inscrire",
+      "inscrireEnCours": "Inscription...",
+      "dejaCompte": "Déjà un compte ?",
+      "connecter": "Se connecter",
+      "supabaseError": "Supabase non configuré. Vérifiez vos variables d'environnement."
+    }
+  },
+  "theme": {
+    "light": "Activer le mode clair",
+    "dark": "Activer le mode sombre"
+  },
+  "gallery": {
+    "parJour": "par jour",
+    "photoPrecedente": "Photo précédente",
+    "photoSuivante": "Photo suivante",
+    "photo": "Photo {{index}}"
+  },
+  "carCard": {
+    "photoPrecedente": "Photo précédente",
+    "photoSuivante": "Photo suivante",
+    "selectionPhoto": "Sélection de photo",
+    "photo": "Photo {{index}}"
+  },
+  "carousel": {
+    "precedent": "Previous slide",
+    "suivant": "Next slide"
+  }
+}
