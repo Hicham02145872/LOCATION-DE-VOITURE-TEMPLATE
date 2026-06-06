@@ -126,35 +126,37 @@ function DashboardCarForm() {
 
   useEffect(() => {
     if (!slug || !supabase) return
+    let cancelled = false
     setLoadingData(true)
     setError("")
     setSuccess("")
-    supabase.from("cars").select("*").eq("slug", slug).single()
-      .then(({ data, error: err }) => {
-        if (err || !data) { setError(t("dashboard.carForm.introuvable")); setLoadingData(false); return }
-        setForm({
-          name: data.name ?? "",
-          price: String(data.price ?? ""),
-          seats: String(data.seats ?? "5"),
-          fuel: data.fuel ?? "",
-          badge: data.badge ?? "",
-          transmission: data.transmission ?? "Automatique",
-          description: data.description ?? "",
-        })
-        setCarColor(extractHexFromGradient(data.gradient))
-        setMainImage({ id: crypto.randomUUID(), url: data.image, name: "", size: 0, isFile: false })
-        if (Array.isArray(data.images)) {
-          setImages(data.images.slice(1).map((url: string) => ({
-            id: crypto.randomUUID(),
-            url,
-            name: "",
-            size: 0,
-            isFile: false,
-          })))
-        }
-        setLoadingData(false)
+    ;(async () => {
+      const { data, error: err } = await supabase.from("cars").select("*").eq("slug", slug).single()
+      if (cancelled) return
+      if (err || !data) { setError(t("dashboard.carForm.introuvable")); setLoadingData(false); return }
+      setForm({
+        name: data.name ?? "",
+        price: String(data.price ?? ""),
+        seats: String(data.seats ?? "5"),
+        fuel: data.fuel ?? "",
+        badge: data.badge ?? "",
+        transmission: data.transmission ?? "Automatique",
+        description: data.description ?? "",
       })
-      .catch(() => { setError(t("dashboard.carForm.introuvable")); setLoadingData(false) })
+      setCarColor(extractHexFromGradient(data.gradient))
+      setMainImage({ id: crypto.randomUUID(), url: data.image, name: "", size: 0, isFile: false })
+      if (Array.isArray(data.images)) {
+        setImages(data.images.slice(1).map((url: string) => ({
+          id: crypto.randomUUID(),
+          url,
+          name: "",
+          size: 0,
+          isFile: false,
+        })))
+      }
+      setLoadingData(false)
+    })()
+    return () => { cancelled = true }
   }, [slug])
 
   const addImageFiles = async (files: FileList) => {

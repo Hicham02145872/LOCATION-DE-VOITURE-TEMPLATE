@@ -95,7 +95,6 @@ function DashboardReservations() {
 
   const today = startOfDay(new Date())
   const todayIndex = differenceInDays(today, monthStart)
-  const hasToday = todayIndex >= 0 && todayIndex < totalDays
 
   const statusVariant = (s: string) => {
     if (s === "confirmed") return "secondary" as const
