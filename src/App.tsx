@@ -326,20 +326,6 @@ function App() {
               <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
             </motion.div>
 
-            {/* Floating promo card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.4, ease }}
-              className="absolute bottom-8 right-8 rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur-xl"
-            >
-              <p className="text-2xl font-bold text-white">-20%</p>
-              <p className="text-sm text-white/70">sur votre première réservation</p>
-              <div className="mt-2 flex items-center gap-1.5 text-xs text-white/50">
-                <Check className="h-3 w-3" />
-                Code: BIENVENUE20
-              </div>
-            </motion.div>
           </div>
         </div>
       </section>
