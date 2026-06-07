@@ -326,6 +326,8 @@ function App() {
       </section>
 
       <section className="relative overflow-hidden border-t bg-background py-16">
+        <div className="absolute -top-1/4 -right-1/4 h-80 w-80 rounded-full bg-primary/[0.03] blur-[100px]" />
+        <div className="absolute -bottom-1/4 -left-1/4 h-60 w-60 rounded-full bg-primary/[0.02] blur-[80px]" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <p className="mb-8 text-center text-sm font-medium uppercase tracking-widest text-muted-foreground">
             {t("brands.title")}
