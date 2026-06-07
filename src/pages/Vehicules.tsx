@@ -24,12 +24,14 @@ import {
 } from "lucide-react"
 import { useCars } from "@/hooks/useCars"
 import { CarCardCarousel } from "@/components/CarCardCarousel"
+import { CarCardSkeleton } from "@/components/CarCardSkeleton"
+import { MobileNav } from "@/components/MobileNav"
 import { ThemeToggle } from "@/components/ThemeToggle"
 import { LanguageSwitcher } from "@/components/LanguageSwitcher"
 import { useAuthModal } from "@/lib/auth-modal"
 
 function Vehicules() {
-  const { cars } = useCars()
+  const { cars, loading } = useCars()
   const { open: openAuth } = useAuthModal()
   const { t } = useTranslation()
   const [searchParams] = useSearchParams()
@@ -74,6 +76,12 @@ function Vehicules() {
             </a>
           ))}
         </nav>
+        <MobileNav links={[
+          { key: "accueil", href: "/" },
+          { key: "vehicules", href: "/vehicules" },
+          { key: "testimonials", href: "/#testimonials" },
+          { key: "contact", href: "/#contact" },
+        ]} />
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <LanguageSwitcher />
@@ -153,7 +161,9 @@ function Vehicules() {
             </div>
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {filtered.map((car) => (
+              {loading && filtered.length === 0
+                ? Array.from({ length: 6 }).map((_, i) => <CarCardSkeleton key={i} />)
+                : filtered.map((car) => (
                 <Link key={car.name} to={`/vehicules/${car.slug}`}>
                   <Card className="group overflow-hidden border-border/50 pt-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5">
                   <CardContent className="p-0">

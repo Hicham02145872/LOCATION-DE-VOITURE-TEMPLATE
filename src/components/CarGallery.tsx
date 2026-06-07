@@ -23,6 +23,7 @@ export function CarGallery({ images, name, badge, fuel, price }: CarGalleryProps
         <img
           src={images[active]}
           alt={`${name} - ${t("gallery.photo", { index: active + 1 })}`}
+          loading="lazy"
           className="h-[50vh] w-full object-cover transition-all duration-500 sm:h-[65vh]"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
@@ -88,6 +89,7 @@ export function CarGallery({ images, name, badge, fuel, price }: CarGalleryProps
             <img
               src={img}
               alt={`${name} - ${t("gallery.photo", { index: idx + 1 })}`}
+              loading="lazy"
               className="h-16 w-24 object-cover sm:h-20 sm:w-28"
             />
           </button>

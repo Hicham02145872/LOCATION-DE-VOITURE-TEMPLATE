@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
+import { CarCardSkeleton } from "@/components/CarCardSkeleton"
 import { Plus, Pencil, Trash2, Car, Search, Users, Gauge } from "lucide-react"
 import { supabase } from "@/lib/supabase"
 import type { Car as CarType } from "@/data/cars"
@@ -70,8 +71,8 @@ function DashboardCars() {
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-16">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, i) => <CarCardSkeleton key={i} />)}
         </div>
       ) : filtered.length === 0 ? (
         <Card>

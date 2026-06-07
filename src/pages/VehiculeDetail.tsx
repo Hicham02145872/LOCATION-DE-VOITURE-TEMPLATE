@@ -29,6 +29,9 @@ import {
 import { testimonials, features } from "@/data/cars"
 import { useCar, useCars } from "@/hooks/useCars"
 import { CarGallery } from "@/components/CarGallery"
+import { MobileNav } from "@/components/MobileNav"
+import { DatePicker } from "@/components/DatePicker"
+import { useToast } from "@/components/Toast"
 import { ThemeToggle } from "@/components/ThemeToggle"
 import { LanguageSwitcher } from "@/components/LanguageSwitcher"
 import { useAuthModal } from "@/lib/auth-modal"
@@ -48,6 +51,7 @@ function VehiculeDetail() {
   const [reserveError, setReserveError] = useState("")
   const [reserved, setReserved] = useState(false)
   const { open: openAuth } = useAuthModal()
+  const { toast } = useToast()
 
   const start = startDate ? new Date(startDate) : null
   const end = endDate ? new Date(endDate) : null
@@ -73,6 +77,7 @@ function VehiculeDetail() {
     setReserving(false)
     if (error) { setReserveError(error.message); return }
     setReserved(true)
+    toast(t("detail.reservationConfirmee"), "success")
   }
 
   if (!car) {
@@ -139,6 +144,12 @@ function VehiculeDetail() {
             </a>
           ))}
         </nav>
+        <MobileNav links={[
+          { key: "accueil", href: "/" },
+          { key: "vehicules", href: "/vehicules" },
+          { key: "testimonials", href: "/#testimonials" },
+          { key: "contact", href: "/#contact" },
+        ]} />
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <LanguageSwitcher />
@@ -314,25 +325,13 @@ function VehiculeDetail() {
                           <label className="text-xs font-medium text-muted-foreground">
                             {t("hero.search.debut")}
                           </label>
-                          <Input
-                            type="date"
-                            value={startDate}
-                            onChange={(e) => setStartDate(e.target.value)}
-                            min={new Date().toISOString().split("T")[0]}
-                            className="h-9 rounded-xl"
-                          />
+                          <DatePicker value={startDate} onChange={setStartDate} placeholder={t("hero.search.debut")} />
                         </div>
                         <div className="space-y-1.5">
                           <label className="text-xs font-medium text-muted-foreground">
                             {t("hero.search.fin")}
                           </label>
-                          <Input
-                            type="date"
-                            value={endDate}
-                            onChange={(e) => setEndDate(e.target.value)}
-                            min={startDate || new Date().toISOString().split("T")[0]}
-                            className="h-9 rounded-xl"
-                          />
+                          <DatePicker value={endDate} onChange={setEndDate} placeholder={t("hero.search.fin")} />
                         </div>
                       </div>
                       <Separator className="bg-border/30" />

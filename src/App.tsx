@@ -34,6 +34,9 @@ import { useTranslation } from "react-i18next"
 import { useDirection } from "@/hooks/useDirection"
 import { LanguageSwitcher } from "@/components/LanguageSwitcher"
 import { ParticlesBackground } from "@/components/ParticlesBackground"
+import { MobileNav } from "@/components/MobileNav"
+import { CarCardSkeleton } from "@/components/CarCardSkeleton"
+import { DatePicker } from "@/components/DatePicker"
 import teslaLogo from "@/assets/brands/tesla.svg"
 import bmwLogo from "@/assets/brands/bmw.svg"
 import mercedesLogo from "@/assets/brands/mercedes.svg"
@@ -87,7 +90,7 @@ const stagger = {
 }
 
 function App() {
-  const { cars } = useCars()
+  const { cars, loading } = useCars()
   const { user } = useAuth()
   const { open: openAuth } = useAuthModal()
   const navigate = useNavigate()
@@ -149,6 +152,7 @@ function App() {
             )
           })}
         </nav>
+        <MobileNav links={navLinks} />
         <div className="flex items-center gap-2">
           <ThemeToggle />
           {user ? (
@@ -238,11 +242,11 @@ function App() {
                       <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-1.5">
                           <label className="text-xs font-medium text-muted-foreground">{t("hero.search.debut")}</label>
-                          <Input type="date" className="rounded-xl" value={searchStart} onChange={(e) => setSearchStart(e.target.value)} />
+                          <DatePicker value={searchStart} onChange={setSearchStart} placeholder={t("hero.search.debut")} />
                         </div>
                         <div className="space-y-1.5">
                           <label className="text-xs font-medium text-muted-foreground">{t("hero.search.fin")}</label>
-                          <Input type="date" className="rounded-xl" value={searchEnd} onChange={(e) => setSearchEnd(e.target.value)} />
+                          <DatePicker value={searchEnd} onChange={setSearchEnd} placeholder={t("hero.search.fin")} />
                         </div>
                       </div>
                       <Button className="w-full rounded-xl" size="lg" onClick={() => navigate(`/vehicules?search=${encodeURIComponent(searchLocation)}&type=${searchType}`)}>
@@ -342,6 +346,7 @@ function App() {
                   <img
                     src={brand.logo}
                     alt={brand.name}
+                    loading="lazy"
                     className="h-6 w-6"
                   />
                   {brand.name}
@@ -376,7 +381,9 @@ function App() {
             </p>
           </motion.div>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {cars.map((car, i) => (
+            {loading && cars.length === 0
+              ? Array.from({ length: 6 }).map((_, i) => <CarCardSkeleton key={i} />)
+              : cars.map((car, i) => (
               <motion.div
                 key={car.name}
                 initial={{ opacity: 0, y: 30 }}

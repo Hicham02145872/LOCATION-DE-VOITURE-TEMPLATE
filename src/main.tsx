@@ -7,6 +7,7 @@ import { AuthProvider } from '@/lib/auth'
 import { AuthModalProvider } from '@/lib/auth-modal'
 import { ProtectedRoute } from '@/components/ProtectedRoute'
 import App from './App.tsx'
+import { ToastProvider } from '@/components/Toast'
 import Vehicules from './pages/Vehicules.tsx'
 import VehiculeDetail from './pages/VehiculeDetail.tsx'
 import Dashboard from './pages/Dashboard.tsx'
@@ -20,6 +21,7 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <AuthProvider>
         <AuthModalProvider>
+        <ToastProvider>
         <Routes>
           <Route path="/" element={<App />} />
           <Route path="/vehicules" element={<Vehicules />} />
@@ -41,6 +43,7 @@ createRoot(document.getElementById('root')!).render(
             <Route path="cars/:slug/edit" element={<DashboardCarForm />} />
           </Route>
         </Routes>
+        </ToastProvider>
         </AuthModalProvider>
       </AuthProvider>
     </BrowserRouter>

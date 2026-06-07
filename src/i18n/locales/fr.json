@@ -9,7 +9,9 @@
     "contact": "Contact",
     "dashboard": "Dashboard",
     "connexion": "Connexion",
-    "reserver": "Réserver"
+    "reserver": "Réserver",
+    "menu": "Menu",
+    "fermer": "Fermer"
   },
   "hero": {
     "badge": "Nouveaux tarifs disponibles",
@@ -310,7 +312,8 @@
       "deconnexion": "Déconnexion",
       "rechercher": "Rechercher...",
       "site": "Site",
-      "voirLeSite": "Voir le site"
+      "voirLeSite": "Voir le site",
+      "menu": "Menu"
     },
     "home": {
       "revenuTotal": "Revenu total",
@@ -326,6 +329,7 @@
       "hausseValeur": "+4.5%",
       "performanceStable": "Performance stable",
       "apercuReservations": "Aperçu des réservations",
+      "statuts": "Répartition des statuts",
       "aucuneReservation": "Aucune réservation récente",
       "aucuneReservationDesc": "Les réservations apparaîtront ici une fois la base de données connectée."
     },

@@ -22,6 +22,8 @@ import { useAuth } from "@/lib/auth"
 import { useState } from "react"
 import { useTranslation } from "react-i18next"
 import { LanguageSwitcher } from "@/components/LanguageSwitcher"
+import { motion, AnimatePresence } from "framer-motion"
+import { Menu, X } from "lucide-react"
 
 const navItems = [
   { to: "/dashboard", icon: LayoutDashboard, label: "dashboard.sidebar.tableauDeBord" },
@@ -35,6 +37,7 @@ function Dashboard() {
   const { user, signOut } = useAuth()
   const navigate = useNavigate()
   const [searchOpen, setSearchOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const handleSignOut = async () => {
     await signOut()
@@ -100,6 +103,13 @@ function Dashboard() {
       <div className="flex flex-1 flex-col">
         <header className="flex h-14 items-center justify-between border-b border-border/50 bg-background px-4 md:px-6">
           <div className="flex items-center gap-3">
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="flex size-8 items-center justify-center rounded-lg md:hidden"
+              aria-label={t("dashboard.sidebar.menu")}
+            >
+              <Menu className="h-4 w-4" />
+            </button>
             <Link to="/dashboard" className="flex items-center gap-2 md:hidden">
               <div className="flex size-7 items-center justify-center rounded-lg bg-primary">
                 <Car className="h-3.5 w-3.5 text-primary-foreground" />
@@ -183,6 +193,71 @@ function Dashboard() {
           <Outlet />
         </main>
       </div>
+
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm md:hidden"
+            />
+            <motion.aside
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="fixed top-0 left-0 bottom-0 z-50 flex w-64 flex-col border-r bg-background shadow-xl md:hidden"
+            >
+              <div className="flex h-14 items-center justify-between border-b border-border/50 px-4">
+                <Link to="/dashboard" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
+                  <div className="flex size-7 items-center justify-center rounded-lg bg-primary">
+                    <Car className="h-3.5 w-3.5 text-primary-foreground" />
+                  </div>
+                  <span className="text-sm font-bold">{t("app.name")}</span>
+                </Link>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex size-7 items-center justify-center rounded-lg"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+              <nav className="flex-1 space-y-1 p-3">
+                {navItems.map((item) => {
+                  const active = item.to === "/dashboard"
+                    ? pathname === "/dashboard"
+                    : pathname.startsWith(item.to)
+                  return (
+                    <Link
+                      key={item.to}
+                      to={item.to}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                        active
+                          ? "bg-primary/10 text-primary"
+                          : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                      }`}
+                    >
+                      <item.icon className="h-4 w-4" />
+                      {t(item.label)}
+                    </Link>
+                  )
+                })}
+              </nav>
+              <div className="border-t p-3">
+                <div className="mb-2 truncate px-3 text-xs text-muted-foreground">{user?.email}</div>
+                <Button variant="ghost" size="sm" className="w-full justify-start gap-2 rounded-lg text-muted-foreground" onClick={handleSignOut}>
+                  <LogOut className="h-4 w-4" />
+                  {t("dashboard.sidebar.deconnexion")}
+                </Button>
+              </div>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

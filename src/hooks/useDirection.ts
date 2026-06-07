@@ -9,4 +9,6 @@ export function useDirection() {
     document.documentElement.dir = dir
     document.documentElement.lang = i18n.language
   }, [i18n.language])
+
+  return i18n.language === "ar" ? "rtl" : "ltr"
 }

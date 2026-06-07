@@ -33,6 +33,7 @@ function DashboardHome() {
   const [lastMonthCount, setLastMonthCount] = useState(0)
   const [carCount, setCarCount] = useState(0)
   const [recentReservations, setRecentReservations] = useState<ReservationWithCar[]>([])
+  const [statusCounts, setStatusCounts] = useState({ confirmed: 0, completed: 0, cancelled: 0, pending: 0 })
 
   useEffect(() => {
     if (!supabase) { setLoading(false); return }
@@ -74,6 +75,14 @@ function DashboardHome() {
         (a, b) => new Date(b.start_date).getTime() - new Date(a.start_date).getTime()
       )
       setRecentReservations(sorted.slice(0, 5))
+
+      const statusCounts = { confirmed: 0, completed: 0, cancelled: 0, pending: 0 }
+      for (const r of data) {
+        if (statusCounts[r.status as keyof typeof statusCounts] !== undefined) {
+          statusCounts[r.status as keyof typeof statusCounts]++
+        }
+      }
+      setStatusCounts(statusCounts)
 
       setLoading(false)
     }).catch(() => setLoading(false))
@@ -175,6 +184,45 @@ function DashboardHome() {
           </Card>
         ))}
       </div>
+
+      {/* Status Distribution Chart */}
+      {!loading && reservationCount > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm font-medium">{t("dashboard.home.statuts")}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-3">
+              {(["confirmed", "completed", "cancelled", "pending"] as const).map((status) => {
+                const count = statusCounts[status]
+                const total = reservationCount || 1
+                const pct = Math.round((count / total) * 100)
+                if (count === 0) return null
+                const colors: Record<string, string> = {
+                  confirmed: "bg-blue-500",
+                  completed: "bg-emerald-500",
+                  cancelled: "bg-red-400/60",
+                  pending: "bg-amber-400",
+                }
+                return (
+                  <div key={status} className="space-y-1">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-medium">{statusLabel(status)}</span>
+                      <span className="text-muted-foreground">{count} ({pct}%)</span>
+                    </div>
+                    <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+                      <div
+                        className={`h-full rounded-full transition-all duration-500 ${colors[status]}`}
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Card>
         <CardHeader className="flex-row items-center justify-between">

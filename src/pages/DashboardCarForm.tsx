@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { useToast } from "@/components/Toast"
 import {
   ArrowLeft,
   Upload,
@@ -22,6 +23,7 @@ import {
   Euro,
   FileText,
   Cog,
+  Check,
 } from "lucide-react"
 import { supabase } from "@/lib/supabase"
 
@@ -123,6 +125,8 @@ function DashboardCarForm() {
   const [images, setImages] = useState<ImageItem[]>([])
   const [mainImage, setMainImage] = useState<ImageItem | null>(null)
   const [carColor, setCarColor] = useState("#3b82f6")
+  const { toast } = useToast()
+  const [step, setStep] = useState(0)
 
   useEffect(() => {
     if (!slug || !supabase) return
@@ -268,12 +272,14 @@ function DashboardCarForm() {
     if (isEdit) {
       const { slug: _omitSlug, ...editPayload } = payload
       const { error: err } = await supabase.from("cars").update(editPayload).eq("slug", slug)
-      if (err) { setError(err.message); setSaving(false); return }
+      if (err) { setError(err.message); toast(err.message, "error"); setSaving(false); return }
       setSuccess(t("dashboard.carForm.modifieSucces") || "Véhicule modifié avec succès")
+      toast(t("dashboard.carForm.modifieSucces") || "Véhicule modifié avec succès", "success")
       setSaving(false)
     } else {
       const { error: err } = await supabase.from("cars").insert(payload)
-      if (err) { setError(err.message); setSaving(false); return }
+      if (err) { setError(err.message); toast(err.message, "error"); setSaving(false); return }
+      toast("Véhicule ajouté avec succès", "success")
       navigate("/dashboard/cars")
     }
     setSaving(false)
@@ -300,6 +306,43 @@ function DashboardCarForm() {
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-muted border-t-primary" />
         </div>
       ) : (
+      <>
+        {/* Step Indicator */}
+        <div className="flex items-center gap-2 sm:gap-4">
+          {[
+            t("dashboard.carForm.infosGenerales"),
+            t("dashboard.carForm.descriptionSection"),
+            t("dashboard.carForm.imagePrincipale"),
+            t("dashboard.carForm.imagesSlider"),
+          ].map((label, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => {
+                if (i < step) setStep(i)
+              }}
+              className={`flex items-center gap-1.5 text-xs font-medium transition-colors ${
+                i === step
+                  ? "text-primary"
+                  : i < step
+                    ? "text-emerald-600 cursor-pointer hover:text-emerald-500"
+                    : "text-muted-foreground/40 cursor-default"
+              }`}
+            >
+              <span className={`flex size-5 items-center justify-center rounded-full text-[10px] font-bold ${
+                i === step
+                  ? "bg-primary text-primary-foreground"
+                  : i < step
+                    ? "bg-emerald-500/10 text-emerald-600"
+                    : "bg-muted text-muted-foreground/40"
+              }`}>
+                {i < step ? <Check className="h-3 w-3" /> : i + 1}
+              </span>
+              <span className="hidden sm:inline">{label}</span>
+            </button>
+          ))}
+        </div>
+
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
         <div className="space-y-6">
           <Card>
@@ -316,7 +359,7 @@ function DashboardCarForm() {
                   </div>
                 )}
 
-                <div className="space-y-4">
+                <div className={step === 0 ? "space-y-4" : "hidden"}>
                   <h2 className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
                     <Car className="h-4 w-4" />
                     {t("dashboard.carForm.infosGenerales")}
@@ -427,7 +470,7 @@ function DashboardCarForm() {
                   </div>
                 </div>
 
-                <div className="space-y-4">
+                <div className={step === 1 ? "space-y-4" : "hidden"}>
                   <h2 className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
                     <FileText className="h-4 w-4" />
                     {t("dashboard.carForm.descriptionSection")}
@@ -441,7 +484,7 @@ function DashboardCarForm() {
                   />
                 </div>
 
-                <div className="space-y-4">
+                <div className={step === 2 ? "space-y-4" : "hidden"}>
                   <h2 className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
                     <Upload className="h-4 w-4" />
                     {t("dashboard.carForm.imagePrincipale")}
@@ -451,6 +494,7 @@ function DashboardCarForm() {
                       <img
                         src={mainImage.url}
                         alt=""
+                        loading="lazy"
                         className="h-full w-full object-cover"
                       />
                       <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors group-hover:bg-black/20">
@@ -508,7 +552,7 @@ function DashboardCarForm() {
                   {errors.mainImage && <p className="text-xs text-destructive">{errors.mainImage}</p>}
                 </div>
 
-                <div className="space-y-4">
+                <div className={step === 3 ? "space-y-4" : "hidden"}>
                   <h2 className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
                     <Upload className="h-4 w-4" />
                     {t("dashboard.carForm.imagesSlider")}
@@ -557,6 +601,7 @@ function DashboardCarForm() {
                           <img
                             src={img.url}
                             alt=""
+                            loading="lazy"
                             className="h-full w-full rounded-lg object-cover"
                             onError={(e) => {
                               (e.target as HTMLImageElement).style.display = "none"
@@ -585,13 +630,28 @@ function DashboardCarForm() {
                   )}
                 </div>
 
-                <div className="flex justify-end gap-3 pt-2">
-                  <Button type="button" variant="outline" className="rounded-lg" onClick={() => navigate("/dashboard/cars")}>
-                    {t("dashboard.carForm.annuler")}
-                  </Button>
-                  <Button type="submit" className="rounded-lg" disabled={saving}>
-                    {saving ? t("dashboard.carForm.enregistrement") : isEdit ? t("dashboard.carForm.enregistrer") : t("dashboard.carForm.ajouterBtn")}
-                  </Button>
+                <div className="flex justify-between gap-3 pt-2">
+                  <div>
+                    {step > 0 && (
+                      <Button type="button" variant="ghost" className="rounded-lg" onClick={() => setStep(step - 1)}>
+                        ← {t("carCard.photoPrecedente")}
+                      </Button>
+                    )}
+                  </div>
+                  <div className="flex gap-3">
+                    <Button type="button" variant="outline" className="rounded-lg" onClick={() => navigate("/dashboard/cars")}>
+                      {t("dashboard.carForm.annuler")}
+                    </Button>
+                    {step < 3 ? (
+                      <Button type="button" className="rounded-lg" onClick={() => setStep(step + 1)}>
+                        {t("gallery.photoSuivante")} →
+                      </Button>
+                    ) : (
+                      <Button type="submit" className="rounded-lg" disabled={saving}>
+                        {saving ? t("dashboard.carForm.enregistrement") : isEdit ? t("dashboard.carForm.enregistrer") : t("dashboard.carForm.ajouterBtn")}
+                      </Button>
+                    )}
+                  </div>
                 </div>
               </form>
             </CardContent>
@@ -641,6 +701,7 @@ function DashboardCarForm() {
           </div>
         </div>
       </div>
+      </>
       )}
     </div>
   )
