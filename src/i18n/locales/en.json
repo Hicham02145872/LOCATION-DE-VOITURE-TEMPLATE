@@ -208,6 +208,31 @@
       }
     ]
   },
+  "contact": {
+    "badge": "Contact",
+    "title": "Get in touch",
+    "subtitle": "Our team is available 7 days a week to answer all your questions.",
+    "adresse": {
+      "title": "Address",
+      "content": "Agadir, Morocco",
+      "sub": "Boulevard Mohammed V"
+    },
+    "telephone": {
+      "title": "Phone",
+      "content": "+212 5 28 00 00 00",
+      "sub": "Mon-Sat 8am-8pm"
+    },
+    "email": {
+      "title": "Email",
+      "content": "contact@driveease.ma",
+      "sub": "Response within 24h"
+    },
+    "horaires": {
+      "title": "Hours",
+      "content": "Mon - Sat: 8am - 8pm",
+      "sub": "Sun: 10am - 6pm"
+    }
+  },
   "cta": {
     "badge": "Ready to go?",
     "title": "Book your vehicle now",

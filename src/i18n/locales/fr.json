@@ -208,6 +208,31 @@
       }
     ]
   },
+  "contact": {
+    "badge": "Contact",
+    "title": "Contactez-nous",
+    "subtitle": "Notre équipe est à votre disposition 7j/7 pour répondre à toutes vos questions.",
+    "adresse": {
+      "title": "Adresse",
+      "content": "Agadir, Maroc",
+      "sub": "Boulevard Mohammed V"
+    },
+    "telephone": {
+      "title": "Téléphone",
+      "content": "+212 5 28 00 00 00",
+      "sub": "Lun-Sam 8h-20h"
+    },
+    "email": {
+      "title": "Email",
+      "content": "contact@driveease.ma",
+      "sub": "Réponse sous 24h"
+    },
+    "horaires": {
+      "title": "Horaires",
+      "content": "Lun - Sam : 8h - 20h",
+      "sub": "Dim : 10h - 18h"
+    }
+  },
   "cta": {
     "badge": "Prêt à partir ?",
     "title": "Réservez votre véhicule dès maintenant",

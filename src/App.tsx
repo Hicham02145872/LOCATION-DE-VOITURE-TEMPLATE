@@ -177,6 +177,11 @@ function App() {
       </header>
 
       <section className="relative min-h-dvh overflow-hidden">
+        {/* Premium gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" />
+        <div className="absolute top-0 -left-1/4 h-[600px] w-[800px] rounded-full bg-primary/5 blur-[120px]" />
+        <div className="absolute -bottom-1/4 -right-1/4 h-[500px] w-[600px] rounded-full bg-primary/10 blur-[100px]" />
+
         {/* Mobile background (< lg) */}
         <div className="absolute inset-0 lg:hidden">
           <div
@@ -201,7 +206,7 @@ function App() {
               {/* Badge */}
               <motion.div
                 variants={fadeUp}
-                className="group mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-sm text-white backdrop-blur-sm lg:border-primary/20 lg:bg-primary/5 lg:text-primary"
+                className="group mb-6 inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary/5 px-4 py-1.5 text-sm text-primary shadow-sm"
               >
                 <span className="relative flex size-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -213,39 +218,41 @@ function App() {
               {/* Headline */}
               <motion.h1
                 variants={fadeUp}
-                className="text-[clamp(2.2rem,5vw,4rem)] font-bold leading-[1.1] tracking-tighter text-white lg:text-foreground"
+                className="text-[clamp(2.5rem,5.5vw,4.5rem)] font-bold leading-[1.05] tracking-tighter"
               >
-                <TypewriterText text={t("hero.title")} />
+                <span className="bg-gradient-to-br from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
+                  <TypewriterText text={t("hero.title")} />
+                </span>
               </motion.h1>
 
               {/* Subtitle */}
               <motion.p
                 variants={fadeUp}
-                className="mt-4 max-w-lg text-balance text-lg leading-relaxed text-gray-300 lg:text-muted-foreground"
+                className="mt-5 max-w-lg text-balance text-lg leading-relaxed text-muted-foreground"
               >
                 {t("hero.subtitle")}
               </motion.p>
 
               {/* Search Card */}
               <motion.div variants={fadeUp} className="mt-8">
-                <Card className="border-0 bg-white/95 shadow-2xl shadow-black/20 backdrop-blur-xl lg:border-border/50 lg:bg-card lg:shadow-lg lg:shadow-black/5">
-                  <CardContent className="p-4 sm:p-5">
-                    <div className="space-y-3">
+                <Card className="overflow-hidden rounded-2xl border border-border/40 bg-background/80 shadow-lg shadow-black/5 backdrop-blur-xl">
+                  <CardContent className="p-5 sm:p-6">
+                    <div className="space-y-4">
                       <div className="relative">
-                        <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                        <Input className="rounded-lg pl-9" placeholder={t("hero.search.lieuPlaceholder")} value={searchLocation} onChange={(e) => setSearchLocation(e.target.value)} />
+                        <MapPin className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                        <Input className="rounded-xl pl-10" placeholder={t("hero.search.lieuPlaceholder")} value={searchLocation} onChange={(e) => setSearchLocation(e.target.value)} />
                       </div>
                       <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-1.5">
                           <label className="text-xs font-medium text-muted-foreground">{t("hero.search.debut")}</label>
-                          <Input type="date" className="rounded-lg" value={searchStart} onChange={(e) => setSearchStart(e.target.value)} />
+                          <Input type="date" className="rounded-xl" value={searchStart} onChange={(e) => setSearchStart(e.target.value)} />
                         </div>
                         <div className="space-y-1.5">
                           <label className="text-xs font-medium text-muted-foreground">{t("hero.search.fin")}</label>
-                          <Input type="date" className="rounded-lg" value={searchEnd} onChange={(e) => setSearchEnd(e.target.value)} />
+                          <Input type="date" className="rounded-xl" value={searchEnd} onChange={(e) => setSearchEnd(e.target.value)} />
                         </div>
                       </div>
-                      <Button className="w-full rounded-lg" size="lg" onClick={() => navigate(`/vehicules?search=${encodeURIComponent(searchLocation)}&type=${searchType}`)}>
+                      <Button className="w-full rounded-xl" size="lg" onClick={() => navigate(`/vehicules?search=${encodeURIComponent(searchLocation)}&type=${searchType}`)}>
                         <Search className="mr-2 h-4 w-4" />
                         {t("hero.search.trouver")}
                       </Button>
@@ -259,17 +266,17 @@ function App() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 1.6, ease }}
-                className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm"
+                className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm"
               >
-                <span className="inline-flex items-center gap-1.5 text-white lg:text-foreground">
+                <span className="inline-flex items-center gap-1.5 text-foreground">
                   <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
                   <span className="font-medium">{t("hero.stats.rating")}</span>
-                  <span className="text-gray-400 lg:text-muted-foreground">{t("hero.stats.avis")}</span>
+                  <span className="text-muted-foreground">{t("hero.stats.avis")}</span>
                 </span>
-                <span className="hidden h-3 w-px bg-white/20 lg:block" />
-                <span className="text-gray-400 lg:text-muted-foreground">{t("hero.stats.vehicules")}</span>
-                <span className="hidden h-3 w-px bg-white/20 lg:block" />
-                <span className="text-gray-400 lg:text-muted-foreground">{t("hero.stats.annulation")}</span>
+                <span className="hidden h-3 w-px bg-border lg:block" />
+                <span className="text-muted-foreground">{t("hero.stats.vehicules")}</span>
+                <span className="hidden h-3 w-px bg-border lg:block" />
+                <span className="text-muted-foreground">{t("hero.stats.annulation")}</span>
               </motion.div>
 
               {/* Stats */}
@@ -291,12 +298,12 @@ function App() {
                       key={stat.label}
                       variants={fadeUp}
                       custom={i}
-                      className="text-center"
+                      className="rounded-xl border border-border/40 bg-background/50 p-3 text-center backdrop-blur-sm"
                     >
-                      <div className="text-xl font-bold tracking-tight text-white sm:text-2xl lg:text-foreground">
+                      <div className="text-xl font-bold tracking-tight sm:text-2xl">
                         {stat.value}
                       </div>
-                      <div className="mt-0.5 text-xs text-gray-400 lg:text-muted-foreground">
+                      <div className="mt-0.5 text-xs text-muted-foreground">
                         {t(labelKey[stat.label] ?? stat.label)}
                       </div>
                     </motion.div>
@@ -312,7 +319,7 @@ function App() {
               initial={{ scale: 1.15 }}
               animate={{ scale: 1 }}
               transition={{ duration: reduced ? 0 : 1.5, ease }}
-              className="absolute inset-0 overflow-hidden"
+              className="absolute inset-0 m-6 overflow-hidden rounded-3xl shadow-2xl"
               style={{ y: heroY, opacity: heroOpacity }}
             >
               <div
@@ -322,10 +329,8 @@ function App() {
                     "url(https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=85)",
                 }}
               />
-              <div className="absolute inset-0 bg-gradient-to-l from-transparent via-background/20 to-background" />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
             </motion.div>
-
           </div>
         </div>
       </section>
@@ -355,10 +360,16 @@ function App() {
         </div>
       </section>
 
-      <section id="vehicules" className="relative overflow-hidden border-t bg-muted/30 py-24">
-        <ParticlesBackground />
+      <section id="vehicules" className="relative overflow-hidden border-t bg-background py-24">
+        <div className="absolute top-0 right-0 h-[400px] w-[400px] rounded-full bg-primary/[0.02] blur-[80px]" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mx-auto max-w-2xl text-center"
+          >
             <Badge
               variant="secondary"
               className="mb-4 rounded-full px-4 py-1 text-xs font-medium"
@@ -371,8 +382,8 @@ function App() {
             <p className="mt-3 text-muted-foreground">
               {t("vehicules.subtitle")}
             </p>
-          </div>
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          </motion.div>
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {cars.map((car, i) => (
               <motion.div
                 key={car.name}
@@ -386,20 +397,20 @@ function App() {
                 }}
               >
                 <Link to={`/vehicules/${car.slug}`}>
-                  <Card className="group cursor-pointer overflow-hidden border-border/50 pt-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5">
+                  <Card className="group cursor-pointer overflow-hidden rounded-2xl border-border/50 bg-background pt-0 shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-black/5">
                   <CardContent className="p-0">
                     <CarCardCarousel
                       images={car.images}
                       gradient={car.gradient}
                       className="h-52 sm:h-56"
                     />
-                      <div className="space-y-3 p-5">
+                      <div className="space-y-4 p-5">
                       <div className="flex items-start justify-between">
                         <div>
                           <div className="mb-2 flex items-center gap-2">
                             <Badge
-                              variant="outline"
-                              className="rounded-full border-border/50 text-[11px] font-medium"
+                              variant="secondary"
+                              className="rounded-full px-2.5 py-0.5 text-[11px] font-medium"
                             >
                               {car.badge}
                             </Badge>
@@ -415,32 +426,32 @@ function App() {
                         ].map((opt) => (
                           <div
                             key={opt.label}
-                            className="rounded-lg border border-border/50 bg-muted/50 p-2 text-center transition-colors hover:border-primary/30 hover:bg-primary/5"
+                            className="rounded-xl border border-border/50 bg-muted/30 p-2.5 text-center transition-all duration-200 group-hover:border-primary/20 group-hover:bg-primary/[0.03]"
                           >
                             <div className="text-[10px] font-medium text-muted-foreground">{opt.label}</div>
                             <div className="text-sm font-bold">{opt.price}DH</div>
                           </div>
                         ))}
                       </div>
-                      <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
-                        <span className="flex items-center gap-1.5 rounded-md bg-muted px-2 py-1">
+                      <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1.5 rounded-lg bg-muted/50 px-2.5 py-1.5">
                           <Users className="h-3.5 w-3.5" />
                           {car.seats} {t("vehicules.places")}
                         </span>
-                        <span className="flex items-center gap-1.5 rounded-md bg-muted px-2 py-1">
+                        <span className="flex items-center gap-1.5 rounded-lg bg-muted/50 px-2.5 py-1.5">
                           <Fuel className="h-3.5 w-3.5" />
                           {car.fuel}
                         </span>
-                        <span className="flex items-center gap-1.5 rounded-md bg-muted px-2 py-1">
+                        <span className="flex items-center gap-1.5 rounded-lg bg-muted/50 px-2.5 py-1.5">
                           <Snowflake className="h-3.5 w-3.5" />
                           {t("vehicules.climatisation")}
                         </span>
                       </div>
-                      <Separator className="bg-border/50" />
+                      <Separator className="bg-border/30" />
                       <div className="flex items-center justify-between">
-                        <Button size="sm" className="rounded-lg">
+                        <Button size="sm" className="rounded-xl">
                           {t("vehicules.reserver")}
-                          <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
+                          <ArrowRight className="ml-1.5 h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
                         </Button>
                       </div>
                     </div>
@@ -450,27 +461,39 @@ function App() {
               </motion.div>
             ))}
           </div>
-          <div className="mt-10 text-center">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mt-12 text-center"
+          >
             <Link to="/vehicules">
               <Button
                 variant="outline"
                 size="lg"
-                className="rounded-lg border-border/50"
+                className="group rounded-xl border-border/50 px-8"
               >
                 {t("vehicules.voirTout")}
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
               </Button>
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      <section className="relative overflow-hidden border-t bg-background py-24">
+      <section className="relative overflow-hidden bg-background py-24">
+        <div className="absolute bottom-0 left-0 h-[300px] w-[300px] rounded-full bg-primary/[0.02] blur-[80px]" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mx-auto max-w-2xl text-center"
+          >
             <Badge
               variant="secondary"
-              className="mb-4 rounded-full px-4 py-1 text-xs font-medium"
+              className="mb-4 rounded-full px-4 py-1 text-xs font-medium shadow-sm"
             >
               {t("commentCaMarche.badge")}
             </Badge>
@@ -480,9 +503,9 @@ function App() {
             <p className="mt-3 text-muted-foreground">
               {t("commentCaMarche.subtitle")}
             </p>
-          </div>
+          </motion.div>
           <div className="relative mt-16 grid gap-8 sm:grid-cols-3">
-            <div className="absolute top-8 left-[calc(16.67%+1.5rem)] right-[calc(16.67%+1.5rem)] hidden h-0.5 bg-gradient-to-r from-primary/50 via-primary/30 to-primary/50 sm:block" />
+            <div className="absolute top-8 left-[calc(16.67%+1.5rem)] right-[calc(16.67%+1.5rem)] hidden h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent sm:block" />
             {howItWorks.map((step, i) => {
               const stepKeys = [
                 { title: "commentCaMarche.step1.title", desc: "commentCaMarche.step1.desc" },
@@ -502,16 +525,16 @@ function App() {
                   }}
                   className="relative text-center"
                 >
-                  <div className="relative mx-auto flex size-16 items-center justify-center rounded-2xl border border-border/50 bg-background shadow-sm">
+                  <div className="relative mx-auto flex size-16 items-center justify-center rounded-2xl border border-border/40 bg-background shadow-sm shadow-black/5">
                     <step.icon className="h-7 w-7 text-primary" />
                   </div>
                   <div className="mt-3 flex items-center justify-center">
-                    <span className="flex size-6 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground">
+                    <span className="flex size-6 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground shadow-sm">
                       {i + 1}
                     </span>
                   </div>
                   <h3 className="mt-4 text-lg font-semibold">{t(stepKeys[i].title)}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                     {t(stepKeys[i].desc)}
                   </p>
                 </motion.div>
@@ -523,11 +546,17 @@ function App() {
 
       <section className="relative overflow-hidden border-t bg-muted/30 py-24">
         <ParticlesBackground />
+        <div className="absolute top-0 right-0 h-[300px] w-[300px] rounded-full bg-primary/[0.03] blur-[80px]" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mx-auto max-w-2xl text-center"
+          >
             <Badge
               variant="secondary"
-              className="mb-4 rounded-full px-4 py-1 text-xs font-medium"
+              className="mb-4 rounded-full px-4 py-1 text-xs font-medium shadow-sm"
             >
               {t("features.badge")}
             </Badge>
@@ -537,8 +566,8 @@ function App() {
             <p className="mt-3 text-muted-foreground">
               {t("features.subtitle")}
             </p>
-          </div>
-          <div className="mt-12 grid gap-4 sm:grid-cols-2">
+          </motion.div>
+          <div className="mt-12 grid gap-5 sm:grid-cols-2">
             {features.map((feature, i) => {
               const featKeys: Record<string, { title: string; desc: string }> = {
                 "Assurance tous risques": { title: "features.assurance.title", desc: "features.assurance.desc" },
@@ -558,11 +587,11 @@ function App() {
                     delay: reduced ? 0 : i * 0.08,
                     ease,
                   }}
-                  className="group rounded-2xl border border-border/50 p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-border hover:shadow-md hover:shadow-black/5"
+                  className="group rounded-2xl border border-border/40 bg-background p-6 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-border/60 hover:shadow-lg hover:shadow-black/5"
                 >
                   <div className="flex items-start gap-4">
                     <div
-                      className={`flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${feature.gradient} ${feature.iconColor}`}
+                      className={`flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br ${feature.gradient} shadow-sm ${feature.iconColor}`}
                     >
                       <feature.icon className="h-5 w-5" />
                     </div>
@@ -580,12 +609,18 @@ function App() {
         </div>
       </section>
 
-      <section id="testimonials" className="relative overflow-hidden border-t bg-background py-24">
+      <section id="testimonials" className="relative overflow-hidden bg-background py-24">
+        <div className="absolute top-0 left-0 h-[400px] w-[400px] rounded-full bg-primary/[0.02] blur-[100px]" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mx-auto max-w-2xl text-center"
+          >
             <Badge
               variant="secondary"
-              className="mb-4 rounded-full px-4 py-1 text-xs font-medium"
+              className="mb-4 rounded-full px-4 py-1 text-xs font-medium shadow-sm"
             >
               {t("testimonials.badge")}
             </Badge>
@@ -595,7 +630,7 @@ function App() {
             <p className="mt-3 text-muted-foreground">
               {t("testimonials.subtitle")}
             </p>
-          </div>
+          </motion.div>
            <div className="mt-12 grid gap-6 sm:grid-cols-3">
             {testimonials.map((item, i) => {
               const tKeys: Record<string, { name: string; role: string; text: string }> = {
@@ -616,7 +651,7 @@ function App() {
                     ease,
                   }}
                 >
-                  <Card className="border-border/50 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:shadow-black/5">
+                  <Card className="rounded-2xl border-border/40 bg-background shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-black/5">
                     <CardContent className="p-6">
                       <div className="flex gap-0.5">
                         {Array.from({ length: 5 }).map((_, i2) => (
@@ -638,10 +673,10 @@ function App() {
                           {t(tk.text)}
                         </p>
                       </div>
-                      <Separator className="my-4 bg-border/50" />
+                      <Separator className="my-4 bg-border/30" />
                       <div className="flex items-center gap-3">
                         <Avatar size="sm">
-                          <AvatarFallback className="bg-primary/10 text-xs font-medium text-primary">
+                          <AvatarFallback className="bg-primary/10 text-xs font-medium text-primary shadow-sm">
                             {item.avatar}
                           </AvatarFallback>
                         </Avatar>
@@ -664,11 +699,18 @@ function App() {
 
 
       <section className="relative overflow-hidden border-t bg-background py-24">
+        <div className="absolute top-0 right-0 h-[300px] w-[300px] rounded-full bg-primary/[0.02] blur-[80px]" />
+        <div className="absolute bottom-0 left-0 h-[250px] w-[250px] rounded-full bg-primary/[0.02] blur-[80px]" />
         <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mx-auto max-w-2xl text-center"
+          >
             <Badge
               variant="secondary"
-              className="mb-4 rounded-full px-4 py-1 text-xs font-medium"
+              className="mb-4 rounded-full px-4 py-1 text-xs font-medium shadow-sm"
             >
               {t("faq.badge")}
             </Badge>
@@ -678,7 +720,7 @@ function App() {
             <p className="mt-3 text-muted-foreground">
               {t("faq.subtitle")}
             </p>
-          </div>
+          </motion.div>
           <div className="mt-12 space-y-3">
             {(t("faq.questions", { returnObjects: true }) as Array<{ q: string; a: string }>).map((item, i) => (
               <motion.div
@@ -690,7 +732,7 @@ function App() {
               >
                 <button
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  className="flex w-full items-center justify-between rounded-xl border border-border/50 px-5 py-4 text-left transition-all duration-200 hover:border-border hover:bg-muted/50"
+                  className="flex w-full items-center justify-between rounded-2xl border border-border/40 bg-background/60 px-5 py-4 text-left shadow-sm backdrop-blur-xl transition-all duration-200 hover:-translate-y-0.5 hover:border-border/60 hover:shadow-lg hover:shadow-black/5"
                 >
                   <span className="pr-4 text-sm font-medium">{item.q}</span>
                   <ChevronDown
@@ -706,7 +748,7 @@ function App() {
                       : "max-h-0 opacity-0"
                   }`}
                 >
-                  <div className="rounded-b-xl border-x border-b border-border/50 px-5 py-4">
+                  <div className="rounded-b-2xl border-x border-b border-border/40 bg-background/30 px-5 py-4 backdrop-blur-xl">
                     <p className="text-sm leading-relaxed text-muted-foreground">
                       {item.a}
                     </p>
@@ -720,88 +762,95 @@ function App() {
 
       <section className="relative overflow-hidden border-t bg-muted/30 py-24">
         <ParticlesBackground />
+        <div className="absolute top-0 right-0 h-[300px] w-[300px] rounded-full bg-primary/[0.03] blur-[80px]" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mx-auto max-w-2xl text-center">
-            <Badge variant="secondary" className="mb-4 rounded-full px-4 py-1 text-xs font-medium">
-              Contact
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mx-auto max-w-2xl text-center"
+          >
+            <Badge variant="secondary" className="mb-4 rounded-full px-4 py-1 text-xs font-medium shadow-sm">
+              {t("contact.badge")}
             </Badge>
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-              Contactez-nous
+              {t("contact.title")}
             </h2>
             <p className="mt-3 text-muted-foreground">
-              Notre équipe est à votre disposition 7j/7 pour répondre à toutes vos questions.
+              {t("contact.subtitle")}
             </p>
-          </div>
+          </motion.div>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[
               {
                 icon: MapPin,
-                title: "Adresse",
-                content: "Agadir, Maroc",
-                sub: "Boulevard Mohammed V",
+                titleKey: "contact.adresse.title",
+                contentKey: "contact.adresse.content",
+                subKey: "contact.adresse.sub",
               },
               {
                 icon: Phone,
-                title: "Téléphone",
-                content: "+212 5 28 00 00 00",
-                sub: "Lun-Sam 8h-20h",
+                titleKey: "contact.telephone.title",
+                contentKey: "contact.telephone.content",
+                subKey: "contact.telephone.sub",
               },
               {
                 icon: Mail,
-                title: "Email",
-                content: "contact@driveease.ma",
-                sub: "Réponse sous 24h",
+                titleKey: "contact.email.title",
+                contentKey: "contact.email.content",
+                subKey: "contact.email.sub",
               },
               {
                 icon: Clock,
-                title: "Horaires",
-                content: "Lun - Sam : 8h - 20h",
-                sub: "Dim : 10h - 18h",
+                titleKey: "contact.horaires.title",
+                contentKey: "contact.horaires.content",
+                subKey: "contact.horaires.sub",
               },
             ].map((item, i) => (
               <motion.div
-                key={item.title}
+                key={item.titleKey}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-30px" }}
                 transition={{ duration: reduced ? 0 : 0.4, delay: reduced ? 0 : i * 0.08, ease }}
-                className="group rounded-2xl border border-border/50 bg-background p-6 text-center transition-all duration-300 hover:-translate-y-0.5 hover:border-border hover:shadow-md hover:shadow-black/5"
+                className="group rounded-2xl border border-border/40 bg-background p-6 text-center shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-border/60 hover:shadow-lg hover:shadow-black/5"
               >
-                <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                <div className="mx-auto flex size-12 items-center justify-center rounded-2xl bg-primary/10 text-primary shadow-sm">
                   <item.icon className="h-5 w-5" />
                 </div>
-                <h3 className="mt-4 font-semibold">{item.title}</h3>
-                <p className="mt-1 text-sm font-medium text-foreground">{item.content}</p>
-                <p className="mt-0.5 text-xs text-muted-foreground">{item.sub}</p>
+                <h3 className="mt-4 font-semibold">{t(item.titleKey)}</h3>
+                <p className="mt-1 text-sm font-medium text-foreground">{t(item.contentKey)}</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">{t(item.subKey)}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="relative overflow-hidden border-t bg-background py-24">
+      <section className="relative overflow-hidden bg-background py-24">
+        <div className="absolute inset-0 bg-gradient-to-b from-primary/[0.02] via-transparent to-primary/[0.02]" />
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: reduced ? 0 : 0.6, ease }}
-            className="relative overflow-hidden rounded-3xl border bg-gradient-to-br from-primary/5 via-primary/[0.02] to-background px-6 py-16 text-center shadow-lg sm:px-16"
+            className="relative overflow-hidden rounded-3xl border border-primary/10 bg-gradient-to-br from-primary/10 via-primary/[0.03] to-background px-8 py-20 text-center shadow-xl shadow-primary/5 sm:px-20"
           >
-            <div className="absolute top-0 right-0 -z-10 h-72 w-72 translate-x-1/3 -translate-y-1/3 rounded-full bg-primary/10 blur-3xl" />
-            <div className="absolute bottom-0 left-0 -z-10 h-72 w-72 -translate-x-1/3 translate-y-1/3 rounded-full bg-primary/5 blur-3xl" />
-            <Badge className="mb-4 rounded-full px-4 py-1 text-xs font-medium">
+            <div className="absolute top-0 right-0 -z-10 h-80 w-80 translate-x-1/4 -translate-y-1/4 rounded-full bg-primary/20 blur-[100px]" />
+            <div className="absolute bottom-0 left-0 -z-10 h-80 w-80 -translate-x-1/4 translate-y-1/4 rounded-full bg-primary/10 blur-[100px]" />
+            <Badge variant="secondary" className="mb-5 rounded-full px-4 py-1.5 text-xs font-medium shadow-sm">
               {t("cta.badge")}
             </Badge>
-            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+            <h2 className="text-4xl font-bold tracking-tight sm:text-5xl">
               {t("cta.title")}
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
               {t("cta.subtitle")}
             </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <Link to="/vehicules">
-                <Button size="lg" className="w-full rounded-lg sm:w-auto">
+                <Button size="lg" className="w-full rounded-xl px-8 shadow-lg shadow-primary/20 sm:w-auto">
                   <Car className="mr-2 h-4 w-4" />
                   {t("cta.reserver")}
                 </Button>
@@ -810,7 +859,7 @@ function App() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="w-full rounded-lg border-border/50 sm:w-auto"
+                  className="w-full rounded-xl border-border/50 px-8 backdrop-blur-sm sm:w-auto"
                 >
                   <Check className="mr-2 h-4 w-4" />
                   {t("cta.voirOffres")}
@@ -823,6 +872,8 @@ function App() {
 
       <footer id="contact" className="relative overflow-hidden border-t bg-muted/30">
         <ParticlesBackground />
+        <div className="absolute top-0 left-0 h-[300px] w-[300px] rounded-full bg-primary/[0.02] blur-[100px]" />
+        <div className="absolute bottom-0 right-0 h-[250px] w-[250px] rounded-full bg-primary/[0.02] blur-[80px]" />
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
             <div className="lg:col-span-2">
