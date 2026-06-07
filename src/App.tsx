@@ -177,12 +177,10 @@ function App() {
       </header>
 
       <section className="relative min-h-dvh overflow-hidden">
-        {/* Premium gradient background */}
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" />
         <div className="absolute top-0 -left-1/4 h-[600px] w-[800px] rounded-full bg-primary/5 blur-[120px]" />
         <div className="absolute -bottom-1/4 -right-1/4 h-[500px] w-[600px] rounded-full bg-primary/10 blur-[100px]" />
 
-        {/* Mobile background (< lg) */}
         <div className="absolute inset-0 lg:hidden">
           <div
             className="h-full w-full bg-cover bg-center"
@@ -195,18 +193,18 @@ function App() {
         </div>
 
         <div className="relative z-10 grid min-h-dvh lg:grid-cols-2">
-          {/* Left: Content */}
+
           <div className="flex flex-col justify-center px-6 pt-28 pb-16 sm:px-10 lg:px-14">
             <motion.div
               initial="hidden"
               animate="visible"
               variants={stagger}
-              className="mx-auto w-full max-w-xl lg:mx-0"
+              className="mx-auto w-full max-w-[42rem] lg:mx-0"
             >
-              {/* Badge */}
+
               <motion.div
                 variants={fadeUp}
-                className="group mb-6 inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary/5 px-4 py-1.5 text-sm text-primary shadow-sm"
+                className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary/5 px-4 py-1.5 text-sm text-primary shadow-sm"
               >
                 <span className="relative flex size-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
@@ -215,26 +213,21 @@ function App() {
                 {t("hero.badge")}
               </motion.div>
 
-              {/* Headline */}
               <motion.h1
                 variants={fadeUp}
-                className="text-[clamp(2.5rem,5.5vw,4.5rem)] font-bold leading-[1.05] tracking-tighter"
+                className="max-w-[12ch] font-black leading-[0.88] tracking-[-0.07em] text-[clamp(3.5rem,10vw,8rem)] text-foreground"
               >
-                <span className="bg-gradient-to-br from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
-                  <TypewriterText text={t("hero.title")} />
-                </span>
+                <TypewriterText text={t("hero.title")} />
               </motion.h1>
 
-              {/* Subtitle */}
               <motion.p
                 variants={fadeUp}
-                className="mt-5 max-w-lg text-balance text-lg leading-relaxed text-muted-foreground"
+                className="mt-8 max-w-[500px] text-balance text-base sm:text-lg font-medium leading-relaxed text-muted-foreground"
               >
                 {t("hero.subtitle")}
               </motion.p>
 
-              {/* Search Card */}
-              <motion.div variants={fadeUp} className="mt-8">
+              <motion.div variants={fadeUp} className="mt-10">
                 <Card className="overflow-hidden rounded-2xl border border-border/40 bg-background/80 shadow-lg shadow-black/5 backdrop-blur-xl">
                   <CardContent className="p-5 sm:p-6">
                     <div className="space-y-4">
@@ -261,7 +254,6 @@ function App() {
                 </Card>
               </motion.div>
 
-              {/* Social proof */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -279,7 +271,6 @@ function App() {
                 <span className="text-muted-foreground">{t("hero.stats.annulation")}</span>
               </motion.div>
 
-              {/* Stats */}
               <motion.div
                 initial="hidden"
                 animate="visible"
@@ -313,7 +304,6 @@ function App() {
             </motion.div>
           </div>
 
-          {/* Right: Image section - Desktop only */}
           <div className="relative hidden lg:block">
             <motion.div
               initial={{ scale: 1.15 }}
