@@ -215,7 +215,7 @@ function App() {
 
               <motion.h1
                 variants={fadeUp}
-                className="max-w-[12ch] font-black leading-[0.88] tracking-[-0.07em] text-[clamp(3.5rem,10vw,8rem)] text-foreground"
+                className="max-w-[14ch] font-black leading-[0.9] tracking-[-0.06em] text-[clamp(2.8rem,7vw,5.5rem)] text-foreground"
               >
                 <TypewriterText text={t("hero.title")} />
               </motion.h1>
