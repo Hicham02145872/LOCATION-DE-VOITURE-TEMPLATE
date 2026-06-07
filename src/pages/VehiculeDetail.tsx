@@ -306,9 +306,7 @@ function VehiculeDetail() {
                             {t("vehicules.parJour")}
                           </div>
                         </div>
-                        <div className="rounded-lg bg-primary/10 px-3 py-1.5 text-xs font-medium text-primary shadow-sm">
-                          -20% {t("hero.search.premium")}
-                        </div>
+
                       </div>
                       <Separator className="bg-border/30" />
                       <div className="space-y-3">
