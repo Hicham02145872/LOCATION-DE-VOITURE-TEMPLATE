@@ -168,47 +168,17 @@ function VehiculeDetail() {
         />
       </section>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-2 py-4 text-sm text-muted-foreground">
-          <Link to="/" className="transition-colors hover:text-foreground">
-            {t("nav.accueil")}
-          </Link>
-          <ChevronLeft className="h-3 w-3 rotate-180" />
-          <Link to="/vehicules" className="transition-colors hover:text-foreground">
-            {t("nav.vehicules")}
-          </Link>
-          <ChevronLeft className="h-3 w-3 rotate-180" />
-          <span className="text-foreground">{car.name}</span>
-        </div>
+      <div className="mx-auto flex max-w-7xl items-center gap-2 px-4 py-4 text-sm text-muted-foreground sm:px-6 lg:px-8">
+        <Link to="/" className="transition-colors hover:text-foreground">
+          {t("nav.accueil")}
+        </Link>
+        <ChevronLeft className="h-3 w-3 rotate-180" />
+        <Link to="/vehicules" className="transition-colors hover:text-foreground">
+          {t("nav.vehicules")}
+        </Link>
+        <ChevronLeft className="h-3 w-3 rotate-180" />
+        <span className="text-foreground">{car.name}</span>
       </div>
-
-      <section className="pb-2">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="hidden items-end justify-between lg:flex">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="rounded-full border border-border/40 bg-muted px-3 py-0.5 text-xs font-medium text-muted-foreground">
-                  {car.badge}
-                </span>
-                <span className="rounded-full bg-primary/10 px-3 py-0.5 text-xs font-medium text-primary">
-                  {car.fuel}
-                </span>
-              </div>
-              <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-                {car.name}
-              </h1>
-            </div>
-            <div className="text-right">
-              <div className="text-3xl font-bold tracking-tight sm:text-4xl">
-                {car.price}DH
-              </div>
-              <div className="text-sm text-muted-foreground">
-                {t("vehicules.parJour")}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <section className="pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

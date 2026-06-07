@@ -1,6 +1,6 @@
-import { useRef } from "react"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
-import { ChevronLeft, ChevronRight, Grid3X3 } from "lucide-react"
+import { ChevronLeft, ChevronRight, Image } from "lucide-react"
 
 interface CarGalleryProps {
   images: string[]
@@ -12,86 +12,25 @@ interface CarGalleryProps {
 
 export function CarGallery({ images, name, badge, fuel, price }: CarGalleryProps) {
   const { t } = useTranslation()
-  const scrollRef = useRef<HTMLDivElement>(null)
+  const [active, setActive] = useState(0)
 
-  const visibleThumbs = images.slice(0, 5)
-
-  const scroll = (dir: "left" | "right") => {
-    if (!scrollRef.current) return
-    const amount = scrollRef.current.clientWidth * (dir === "left" ? -1 : 1)
-    scrollRef.current.scrollBy({ left: amount, behavior: "smooth" })
-  }
+  const prev = () => setActive((a) => (a === 0 ? images.length - 1 : a - 1))
+  const next = () => setActive((a) => (a === images.length - 1 ? 0 : a + 1))
 
   return (
-    <div className="relative">
-      {/* Desktop: Grid layout */}
-      <div className="hidden h-[460px] grid-cols-4 grid-rows-2 gap-2 lg:grid">
-        <div className="group relative col-span-2 row-span-2 overflow-hidden rounded-2xl">
-          <img
-            src={images[0]}
-            alt={`${name} - ${t("gallery.photo", { index: 1 })}`}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        </div>
-        {visibleThumbs.slice(1, 5).map((img, idx) => (
-          <div
-            key={idx}
-            className="group relative overflow-hidden rounded-2xl"
-          >
-            <img
-              src={img}
-              alt={`${name} - ${t("gallery.photo", { index: idx + 2 })}`}
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-          </div>
-        ))}
-        <div className="absolute bottom-4 right-4 flex items-center gap-1.5 rounded-xl bg-background/80 px-3 py-1.5 text-xs font-medium text-foreground shadow-sm backdrop-blur-sm">
-          <Grid3X3 className="h-3.5 w-3.5" />
-          {images.length} {t("gallery.photo", { index: "" }).trim()}
-        </div>
-      </div>
-
-      {/* Mobile: Carousel */}
-      <div className="relative lg:hidden">
-        <div
-          ref={scrollRef}
-          className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth"
-        >
-          {images.map((img, idx) => (
-            <div
-              key={idx}
-              className="min-w-0 shrink-0 grow-0 basis-full snap-center"
-            >
-              <img
-                src={img}
-                alt={`${name} - ${t("gallery.photo", { index: idx + 1 })}`}
-                className="h-[55vh] min-h-[420px] w-full object-cover"
-              />
-            </div>
-          ))}
-        </div>
-
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
-
-        <button
-          onClick={() => scroll("left")}
-          aria-label={t("gallery.photoPrecedente")}
-          className="pointer-events-auto absolute top-1/2 left-3 -translate-y-1/2 rounded-full bg-background/70 p-2 text-foreground shadow-xs backdrop-blur-sm transition-all hover:bg-background/90 hover:scale-110"
-        >
-          <ChevronLeft className="h-5 w-5" />
-        </button>
-        <button
-          onClick={() => scroll("right")}
-          aria-label={t("gallery.photoSuivante")}
-          className="pointer-events-auto absolute top-1/2 right-3 -translate-y-1/2 rounded-full bg-background/70 p-2 text-foreground shadow-xs backdrop-blur-sm transition-all hover:bg-background/90 hover:scale-110"
-        >
-          <ChevronRight className="h-5 w-5" />
-        </button>
+    <div className="mx-auto max-w-7xl px-0 sm:px-4">
+      <div className="group relative overflow-hidden rounded-none sm:rounded-2xl">
+        <img
+          src={images[active]}
+          alt={`${name} - ${t("gallery.photo", { index: active + 1 })}`}
+          className="h-[50vh] w-full object-cover transition-all duration-500 sm:h-[65vh]"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
 
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 p-6 sm:p-10">
-          <div className="pointer-events-auto mx-auto max-w-7xl">
+          <div className="mx-auto max-w-7xl">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-              <div>
+              <div className="pointer-events-auto">
                 <div className="flex items-center gap-2">
                   <span className="rounded-full border border-white/30 bg-white/10 px-3 py-0.5 text-xs font-medium text-white backdrop-blur-sm">
                     {badge}
@@ -104,7 +43,7 @@ export function CarGallery({ images, name, badge, fuel, price }: CarGalleryProps
                   {name}
                 </h1>
               </div>
-              <div className="mt-3 sm:mt-0 sm:text-right">
+              <div className="pointer-events-auto mt-3 sm:mt-0 sm:text-right">
                 <div className="text-3xl font-bold text-white drop-shadow-sm sm:text-4xl">
                   {price}DH
                 </div>
@@ -113,6 +52,58 @@ export function CarGallery({ images, name, badge, fuel, price }: CarGalleryProps
             </div>
           </div>
         </div>
+
+        <button
+          onClick={prev}
+          aria-label={t("gallery.photoPrecedente")}
+          className="pointer-events-auto absolute top-1/2 left-4 -translate-y-1/2 rounded-full bg-background/70 p-2 text-foreground opacity-0 shadow-xs backdrop-blur-sm transition-all hover:bg-background/90 hover:scale-110 group-hover:opacity-100"
+        >
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+        <button
+          onClick={next}
+          aria-label={t("gallery.photoSuivante")}
+          className="pointer-events-auto absolute top-1/2 right-4 -translate-y-1/2 rounded-full bg-background/70 p-2 text-foreground opacity-0 shadow-xs backdrop-blur-sm transition-all hover:bg-background/90 hover:scale-110 group-hover:opacity-100"
+        >
+          <ChevronRight className="h-5 w-5" />
+        </button>
+
+        <div className="pointer-events-auto absolute top-4 right-4 flex items-center gap-1 rounded-lg bg-background/70 px-2.5 py-1 text-xs font-medium text-foreground backdrop-blur-sm sm:top-6 sm:right-6">
+          <Image className="h-3.5 w-3.5" />
+          {active + 1}/{images.length}
+        </div>
+      </div>
+
+      <div className="mt-3 hidden gap-2 overflow-x-auto sm:flex">
+        {images.map((img, idx) => (
+          <button
+            key={idx}
+            onClick={() => setActive(idx)}
+            className={`relative shrink-0 overflow-hidden rounded-xl transition-all duration-200 hover:ring-2 hover:ring-primary/50 ${
+              idx === active
+                ? "ring-2 ring-primary ring-offset-2 ring-offset-background"
+                : "opacity-60 hover:opacity-100"
+            }`}
+          >
+            <img
+              src={img}
+              alt={`${name} - ${t("gallery.photo", { index: idx + 1 })}`}
+              className="h-16 w-24 object-cover sm:h-20 sm:w-28"
+            />
+          </button>
+        ))}
+      </div>
+
+      <div className="mt-3 flex justify-center gap-1.5 sm:hidden">
+        {images.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setActive(idx)}
+            className={`rounded-full transition-all ${
+              idx === active ? "h-2 w-6 bg-primary" : "h-2 w-2 bg-muted-foreground/40"
+            }`}
+          />
+        ))}
       </div>
     </div>
   )
