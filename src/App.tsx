@@ -206,17 +206,6 @@ function App() {
               className="mx-auto w-full max-w-[42rem] lg:mx-0"
             >
 
-              <motion.div
-                variants={fadeUp}
-                className="mb-8 inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary/5 px-4 py-1.5 text-sm text-primary shadow-sm"
-              >
-                <span className="relative flex size-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
-                </span>
-                {t("hero.badge")}
-              </motion.div>
-
               <motion.h1
                 variants={fadeUp}
                 className="max-w-[14ch] font-black leading-[0.9] tracking-[-0.06em] text-[clamp(2.8rem,7vw,5.5rem)] text-foreground"
