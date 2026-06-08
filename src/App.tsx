@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/button"
@@ -22,7 +22,7 @@ import {
   Mail,
   Clock,
 } from "lucide-react"
-import { howItWorks, features, testimonials, stats } from "@/data/cars"
+import { howItWorks, features, testimonials } from "@/data/cars"
 import { useCars } from "@/hooks/useCars"
 import { CarCardCarousel } from "@/components/CarCardCarousel"
 import { ThemeToggle } from "@/components/ThemeToggle"
@@ -97,13 +97,14 @@ function App() {
   const [searchLocation, setSearchLocation] = useState("")
   const [searchStart, setSearchStart] = useState("")
   const [searchEnd, setSearchEnd] = useState("")
-  const [searchType] = useState("all")
+  const [searchType, setSearchType] = useState("all")
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [scrolled, setScrolled] = useState(false)
   const reduced = useReducedMotion()
-  const { scrollYProgress } = useScroll()
-  const heroY = useTransform(scrollYProgress, [0, 0.3], [0, 80])
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.6])
+  const heroRef = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] })
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, 120])
+
   const { hash, pathname } = useLocation()
   const { t } = useTranslation()
   useDirection()
@@ -180,142 +181,116 @@ function App() {
         </div>
       </header>
 
-      <section className="relative min-h-dvh overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-primary/5" />
-        <div className="absolute top-0 -left-1/4 h-[600px] w-[800px] rounded-full bg-primary/5 blur-[120px]" />
-        <div className="absolute -bottom-1/4 -right-1/4 h-[500px] w-[600px] rounded-full bg-primary/10 blur-[100px]" />
+      <section ref={heroRef} className="relative flex min-h-dvh items-center overflow-hidden">
+        <motion.div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "url(https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=85)",
+            y: reduced ? 0 : bgY,
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+        <div className="absolute top-0 -left-1/4 h-[600px] w-[800px] rounded-full bg-primary/20 blur-[120px]" />
+        <div className="absolute -bottom-1/4 -right-1/4 h-[500px] w-[600px] rounded-full bg-primary/30 blur-[100px]" />
 
-        <div className="absolute inset-0 lg:hidden">
-          <div
-            className="h-full w-full bg-cover bg-center"
-            style={{
-              backgroundImage:
-                "url(https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=85)",
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
-        </div>
+        <div className="relative z-10 mx-auto w-full max-w-4xl px-4 py-28 sm:px-6">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={stagger}
+            className="text-center"
+          >
+            <motion.div variants={fadeUp} className="mb-5 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-xs font-medium tracking-wide text-white/80 backdrop-blur-sm">
+              <span className="flex size-1.5 rounded-full bg-primary shadow-[0_0_6px_var(--primary)]" />
+              {t("hero.badge")}
+            </motion.div>
 
-        <div className="relative z-10 grid min-h-dvh lg:grid-cols-2">
-
-          <div className="flex flex-col justify-center px-6 pt-28 pb-16 sm:px-10 lg:px-14">
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={stagger}
-              className="mx-auto w-full max-w-[42rem] lg:mx-0"
+            <motion.h1
+              variants={fadeUp}
+              className="font-black leading-[0.9] tracking-[-0.06em] text-[clamp(2.5rem,6vw,4.5rem)] text-white drop-shadow-lg"
             >
+              <TypewriterText text={t("hero.title")} />
+            </motion.h1>
 
-              <motion.h1
-                variants={fadeUp}
-                className="max-w-[14ch] font-black leading-[0.9] tracking-[-0.06em] text-[clamp(2.8rem,7vw,5.5rem)] text-foreground"
-              >
-                <TypewriterText text={t("hero.title")} />
-              </motion.h1>
+            <motion.p
+              variants={fadeUp}
+              className="mx-auto mt-6 max-w-xl text-balance text-base sm:text-lg font-medium leading-relaxed text-white/80"
+            >
+              {t("hero.subtitle")}
+            </motion.p>
 
-              <motion.p
-                variants={fadeUp}
-                className="mt-8 max-w-[500px] text-balance text-base sm:text-lg font-medium leading-relaxed text-muted-foreground"
-              >
-                {t("hero.subtitle")}
-              </motion.p>
-
-              <motion.div variants={fadeUp} className="mt-10">
-                <Card className="overflow-hidden rounded-2xl border border-border/40 bg-background/80 shadow-lg shadow-black/5 backdrop-blur-xl">
-                  <CardContent className="p-5 sm:p-6">
-                    <div className="space-y-4">
-                      <div className="relative">
-                        <MapPin className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                        <Input className="rounded-xl pl-10" placeholder={t("hero.search.lieuPlaceholder")} value={searchLocation} onChange={(e) => setSearchLocation(e.target.value)} />
-                      </div>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="space-y-1.5">
-                          <label className="text-xs font-medium text-muted-foreground">{t("hero.search.debut")}</label>
-                          <DatePicker value={searchStart} onChange={setSearchStart} placeholder={t("hero.search.debut")} />
-                        </div>
-                        <div className="space-y-1.5">
-                          <label className="text-xs font-medium text-muted-foreground">{t("hero.search.fin")}</label>
-                          <DatePicker value={searchEnd} onChange={setSearchEnd} placeholder={t("hero.search.fin")} />
-                        </div>
-                      </div>
-                      <Button className="w-full rounded-xl" size="lg" onClick={() => navigate(`/vehicules?search=${encodeURIComponent(searchLocation)}&type=${searchType}`)}>
-                        <Search className="mr-2 h-4 w-4" />
-                        {t("hero.search.trouver")}
-                      </Button>
+            <motion.div
+              variants={fadeUp}
+              className="mx-auto mt-12 max-w-3xl"
+              animate={reduced ? {} : { y: [0, -6, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: [0.25, 0.4, 0.25, 1] }}
+            >
+              <Card className="group overflow-hidden rounded-2xl border border-white/10 bg-white/10 shadow-2xl shadow-black/20 backdrop-blur-2xl transition-shadow duration-500 hover:shadow-[0_0_40px_rgba(185,28,28,0.15)]">
+                <CardContent className="p-5 sm:p-6">
+                  <div className="space-y-4">
+                    <div className="relative">
+                      <MapPin className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/60" />
+                      <Input
+                        className="rounded-xl border-white/20 bg-white/10 pl-10 text-white placeholder:text-white/50 transition-all duration-300 focus-visible:border-primary/60 focus-visible:ring-[3px] focus-visible:ring-primary/30"
+                        placeholder={t("hero.search.lieuPlaceholder")}
+                        value={searchLocation}
+                        onChange={(e) => setSearchLocation(e.target.value)}
+                      />
                     </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.6, ease }}
-                className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm"
-              >
-                <span className="inline-flex items-center gap-1.5 text-foreground">
-                  <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
-                  <span className="font-medium">{t("hero.stats.rating")}</span>
-                  <span className="text-muted-foreground">{t("hero.stats.avis")}</span>
-                </span>
-                <span className="hidden h-3 w-px bg-border lg:block" />
-                <span className="text-muted-foreground">{t("hero.stats.vehicules")}</span>
-                <span className="hidden h-3 w-px bg-border lg:block" />
-                <span className="text-muted-foreground">{t("hero.stats.annulation")}</span>
-              </motion.div>
-
-              <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={stagger}
-                className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4"
-              >
-                {stats.map((stat, i) => {
-                  const labelKey: Record<string, string> = {
-                    "Véhicules": "stats.vehicules",
-                    "Satisfaction": "stats.satisfaction",
-                    "Agences": "stats.agences",
-                    "d'expérience": "stats.experience",
-                  }
-                  return (
-                    <motion.div
-                      key={stat.label}
-                      variants={fadeUp}
-                      custom={i}
-                      className="rounded-xl border border-border/40 bg-background/50 p-3 text-center backdrop-blur-sm"
-                    >
-                      <div className="text-xl font-bold tracking-tight sm:text-2xl">
-                        {stat.value}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-white/60">{t("hero.search.debut")}</label>
+                        <DatePicker value={searchStart} onChange={setSearchStart} placeholder={t("hero.search.debut")} className="border-white/20 bg-white/10 text-white hover:bg-white/20 transition-all duration-300 focus-visible:border-primary/60 focus-visible:ring-primary/30" />
                       </div>
-                      <div className="mt-0.5 text-xs text-muted-foreground">
-                        {t(labelKey[stat.label] ?? stat.label)}
+                      <div className="space-y-1.5">
+                        <label className="text-xs font-medium text-white/60">{t("hero.search.fin")}</label>
+                        <DatePicker value={searchEnd} onChange={setSearchEnd} placeholder={t("hero.search.fin")} className="border-white/20 bg-white/10 text-white hover:bg-white/20 transition-all duration-300 focus-visible:border-primary/60 focus-visible:ring-primary/30" />
                       </div>
-                    </motion.div>
-                  )
-                })}
-              </motion.div>
+                    </div>
+                    <Button className="w-full rounded-xl shadow-lg shadow-primary/30 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:shadow-primary/40 active:scale-[0.98]" size="lg" onClick={() => navigate(`/vehicules?search=${encodeURIComponent(searchLocation)}&type=${searchType}`)}>
+                      <Search className="mr-2 h-4 w-4" />
+                      {t("hero.search.trouver")}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
-          </div>
 
-          <div className="relative hidden lg:block">
             <motion.div
-              initial={{ scale: 1.15 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: reduced ? 0 : 1.5, ease }}
-              className="absolute inset-0 m-6 overflow-hidden rounded-3xl shadow-2xl"
-              style={{ y: heroY, opacity: heroOpacity }}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.4, ease }}
+              className="mx-auto mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm"
             >
-              <div
-                className="h-full w-full bg-cover bg-center"
-                style={{
-                  backgroundImage:
-                    "url(https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=85)",
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+              <span className="inline-flex items-center gap-1.5 text-white/80">
+                <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                <span className="font-medium text-white">{t("hero.stats.rating")}</span>
+                <span className="text-white/60">{t("hero.stats.avis")}</span>
+              </span>
+              <span className="h-3 w-px bg-white/20" />
+              <span className="text-white/60">{t("hero.stats.vehicules")}</span>
+              <span className="h-3 w-px bg-white/20" />
+              <span className="text-white/60">{t("hero.stats.annulation")}</span>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 0.8 }}
+          className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2"
+        >
+          <motion.div
+            animate={reduced ? {} : { y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: [0.25, 0.4, 0.25, 1] }}
+            className="flex flex-col items-center gap-1"
+          >
+            <ChevronDown className="h-4 w-4 text-white/40" />
+            <ChevronDown className="-mt-3 h-4 w-4 text-white/20" />
+          </motion.div>
+        </motion.div>
       </section>
 
       <section className="relative overflow-hidden border-t bg-background py-16">
@@ -369,10 +344,33 @@ function App() {
               {t("vehicules.subtitle")}
             </p>
           </motion.div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: 0.15 }}
+            className="mt-10 flex flex-wrap items-center justify-center gap-2"
+          >
+            {["all", "Populaire", "SUV", "Premium", "Sport", "Luxe", "Économique"].map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSearchType(cat)}
+                className={`rounded-full px-4 py-1.5 text-xs font-medium transition-all duration-300 ${
+                  searchType === cat
+                    ? "bg-primary text-primary-foreground shadow-md shadow-primary/20"
+                    : "border border-border/50 bg-background/60 text-muted-foreground hover:border-border hover:bg-muted/50"
+                }`}
+              >
+                {cat === "all" ? t("vehicules.tous") : cat}
+              </button>
+            ))}
+          </motion.div>
+
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {loading && cars.length === 0
               ? Array.from({ length: 6 }).map((_, i) => <CarCardSkeleton key={i} />)
-              : cars.map((car, i) => (
+              : cars.filter((car) => searchType === "all" || car.badge === searchType).map((car, i) => (
               <motion.div
                 key={car.name}
                 initial={{ opacity: 0, y: 30 }}
@@ -385,41 +383,32 @@ function App() {
                 }}
               >
                 <Link to={`/vehicules/${car.slug}`}>
-                  <Card className="group cursor-pointer overflow-hidden rounded-2xl border-border/50 bg-background pt-0 shadow-sm transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-black/5">
+                  <Card className="group cursor-pointer overflow-hidden rounded-2xl border border-border/20 bg-background/80 pt-0 shadow-sm backdrop-blur-xl transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_0_35px_rgba(185,28,28,0.08)] hover:shadow-xl hover:shadow-black/5">
                   <CardContent className="p-0">
-                    <CarCardCarousel
-                      images={car.images}
-                      gradient={car.gradient}
-                      className="h-52 sm:h-56"
-                    />
-                      <div className="space-y-4 p-5">
-                      <div className="flex items-start justify-between">
-                        <div>
-                          <div className="mb-2 flex items-center gap-2">
-                            <Badge
-                              variant="secondary"
-                              className="rounded-full px-2.5 py-0.5 text-[11px] font-medium"
-                            >
-                              {car.badge}
-                            </Badge>
-                          </div>
-                          <h3 className="font-semibold">{car.name}</h3>
-                        </div>
+                    <div className="relative overflow-hidden">
+                      <CarCardCarousel
+                        images={car.images}
+                        gradient={car.gradient}
+                        className="h-52 sm:h-56"
+                      />
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all duration-300 group-hover:bg-black/30 group-hover:opacity-100">
+                        <span className="translate-y-2 rounded-full bg-white/20 px-4 py-2 text-xs font-medium text-white backdrop-blur-sm transition-transform duration-300 group-hover:translate-y-0">
+                          {t("vehicules.voirDetails")}
+                        </span>
                       </div>
-                      <div className="grid grid-cols-3 gap-2">
-                        {[
-                          { label: "1j", price: car.price },
-                          { label: "2j", price: car.price * 2 },
-                          { label: "7j", price: car.price * 7 },
-                        ].map((opt) => (
-                          <div
-                            key={opt.label}
-                            className="rounded-xl border border-border/50 bg-muted/30 p-2.5 text-center transition-all duration-200 group-hover:border-primary/20 group-hover:bg-primary/[0.03]"
-                          >
-                            <div className="text-[10px] font-medium text-muted-foreground">{opt.label}</div>
-                            <div className="text-sm font-bold">{opt.price}DH</div>
-                          </div>
-                        ))}
+                      <div className="absolute top-3 left-3 flex gap-2">
+                        <Badge className="rounded-full border-white/10 bg-white/15 px-2.5 py-0.5 text-[11px] font-medium text-white backdrop-blur-sm">
+                          {car.badge}
+                        </Badge>
+                      </div>
+                    </div>
+                    <div className="space-y-4 p-5">
+                      <div className="flex items-start justify-between gap-2">
+                        <h3 className="font-semibold text-lg">{car.name}</h3>
+                        <div className="shrink-0 text-right">
+                          <div className="text-xl font-bold tracking-tight">{car.price}</div>
+                          <div className="text-[11px] text-muted-foreground">{t("vehicules.parJour")}</div>
+                        </div>
                       </div>
                       <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
                         <span className="flex items-center gap-1.5 rounded-lg bg-muted/50 px-2.5 py-1.5">
@@ -460,7 +449,7 @@ function App() {
               <Button
                 variant="outline"
                 size="lg"
-                className="group rounded-xl border-border/50 px-8"
+                className="group rounded-xl border-border/50 px-8 hover:border-primary/30 hover:bg-primary/[0.03]"
               >
                 {t("vehicules.voirTout")}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />

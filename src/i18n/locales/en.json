@@ -14,7 +14,7 @@
     "fermer": "Close"
   },
   "hero": {
-    "badge": "New prices available",
+    "badge": "Premium car rental service",
     "title": "Rent the perfect car for every journey",
     "subtitle": "Hundreds of recent vehicles across Morocco. Book online in 2 minutes, free cancellation, insurance included.",
     "search": {
@@ -70,7 +70,9 @@
     "aucunResultat": "No vehicles found for",
     "essayezAutre": "Try different search terms.",
     "aucunVehicule": "No vehicles",
-    "parJour": "/day"
+    "parJour": "/day",
+    "tous": "All",
+    "voirDetails": "View details"
   },
   "commentCaMarche": {
     "badge": "Simplicity",

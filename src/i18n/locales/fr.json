@@ -14,7 +14,7 @@
     "fermer": "Fermer"
   },
   "hero": {
-    "badge": "Nouveaux tarifs disponibles",
+    "badge": "Service de location premium",
     "title": "Louez la voiture idéale pour chaque voyage",
     "subtitle": "Des centaines de véhicules récents dans tout le Maroc. Réservez en ligne en 2 minutes, annulation gratuite, assurance incluse.",
     "search": {
@@ -70,7 +70,9 @@
     "aucunResultat": "Aucun véhicule trouvé pour",
     "essayezAutre": "Essayez d'autres termes de recherche.",
     "aucunVehicule": "Aucun véhicule",
-    "parJour": "/jour"
+    "parJour": "/jour",
+    "tous": "Tous",
+    "voirDetails": "Voir le détail"
   },
   "commentCaMarche": {
     "badge": "Simplicité",
