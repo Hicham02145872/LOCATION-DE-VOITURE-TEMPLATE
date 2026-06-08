@@ -141,15 +141,15 @@ function App() {
           {navLinks.map((link) => {
             const isActive = link.href.startsWith("/") && pathname.startsWith(link.href)
             return (
-              <a
+              <Link
                 key={link.key}
-                href={link.href}
+                to={link.href}
                 className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-foreground ${
                   isActive ? "bg-muted text-foreground" : "text-muted-foreground"
                 }`}
               >
                 {t(`nav.${link.key}`)}
-              </a>
+              </Link>
             )
           })}
         </nav>

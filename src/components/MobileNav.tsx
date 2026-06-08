@@ -65,9 +65,9 @@ export function MobileNav({ links }: MobileNavProps) {
                 {links.map((link) => {
                   const isActive = link.href.startsWith("/") && pathname.startsWith(link.href)
                   return (
-                    <a
+                    <Link
                       key={link.key}
-                      href={link.href}
+                      to={link.href}
                       onClick={() => setOpen(false)}
                       className={`flex items-center rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
                         isActive
@@ -76,7 +76,7 @@ export function MobileNav({ links }: MobileNavProps) {
                       }`}
                     >
                       {t(`nav.${link.key}`)}
-                    </a>
+                    </Link>
                   )
                 })}
               </nav>
