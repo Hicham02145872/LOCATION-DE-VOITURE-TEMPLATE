@@ -23,9 +23,14 @@ import {
   Euro,
   FileText,
   Cog,
+  Zap,
+  Timer,
+  Gauge,
+  MapPin,
   Check,
 } from "lucide-react"
 import { supabase } from "@/lib/supabase"
+import { CitySelect } from "@/components/CitySelect"
 
 interface ImageItem {
   id: string
@@ -120,6 +125,10 @@ function DashboardCarForm() {
     badge: "",
     transmission: "Automatique",
     description: "",
+    acceleration: "5.2s",
+    range_km: "600",
+    top_speed: "220km/h",
+    ville: "Marrakech",
   })
 
   const [images, setImages] = useState<ImageItem[]>([])
@@ -146,6 +155,10 @@ function DashboardCarForm() {
         badge: data.badge ?? "",
         transmission: data.transmission ?? "Automatique",
         description: data.description ?? "",
+        acceleration: data.acceleration ?? "5.2s",
+        range_km: String(data.range_km ?? "600"),
+        top_speed: data.top_speed ?? "220km/h",
+        ville: data.ville ?? "Marrakech",
       })
       setCarColor(extractHexFromGradient(data.gradient))
       setMainImage({ id: crypto.randomUUID(), url: data.image, name: "", size: 0, isFile: false })
@@ -267,6 +280,10 @@ function DashboardCarForm() {
       images: imageUrls,
       transmission: form.transmission,
       description: form.description,
+      acceleration: form.acceleration,
+      range_km: Number(form.range_km) || 600,
+      top_speed: form.top_speed,
+      ville: form.ville,
     }
 
     if (isEdit) {
@@ -466,6 +483,54 @@ function DashboardCarForm() {
                           ))}
                         </SelectContent>
                       </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium flex items-center gap-1.5">
+                        <Timer className="h-3.5 w-3.5 text-muted-foreground" />
+                        {t("dashboard.carForm.acceleration")}
+                      </label>
+                      <Input
+                        value={form.acceleration}
+                        onChange={(e) => setForm({ ...form, acceleration: e.target.value })}
+                        placeholder="3.1s"
+                        className="h-8"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium flex items-center gap-1.5">
+                        <Zap className="h-3.5 w-3.5 text-muted-foreground" />
+                        {t("dashboard.carForm.rangeKm")}
+                      </label>
+                      <Input
+                        type="number"
+                        min={0}
+                        value={form.range_km}
+                        onChange={(e) => setForm({ ...form, range_km: e.target.value })}
+                        placeholder="600"
+                        className="h-8"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium flex items-center gap-1.5">
+                        <Gauge className="h-3.5 w-3.5 text-muted-foreground" />
+                        {t("dashboard.carForm.topSpeed")}
+                      </label>
+                      <Input
+                        value={form.top_speed}
+                        onChange={(e) => setForm({ ...form, top_speed: e.target.value })}
+                        placeholder="220km/h"
+                        className="h-8"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium flex items-center gap-1.5">
+                        <MapPin className="h-3.5 w-3.5 text-muted-foreground" />
+                        {t("dashboard.carForm.ville")}
+                      </label>
+                      <CitySelect
+                        value={form.ville}
+                        onChange={(v) => setForm({ ...form, ville: v ?? "Marrakech" })}
+                      />
                     </div>
                   </div>
                 </div>
@@ -694,6 +759,11 @@ function DashboardCarForm() {
                     <span className="flex items-center gap-1">
                       <Cog className="h-3 w-3" /> {form.transmission}
                     </span>
+                  </div>
+                  <div className="flex items-center gap-3 text-[10px] text-muted-foreground pt-1">
+                    <span>{form.acceleration || "—"}</span>
+                    <span>{form.range_km ? `${form.range_km}km` : "—"}</span>
+                    <span>{form.top_speed || "—"}</span>
                   </div>
                 </div>
               </CardContent>

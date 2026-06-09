@@ -1,9 +1,10 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { useParams, Link } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { supabase } from "@/lib/supabase"
@@ -12,23 +13,22 @@ import {
   Car,
   Users,
   Fuel,
-  Snowflake,
   Star,
   ArrowRight,
   Check,
   Gauge,
   MapPin,
-  Calendar,
   Shield,
   Headphones,
-  CreditCard,
   Sparkles,
-  ChevronLeft,
   Infinity,
+  Zap,
+  Timer,
+  ChevronLeft,
+  Image as ImageIcon,
 } from "lucide-react"
-import { testimonials, features } from "@/data/cars"
+import { testimonials } from "@/data/cars"
 import { useCar, useCars } from "@/hooks/useCars"
-import { CarGallery } from "@/components/CarGallery"
 import { MobileNav } from "@/components/MobileNav"
 import { DatePicker } from "@/components/DatePicker"
 import { useToast } from "@/components/Toast"
@@ -47,11 +47,14 @@ function VehiculeDetail() {
   const [endDate, setEndDate] = useState("")
   const [phone, setPhone] = useState("")
   const [email, setEmail] = useState(user?.email ?? "")
+  const [ville, setVille] = useState("Marrakech - Centre-ville")
   const [reserving, setReserving] = useState(false)
   const [reserveError, setReserveError] = useState("")
   const [reserved, setReserved] = useState(false)
+  const [galIdx, setGalIdx] = useState(0)
   const { open: openAuth } = useAuthModal()
   const { toast } = useToast()
+  const galleryRef = useRef<HTMLDivElement>(null)
 
   const start = startDate ? new Date(startDate) : null
   const end = endDate ? new Date(endDate) : null
@@ -72,6 +75,7 @@ function VehiculeDetail() {
       end_date: endDate,
       phone: phone.trim(),
       email: email.trim() || null,
+      ville,
       status: "confirmed",
     })
     setReserving(false)
@@ -103,25 +107,24 @@ function VehiculeDetail() {
     )
   }
 
-  const specs = [
-    { icon: Users, label: `${car.seats} ${t("vehicules.places")}` },
-    { icon: Fuel, label: car.fuel },
-    { icon: Snowflake, label: t("vehicules.climatisation") },
-    { icon: Gauge, label: t("detail.boiteAuto") },
+  const whiteGlove = [
+    { icon: Headphones, title: t("detail.conciergerie"), desc: t("detail.conciergerieDesc") },
+    { icon: Shield, title: t("detail.assuranceTousRisques"), desc: t("detail.assuranceDesc") },
+    { icon: Sparkles, title: t("detail.propreteGarantie"), desc: t("detail.propreteDesc") },
+    { icon: Infinity, title: t("detail.kilometrageInclus"), desc: t("detail.kilometrageDesc") },
   ]
 
-  const included = [
-    { key: "detail.assuranceTousRisques", icon: Shield },
-    { key: "detail.kilometrageInclus", icon: Infinity },
-    { key: "detail.gpsIntegre", icon: MapPin },
-    { key: "detail.support247", icon: Headphones },
-    { key: "detail.annulationGratuite", icon: Calendar },
-    { key: "detail.propreteGarantie", icon: Sparkles },
+  const techSpecs = [
+    { label: t("detail.chassis"), value: t("detail.chassisDesc") },
+    { label: t("detail.drivetrain"), value: t("detail.drivetrainDesc") },
+    { label: t("detail.securite"), value: t("detail.securiteDesc") },
   ]
+
+  const hasMultipleImages = car.images.length > 1
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="fixed top-0 right-0 left-0 z-50 flex items-center justify-between border-b border-border/40 bg-background/70 px-6 py-3 shadow-xs backdrop-blur-xl sm:px-8">
+      <header className="fixed top-0 right-0 left-0 z-50 flex items-center justify-between border-b border-border/40 bg-background/80 px-6 py-3 shadow-xs backdrop-blur-md sm:px-8">
         <Link to="/" className="flex items-center gap-2">
           <div className="flex size-8 items-center justify-center rounded-lg bg-primary">
             <Car className="h-4 w-4 text-primary-foreground" />
@@ -169,14 +172,24 @@ function VehiculeDetail() {
         </div>
       </header>
 
-      <section className="pt-16">
-        <CarGallery
-          images={car.images}
-          name={car.name}
-          badge={car.badge}
-          fuel={car.fuel}
-          price={car.price}
+      <section className="relative h-[75vh] min-h-[500px] w-full overflow-hidden">
+        <img
+          src={car.images[0]}
+          alt={car.name}
+          className="h-full w-full object-cover"
+          loading="eager"
         />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/50 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-primary/70 to-transparent p-8 sm:p-12">
+          <div className="mx-auto max-w-7xl">
+            <p className="mb-1 text-sm font-semibold uppercase tracking-[0.2em] text-white/70">
+              {car.badge}
+            </p>
+            <h1 className="max-w-2xl text-4xl font-extrabold text-white sm:text-5xl lg:text-6xl">
+              {car.name}
+            </h1>
+          </div>
+        </div>
       </section>
 
       <div className="mx-auto flex max-w-7xl items-center gap-2 px-4 py-4 text-sm text-muted-foreground sm:px-6 lg:px-8">
@@ -193,30 +206,25 @@ function VehiculeDetail() {
 
       <section className="pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-3">
-            <div className="space-y-12 lg:col-span-2">
-              {/* Key Specs */}
-              <div>
-                <h2 className="text-lg font-semibold">{t("detail.caracteristiques")}</h2>
-                <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                  {specs.map((item) => (
-                    <div
-                      key={item.label}
-                      className="flex items-center gap-3 rounded-2xl border border-border/40 bg-background p-4 shadow-sm transition-all hover:border-border/60 hover:shadow-md"
-                    >
-                      <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary shadow-sm">
-                        <item.icon className="h-4 w-4" />
-                      </div>
-                      <span className="text-sm font-medium">{item.label}</span>
-                    </div>
-                  ))}
-                </div>
+          <div className="grid gap-12 lg:grid-cols-12">
+            <div className="space-y-12 lg:col-span-8">
+              <div className="grid grid-cols-3 gap-4">
+                {[
+                  { icon: Timer, value: car.acceleration ?? "5.2s", label: "0-100 km/h" },
+                  { icon: Zap, value: `${car.range_km ?? 600}km`, label: t("detail.autonomie") },
+                  { icon: Gauge, value: car.top_speed ?? "220km/h", label: t("detail.vitesseMax") },
+                ].map((item) => (
+                  <div key={item.label} className="flex flex-col items-center justify-center rounded-xl border border-border/40 bg-card p-6 text-center shadow-sm">
+                    <item.icon className="mb-2 text-2xl text-primary" />
+                    <p className="text-2xl font-bold">{item.value}</p>
+                    <p className="text-xs uppercase text-muted-foreground">{item.label}</p>
+                  </div>
+                ))}
               </div>
 
-              {/* Description */}
               <div>
-                <h2 className="text-lg font-semibold">{t("detail.description")}</h2>
-                <p className="mt-3 leading-relaxed text-muted-foreground">
+                <h2 className="text-2xl font-bold tracking-tight">{t("detail.description")}</h2>
+                <p className="mt-4 leading-relaxed text-muted-foreground">
                   Découvrez la {car.name}, un véhicule {car.badge.toLowerCase()}{" "}
                   idéal pour vos déplacements. Avec ses {car.seats} places et sa
                   motorisation {car.fuel.toLowerCase()}, elle allie confort et
@@ -225,73 +233,78 @@ function VehiculeDetail() {
                 </p>
               </div>
 
-              {/* What's included */}
               <div>
-                <h2 className="text-lg font-semibold">{t("detail.ceQuiEstInclus")}</h2>
-                <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                  {included.map(({ key, icon: Icon }) => (
-                    <div
-                      key={key}
-                      className="flex items-center gap-3 rounded-xl border border-border/40 bg-background p-3.5 shadow-sm transition-all hover:border-border/60 hover:shadow-md"
-                    >
-                      <div className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary shadow-sm">
-                        <Icon className="h-4 w-4" />
+                <h2 className="text-2xl font-bold tracking-tight">{t("detail.whiteGlove")}</h2>
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  {whiteGlove.map((item) => (
+                    <div key={item.title} className="flex gap-4 rounded-xl border border-border/40 bg-card p-5 shadow-sm transition-all hover:shadow-md">
+                      <div className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                        <item.icon className="h-5 w-5" />
                       </div>
-                      <span className="text-sm text-muted-foreground">{t(key)}</span>
+                      <div>
+                        <h4 className="font-semibold text-sm">{item.title}</h4>
+                        <p className="mt-0.5 text-xs text-muted-foreground">{item.desc}</p>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <Separator className="bg-border/30" />
-
-              {/* Testimonials */}
-              <div>
-                <h2 className="text-lg font-semibold">{t("detail.ceQueDisentClients")}</h2>
-                <div className="mt-6 grid gap-4 sm:grid-cols-2">
-                  {testimonials.slice(0, 2).map((item) => (
-                    <Card
-                      key={item.name}
-                      className="rounded-2xl border-border/40 shadow-sm transition-all hover:shadow-md"
-                    >
-                      <CardContent className="p-5">
-                        <div className="flex gap-0.5">
-                          {Array.from({ length: 5 }).map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`h-3.5 w-3.5 ${
-                                i < item.rating
-                                  ? "fill-amber-400 text-amber-400"
-                                  : "text-muted-foreground/30"
-                              }`}
-                            />
-                          ))}
-                        </div>
-                        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                          &ldquo;{item.text}&rdquo;
-                        </p>
-                        <div className="mt-4 flex items-center gap-2.5">
-                          <Avatar size="sm">
-                            <AvatarFallback className="bg-primary/10 text-xs font-medium text-primary shadow-sm">
-                              {item.avatar}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <div className="text-sm font-medium">{item.name}</div>
-                            <div className="text-xs text-muted-foreground">{item.role}</div>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+              {hasMultipleImages && (
+                <div>
+                  <h2 className="text-2xl font-bold tracking-tight">{t("detail.galerie")}</h2>
+                  <div ref={galleryRef} className="mt-6 grid grid-cols-12 gap-3" style={{ height: 420 }}>
+                    <div className="relative col-span-8 h-full overflow-hidden rounded-xl">
+                      <img
+                        src={car.images[galIdx]}
+                        alt={`${car.name} - ${t("gallery.photo", { index: galIdx + 1 })}`}
+                        className="h-full w-full object-cover transition-all duration-500"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div className="col-span-4 flex h-full flex-col gap-3">
+                      {[1, 2].filter((i) => car.images[i]).map((i) => (
+                        <button
+                          key={i}
+                          onClick={() => setGalIdx(i)}
+                          className={`relative h-1/2 overflow-hidden rounded-xl transition-all hover:ring-2 hover:ring-primary/50 ${
+                            galIdx === i ? "ring-2 ring-primary" : "opacity-70 hover:opacity-100"
+                          }`}
+                        >
+                          <img
+                            src={car.images[i]}
+                            alt={`${car.name} - ${t("gallery.photo", { index: i + 1 })}`}
+                            className="h-full w-full object-cover"
+                            loading="lazy"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="mt-3 flex items-center justify-between">
+                    <div className="flex items-center gap-1.5">
+                      {car.images.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setGalIdx(idx)}
+                          className={`rounded-full transition-all ${
+                            idx === galIdx ? "h-2 w-6 bg-primary" : "h-2 w-2 bg-muted-foreground/30"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                      <ImageIcon className="h-3.5 w-3.5" />
+                      {galIdx + 1}/{car.images.length}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
-            {/* Sidebar - Booking Card */}
-            <div className="space-y-6">
-              <Card className="sticky top-28 rounded-2xl border-border/40 shadow-sm transition-all hover:shadow-md">
-                <CardContent className="space-y-5 p-6">
+            <div className="lg:col-span-4">
+              <div className="sticky top-24 space-y-6">
+                <div className="rounded-xl border border-border/40 bg-card p-6 shadow-sm">
                   {reserved ? (
                     <div className="space-y-3 py-4 text-center">
                       <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-emerald-500/10 shadow-sm">
@@ -308,61 +321,69 @@ function VehiculeDetail() {
                     </div>
                   ) : (
                     <>
-                      <div className="flex items-end justify-between">
+                      <div className="mb-4 flex items-end justify-between">
                         <div>
-                          <div className="text-3xl font-bold tracking-tight">
-                            {car.price}DH
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            {t("vehicules.parJour")}
-                          </div>
+                          <p className="text-xs uppercase text-muted-foreground">{t("detail.aPartirDe")}</p>
+                          <p className="text-3xl font-bold">{car.price}DH</p>
+                          <p className="text-sm text-muted-foreground">{t("vehicules.parJour")}</p>
                         </div>
-
+                        <Badge className="rounded-md bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+                          {t("detail.disponible")}
+                        </Badge>
                       </div>
-                      <Separator className="bg-border/30" />
+                      <Separator className="mb-4 bg-border/30" />
                       <div className="space-y-3">
                         <div className="space-y-1.5">
-                          <label className="text-xs font-medium text-muted-foreground">
-                            {t("hero.search.debut")}
-                          </label>
-                          <DatePicker value={startDate} onChange={setStartDate} placeholder={t("hero.search.debut")} />
+                          <label className="text-xs font-medium text-muted-foreground">{t("hero.search.lieu")}</label>
+                          <div className="relative">
+                            <MapPin className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                            <select
+                              value={ville}
+                              onChange={(e) => setVille(e.target.value)}
+                              className="w-full rounded-lg border border-border/50 bg-background py-3 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
+                            >
+                              <option>Marrakech - Centre-ville</option>
+                              <option>Casablanca - Quartier des affaires</option>
+                              <option>Rabat - Centre administratif</option>
+                            </select>
+                          </div>
                         </div>
-                        <div className="space-y-1.5">
-                          <label className="text-xs font-medium text-muted-foreground">
-                            {t("hero.search.fin")}
-                          </label>
-                          <DatePicker value={endDate} onChange={setEndDate} placeholder={t("hero.search.fin")} />
+                        <div className="grid grid-cols-2 gap-3">
+                          <div className="space-y-1.5">
+                            <label className="text-xs font-medium text-muted-foreground">{t("hero.search.debut")}</label>
+                            <DatePicker value={startDate} onChange={setStartDate} placeholder={t("hero.search.debut")} />
+                          </div>
+                          <div className="space-y-1.5">
+                            <label className="text-xs font-medium text-muted-foreground">{t("hero.search.fin")}</label>
+                            <DatePicker value={endDate} onChange={setEndDate} placeholder={t("hero.search.fin")} />
+                          </div>
                         </div>
                       </div>
-                      <Separator className="bg-border/30" />
+                      <Separator className="my-4 bg-border/30" />
                       <div className="space-y-3">
                         <div className="space-y-1.5">
-                          <label className="text-xs font-medium text-muted-foreground">
-                            {t("detail.telephone")}
-                          </label>
+                          <label className="text-xs font-medium text-muted-foreground">{t("detail.telephone")}</label>
                           <Input
                             type="tel"
                             placeholder={t("detail.telephonePlaceholder")}
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
-                            className="h-9 rounded-xl"
+                            className="h-10 rounded-lg"
                           />
                         </div>
                         <div className="space-y-1.5">
-                          <label className="text-xs font-medium text-muted-foreground">
-                            {t("detail.emailOptionnel")}
-                          </label>
+                          <label className="text-xs font-medium text-muted-foreground">{t("detail.emailOptionnel")}</label>
                           <Input
                             type="email"
                             placeholder={t("detail.emailPlaceholder")}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="h-9 rounded-xl"
+                            className="h-10 rounded-lg"
                           />
                         </div>
                       </div>
                       {days > 0 && (
-                        <div className="rounded-xl bg-muted/50 p-4 text-sm">
+                        <div className="mt-4 rounded-lg bg-muted/50 p-4 text-sm">
                           <div className="flex justify-between">
                             <span className="text-muted-foreground">
                               {car.price}DH × {days}{" "}
@@ -372,7 +393,7 @@ function VehiculeDetail() {
                             </span>
                             <span>{car.price * days}DH</span>
                           </div>
-                          <Separator className="my-2.5 bg-border/30" />
+                          <Separator className="my-2 bg-border/30" />
                           <div className="flex justify-between font-semibold">
                             <span>{t("detail.total")}</span>
                             <span className="text-lg">{total}DH</span>
@@ -380,10 +401,10 @@ function VehiculeDetail() {
                         </div>
                       )}
                       {reserveError && (
-                        <p className="text-xs text-destructive">{reserveError}</p>
+                        <p className="mt-2 text-xs text-destructive">{reserveError}</p>
                       )}
                       <Button
-                        className="w-full rounded-xl shadow-lg shadow-primary/20 transition-all hover:shadow-xl hover:shadow-primary/30"
+                        className="mt-4 w-full rounded-lg bg-primary text-sm font-semibold shadow-sm transition-all hover:bg-primary/90"
                         size="lg"
                         disabled={!startDate || !endDate || days <= 0 || reserving}
                         onClick={handleReserve}
@@ -393,46 +414,99 @@ function VehiculeDetail() {
                           : t("detail.reserverMaintenant")}
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
-                      <div className="flex items-center justify-center gap-3 text-xs text-muted-foreground">
+                      <div className="mt-4 flex items-center justify-center gap-3 text-xs text-muted-foreground">
                         <span className="flex items-center gap-1">
                           <Shield className="h-3.5 w-3.5" />
                           {t("detail.pasFraisCaches")}
                         </span>
-                        <span className="flex items-center gap-1">
-                          <CreditCard className="h-3.5 w-3.5" />
-                          Paiement sécurisé
-                        </span>
                       </div>
                     </>
                   )}
-                </CardContent>
-              </Card>
+                </div>
 
-              {/* Why book with us */}
-              <div className="rounded-2xl border border-border/40 bg-background p-5 shadow-sm transition-all hover:shadow-md">
-                <h3 className="flex items-center gap-2 text-sm font-semibold">
-                  <Shield className="h-4 w-4 text-primary" />
-                  {t("detail.pourquoiReserver")}
-                </h3>
-                <div className="mt-4 space-y-3">
-                  {features.slice(0, 3).map((f) => (
-                    <div key={f.title} className="flex items-start gap-3">
-                      <div
-                        className={`flex size-8 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br shadow-sm ${f.gradient} ${f.iconColor}`}
-                      >
-                        <f.icon className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <div className="text-sm font-medium">{f.title}</div>
-                        <div className="text-xs leading-relaxed text-muted-foreground">
-                          {f.desc}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+                <div className="rounded-xl border border-border/40 bg-card p-5 shadow-sm text-center">
+                  <p className="mb-3 text-xs uppercase text-muted-foreground">{t("detail.partenaires")}</p>
+                  <div className="flex items-center justify-around gap-4 opacity-50 grayscale transition-all hover:opacity-100 hover:grayscale-0">
+                    <span className="text-lg font-bold">TESLA</span>
+                    <span className="text-lg font-bold">BMW</span>
+                    <span className="text-lg font-bold">MERCEDES</span>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-primary py-16 text-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid items-center gap-10 lg:grid-cols-2">
+            <div>
+              <h2 className="text-3xl font-bold tracking-tight">{t("detail.excellenceTechnique")}</h2>
+              <p className="mt-3 text-white/60">{t("detail.excellenceDesc")}</p>
+              <div className="mt-8 space-y-6 border-l-2 border-secondary pl-8">
+                {techSpecs.map((spec) => (
+                  <div key={spec.label}>
+                    <h4 className="text-sm font-semibold uppercase tracking-wider text-secondary">{spec.label}</h4>
+                    <p className="mt-1 text-white/80">{spec.value}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="relative h-[350px] overflow-hidden rounded-xl">
+              <img
+                src={car.images[Math.min(1, car.images.length - 1)]}
+                alt=""
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+              <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                <div className="rounded-xl border border-white/20 bg-white/10 p-6 text-center backdrop-blur-sm">
+                  <p className="text-3xl font-bold">15 min</p>
+                  <p className="text-xs uppercase text-white/70">{t("detail.recharge")}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold tracking-tight">{t("detail.ceQueDisentClients")}</h2>
+          <div className="mt-8 grid gap-5 sm:grid-cols-2">
+            {testimonials.slice(0, 2).map((item) => (
+              <Card key={item.name} className="rounded-xl border-border/40 shadow-sm transition-all hover:shadow-md">
+                <CardContent className="p-6">
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`h-3.5 w-3.5 ${
+                          i < item.rating
+                            ? "fill-amber-400 text-amber-400"
+                            : "text-muted-foreground/30"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                    &ldquo;{item.text}&rdquo;
+                  </p>
+                  <div className="mt-5 flex items-center gap-3">
+                    <Avatar size="sm">
+                      <AvatarFallback className="bg-primary/10 text-xs font-medium text-primary shadow-sm">
+                        {item.avatar}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <div className="text-sm font-medium">{item.name}</div>
+                      <div className="text-xs text-muted-foreground">{item.role}</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
@@ -444,18 +518,20 @@ function VehiculeDetail() {
             <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((r) => (
                 <Link key={r.slug} to={`/vehicules/${r.slug}`}>
-                  <Card className="group overflow-hidden rounded-2xl border-border/40 pt-0 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/5">
+                  <Card className="group overflow-hidden rounded-xl border-border/40 pt-0 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/5">
                     <CardContent className="p-0">
-                      <div
-                        className={`bg-gradient-to-br ${r.gradient} h-48 bg-cover bg-center transition-transform duration-500 group-hover:scale-105`}
-                        style={{ backgroundImage: `url(${r.image})` }}
-                      />
+                      <div className="relative aspect-[16/10] overflow-hidden">
+                        <img
+                          src={r.images[0]}
+                          alt={r.name}
+                          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          loading="lazy"
+                        />
+                      </div>
                       <div className="space-y-2 p-5">
                         <div className="flex items-center justify-between">
                           <h3 className="font-semibold">{r.name}</h3>
-                          <span className="text-lg font-bold tracking-tight">
-                            {r.price}DH
-                          </span>
+                          <span className="text-lg font-bold tracking-tight">{r.price}DH</span>
                         </div>
                         <div className="flex items-center gap-3 text-xs text-muted-foreground">
                           <span className="flex items-center gap-1">

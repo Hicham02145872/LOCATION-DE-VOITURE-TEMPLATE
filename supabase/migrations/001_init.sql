@@ -94,23 +94,29 @@ create policy "Users can update their own reservations"
   using (auth.uid() = user_id);
 
 -- 7. Seed data (optional)
-insert into public.cars (slug, name, price, seats, fuel, badge, gradient, color, image, images) values
+insert into public.cars (slug, name, price, seats, fuel, badge, gradient, color, image, images, acceleration, range_km, top_speed, ville) values
   ('tesla-model-3', 'Tesla Model 3', 89, 5, 'Électrique', 'Populaire', 'from-blue-500/20 to-blue-600/10', '#3b82f6',
    'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600&q=85',
-   '["https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600&q=85","https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=600&q=85","https://images.unsplash.com/photo-1536700503339-0e4f1b8e9f3a?w=600&q=85"]'::jsonb),
+   '["https://images.unsplash.com/photo-1555215695-3004980ad54e?w=600&q=85","https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=600&q=85","https://images.unsplash.com/photo-1536700503339-0e4f1b8e9f3a?w=600&q=85"]'::jsonb,
+   '3.1s', 513, '261km/h', 'Marrakech'),
   ('bmw-serie-3', 'BMW Série 3', 75, 5, 'Essence', 'Premium', 'from-indigo-500/20 to-indigo-600/10', '#6366f1',
    'https://images.unsplash.com/photo-1556189250-72a3a32b1e3e?w=600&q=85',
-   '["https://images.unsplash.com/photo-1556189250-72a3a32b1e3e?w=600&q=85","https://images.unsplash.com/photo-1523983388277-336a66bf9bcd?w=600&q=85","https://images.unsplash.com/photo-1583267746897-2cf415887172?w=600&q=85"]'::jsonb),
+   '["https://images.unsplash.com/photo-1556189250-72a3a32b1e3e?w=600&q=85","https://images.unsplash.com/photo-1523983388277-336a66bf9bcd?w=600&q=85","https://images.unsplash.com/photo-1583267746897-2cf415887172?w=600&q=85"]'::jsonb,
+   '5.6s', 750, '250km/h', 'Casablanca'),
   ('mercedes-classe-c', 'Mercedes Classe C', 82, 5, 'Diesel', 'Premium', 'from-violet-500/20 to-violet-600/10', '#8b5cf6',
    'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=600&q=85',
-   '["https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=600&q=85","https://images.unsplash.com/photo-1617469767053-d3b523a0b982?w=600&q=85","https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=600&q=85"]'::jsonb),
+   '["https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=600&q=85","https://images.unsplash.com/photo-1617469767053-d3b523a0b982?w=600&q=85","https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=600&q=85"]'::jsonb,
+   '6.0s', 800, '250km/h', 'Rabat'),
   ('audi-q5', 'Audi Q5', 95, 5, 'Hybride', 'SUV', 'from-emerald-500/20 to-emerald-600/10', '#10b981',
    'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=600&q=85',
-   '["https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=600&q=85","https://images.unsplash.com/photo-1603584173870-7f23fd4c0a67?w=600&q=85","https://images.unsplash.com/photo-1609521263047-f8f205293f64?w=600&q=85"]'::jsonb),
+   '["https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=600&q=85","https://images.unsplash.com/photo-1603584173870-7f23fd4c0a67?w=600&q=85","https://images.unsplash.com/photo-1609521263047-f8f205293f64?w=600&q=85"]'::jsonb,
+   '5.9s', 600, '240km/h', 'Marrakech'),
   ('volkswagen-golf', 'Volkswagen Golf', 45, 5, 'Essence', 'Économique', 'from-amber-500/20 to-amber-600/10', '#f59e0b',
    'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&q=85',
-   '["https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&q=85","https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=600&q=85","https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=85"]'::jsonb),
+   '["https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&q=85","https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=600&q=85","https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=85"]'::jsonb,
+   '7.5s', 650, '220km/h', 'Casablanca'),
   ('porsche-911', 'Porsche 911', 220, 2, 'Essence', 'Sport', 'from-rose-500/20 to-rose-600/10', '#f43f5e',
    'https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=600&q=85',
-   '["https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=600&q=85","https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=85","https://images.unsplash.com/photo-1619682817481-e994891cd75b?w=600&q=85"]'::jsonb)
+   '["https://images.unsplash.com/photo-1614162692292-7ac56d7f7f1e?w=600&q=85","https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=85","https://images.unsplash.com/photo-1619682817481-e994891cd75b?w=600&q=85"]'::jsonb,
+   '3.0s', 480, '308km/h', 'Marrakech')
 on conflict (slug) do nothing;

@@ -25,6 +25,7 @@ import {
   Phone,
   Mail,
   Calendar,
+  MapPin,
   User,
 } from "lucide-react"
 
@@ -37,6 +38,7 @@ interface Reservation {
   user_id: string
   email: string | null
   phone: string
+  ville: string | null
   cars: { name: string } | null
 }
 
@@ -323,6 +325,10 @@ function DashboardReservations() {
                 </div>
                 <Separator />
                 <div className="space-y-3 pt-1">
+                  <div className="flex items-center gap-3 text-sm">
+                    <MapPin className="h-4 w-4 shrink-0 text-muted-foreground" />
+                    <span className="font-medium">{selectedReservation.ville || "—"}</span>
+                  </div>
                   <div className="flex items-center gap-3 text-sm">
                     <Phone className="h-4 w-4 shrink-0 text-muted-foreground" />
                     <span className="font-medium">{selectedReservation.phone || "—"}</span>

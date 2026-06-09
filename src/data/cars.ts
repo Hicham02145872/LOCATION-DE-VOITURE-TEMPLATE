@@ -22,6 +22,10 @@ export interface Car {
   color: string
   image: string
   images: string[]
+  ville?: string
+  acceleration?: string
+  range_km?: number
+  top_speed?: string
 }
 
 export interface Step {
@@ -81,6 +85,10 @@ export const cars: Car[] = [
       "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=600&q=85",
       "https://images.unsplash.com/photo-1536700503339-0e4f1b8e9f3a?w=600&q=85",
     ],
+    acceleration: "3.1s",
+    range_km: 513,
+    top_speed: "261km/h",
+    ville: "Marrakech",
   },
   {
     slug: "bmw-serie-3",
@@ -97,6 +105,10 @@ export const cars: Car[] = [
       "https://images.unsplash.com/photo-1523983388277-336a66bf9bcd?w=600&q=85",
       "https://images.unsplash.com/photo-1583267746897-2cf415887172?w=600&q=85",
     ],
+    acceleration: "5.6s",
+    range_km: 750,
+    top_speed: "250km/h",
+    ville: "Casablanca",
   },
   {
     slug: "mercedes-classe-c",
@@ -113,6 +125,10 @@ export const cars: Car[] = [
       "https://images.unsplash.com/photo-1617469767053-d3b523a0b982?w=600&q=85",
       "https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=600&q=85",
     ],
+    acceleration: "6.0s",
+    range_km: 800,
+    top_speed: "250km/h",
+    ville: "Rabat",
   },
   {
     slug: "audi-q5",
@@ -129,6 +145,10 @@ export const cars: Car[] = [
       "https://images.unsplash.com/photo-1603584173870-7f23fd4c0a67?w=600&q=85",
       "https://images.unsplash.com/photo-1609521263047-f8f205293f64?w=600&q=85",
     ],
+    acceleration: "5.9s",
+    range_km: 600,
+    top_speed: "240km/h",
+    ville: "Marrakech",
   },
   {
     slug: "volkswagen-golf",
@@ -145,6 +165,10 @@ export const cars: Car[] = [
       "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=600&q=85",
       "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600&q=85",
     ],
+    acceleration: "7.5s",
+    range_km: 650,
+    top_speed: "220km/h",
+    ville: "Casablanca",
   },
   {
     slug: "porsche-911",
@@ -161,6 +185,10 @@ export const cars: Car[] = [
       "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=85",
       "https://images.unsplash.com/photo-1619682817481-e994891cd75b?w=600&q=85",
     ],
+    acceleration: "3.0s",
+    range_km: 480,
+    top_speed: "308km/h",
+    ville: "Marrakech",
   },
 ]
 
@@ -235,6 +263,18 @@ export const testimonials: Testimonial[] = [
     rating: 4,
     text: "Parfait pour les vacances en famille ! SUV spacieux, sièges bébé inclus sans frais. Le rapport qualité-prix est imbattable.",
   },
+]
+
+export interface Agency {
+  key: string
+  label: string
+  desc: string
+}
+
+export const agencies: Agency[] = [
+  { key: "marrakech", label: "Marrakech", desc: "locations.marrakech" },
+  { key: "casablanca", label: "Casablanca", desc: "locations.casablanca" },
+  { key: "rabat", label: "Rabat", desc: "locations.rabat" },
 ]
 
 export const stats: Stat[] = [

@@ -5,6 +5,8 @@
   "nav": {
     "accueil": "Home",
     "vehicules": "Vehicles",
+    "services": "Services",
+    "locations": "Agencies",
     "testimonials": "Testimonials",
     "contact": "Contact",
     "dashboard": "Dashboard",
@@ -14,11 +16,13 @@
     "fermer": "Close"
   },
   "hero": {
-    "badge": "Premium car rental service",
+    "badge": "The pinnacle of automotive luxury",
+    "explorerFlotte": "Explore the fleet",
     "title": "Rent the perfect car for every journey",
     "subtitle": "Hundreds of recent vehicles across Morocco. Book online in 2 minutes, free cancellation, insurance included.",
     "search": {
-      "lieu": "Location",
+      "titre": "Book a vehicle",
+      "lieu": "Pickup location",
       "lieuPlaceholder": "City or airport",
       "debut": "Start",
       "fin": "End",
@@ -30,7 +34,12 @@
       "economique": "Economy",
       "sport": "Sport",
       "luxe": "Luxury",
-      "trouver": "Find my vehicle"
+      "trouver": "Find my vehicle",
+      "type": "Type",
+      "localisation": "Location",
+      "rechercher": "Search",
+      "aucunResultat": "No vehicles found",
+      "chargement": "Loading..."
     },
     "typed": ["Explore Morocco freely", "Travel with peace of mind", "Go on an adventure", "Discover our vehicles"],
     "stats": {
@@ -59,6 +68,11 @@
     "subtitle": "Recent, well-maintained cars for every budget.",
     "places": "seats",
     "climatisation": "Air conditioning",
+    "carburant": "Fuel",
+    "inclus": "Included",
+    "affichage": "Showing",
+    "sur": "of",
+    "vehiculesDisponibles": "Available vehicles",
     "aPartirDe": "From",
     "septJours": "/ 7 days",
     "reserver": "Book",
@@ -73,6 +87,16 @@
     "parJour": "/day",
     "tous": "All",
     "voirDetails": "View details"
+  },
+  "locations": {
+    "badge": "Our agencies",
+    "title": "Strategic hubs",
+    "subtitle": "Our centers of excellence are positioned at the crossroads of Moroccan commerce and tourism.",
+    "marrakech": "City Center | Main Agency",
+    "casablanca": "Business District | Corporate Hub",
+    "rabat": "Administrative Center | Diplomatic Agency",
+    "carte": "Live operations map",
+    "carteDesc": "Real-time fleet availability across all our agencies."
   },
   "commentCaMarche": {
     "badge": "Simplicity",
@@ -92,8 +116,9 @@
     }
   },
   "features": {
-    "badge": "Why us",
+    "badge": "Exclusive services",
     "title": "A premium experience",
+    "subtitleItalic": "so much more than a rental.",
     "subtitle": "Everything you need for a worry-free rental.",
     "assurance": {
       "title": "Full coverage insurance",
@@ -110,7 +135,16 @@
     "paiement": {
       "title": "Secure payment",
       "desc": "100% secure transactions, multiple payment methods."
-    }
+    },
+    "conciergerie": "Personalized concierge",
+    "conciergerieLabel": "Institutional standard",
+    "conciergerieDesc": "Every DriveEase booking includes dedicated support. Our team ensures everything is ready upon your arrival.",
+    "garantie": "Reliability guarantee",
+    "garantieDesc": "99.9% confirmed availability. We guarantee your vehicle 15 minutes before the scheduled time.",
+    "comptes": "Corporate accounts",
+    "comptesDesc": "Simplified billing for businesses and frequent travelers.",
+    "contacter": "Contact us",
+    "decouvrir": "Discover"
   },
   "testimonials": {
     "badge": "Testimonials",
@@ -267,6 +301,10 @@
       "cgv": "Terms",
       "confidentialite": "Privacy"
     },
+    "resterInforme": "Stay informed",
+    "newsletterDesc": "Receive our exclusive offers and the latest fleet updates.",
+    "emailPlaceholder": "your@email.com",
+    "sabonner": "Subscribe",
     "droits": "All rights reserved.",
     "mentionsLegales": "Legal notice",
     "cgu": "Terms of use",
@@ -289,6 +327,27 @@
     "support247": "24/7 support",
     "annulationGratuite": "Free cancellation",
     "propreteGarantie": "Cleanliness guaranteed",
+    "autonomie": "Range",
+    "vitesseMax": "Top speed",
+    "whiteGlove": "White glove service",
+    "conciergerie": "Personal concierge",
+    "conciergerieDesc": "Dedicated support for your itinerary and vehicle preferences.",
+    "assuranceDesc": "Zero-deductible coverage for complete peace of mind.",
+    "propreteDesc": "Professional cleaning and disinfection after every rental.",
+    "kilometrageDesc": "Drive without limits with our unlimited mileage.",
+    "galerie": "Gallery",
+    "aPartirDe": "Starting at",
+    "disponible": "Available",
+    "partenaires": "Partnered for excellence",
+    "excellenceTechnique": "Technical excellence.",
+    "excellenceDesc": "A showcase of the engineering that defines elite performance.",
+    "chassis": "Chassis",
+    "chassisDesc": "Track-tuned lowered suspension and performance brakes.",
+    "drivetrain": "Drivetrain",
+    "drivetrainDesc": "All-Wheel Drive with Track Mode.",
+    "securite": "Safety",
+    "securiteDesc": "5-star rating in every category.",
+    "recharge": "Recharge for 282 km",
     "ceQueDisentClients": "What our customers say",
     "telephone": "Phone *",
     "telephonePlaceholder": "06 12 34 56 78",
@@ -398,6 +457,10 @@
       "enregistrer": "Save",
       "ajouterBtn": "Add",
       "supabaseError": "Supabase is not configured. Check your .env file",
+      "acceleration": "0-100 km/h",
+      "rangeKm": "Range (km)",
+      "topSpeed": "Top speed",
+      "ville": "City",
       "introuvable": "Vehicle not found",
       "modifieSucces": "Vehicle updated successfully"
     },
