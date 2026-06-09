@@ -35,32 +35,19 @@ function Vehicules() {
   const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const [search, setSearch] = useState(searchParams.get("search") ?? "")
-  const [location, setLocation] = useState("")
   const [type, setType] = useState(searchParams.get("type") ?? "all")
 
   const filtered = cars.filter((c) => {
     const q = search.toLowerCase()
-    const loc = location.toLowerCase()
     const matchesSearch =
       !q ||
       c.name.toLowerCase().includes(q) ||
       c.badge.toLowerCase().includes(q) ||
       c.fuel.toLowerCase().includes(q) ||
       (c.ville && c.ville.toLowerCase().includes(q))
-    const matchesLocation =
-      !loc ||
-      c.name.toLowerCase().includes(loc) ||
-      c.badge.toLowerCase().includes(loc) ||
-      c.fuel.toLowerCase().includes(loc) ||
-      c.price.toString().includes(loc) ||
-      (c.ville && c.ville.toLowerCase().includes(loc))
     const matchesType = type === "all" || c.badge === type
-    return matchesSearch && matchesLocation && matchesType
+    return matchesSearch && matchesType
   })
-
-  const scrollToResults = () => {
-    document.getElementById("catalogue-resultats")?.scrollIntoView({ behavior: "smooth", block: "start" })
-  }
 
   return (
     <div className="min-h-screen bg-background text-foreground">
