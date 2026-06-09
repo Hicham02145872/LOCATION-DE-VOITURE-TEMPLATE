@@ -266,38 +266,44 @@ function DashboardCarForm() {
     setSaving(true)
     setError("")
 
-    const imageUrls = [mainImage!.url, ...images.map((img) => img.url)]
+    try {
+      const imageUrls = [mainImage!.url, ...images.map((img) => img.url)]
 
-    const payload: Record<string, unknown> = {
-      slug: autoSlug,
-      name: form.name,
-      price: Number(form.price) || 0,
-      seats: Number(form.seats) || 1,
-      fuel: form.fuel,
-      badge: form.badge,
-      gradient: gradientFromHex(carColor),
-      image: mainImage!.url,
-      images: imageUrls,
-      transmission: form.transmission,
-      description: form.description,
-      acceleration: form.acceleration,
-      range_km: Number(form.range_km) || 600,
-      top_speed: form.top_speed,
-      ville: form.ville,
-    }
+      const payload: Record<string, unknown> = {
+        slug: autoSlug,
+        name: form.name,
+        price: Number(form.price) || 0,
+        seats: Number(form.seats) || 1,
+        fuel: form.fuel,
+        badge: form.badge,
+        gradient: gradientFromHex(carColor),
+        image: mainImage!.url,
+        images: imageUrls,
+        transmission: form.transmission,
+        description: form.description,
+        acceleration: form.acceleration,
+        range_km: Number(form.range_km) || 600,
+        top_speed: form.top_speed,
+        ville: form.ville,
+      }
 
-    if (isEdit) {
-      const { slug: _omitSlug, ...editPayload } = payload
-      const { error: err } = await supabase.from("cars").update(editPayload).eq("slug", slug)
-      if (err) { setError(err.message); toast(err.message, "error"); setSaving(false); return }
-      setSuccess(t("dashboard.carForm.modifieSucces") || "Véhicule modifié avec succès")
-      toast(t("dashboard.carForm.modifieSucces") || "Véhicule modifié avec succès", "success")
-      setSaving(false)
-    } else {
-      const { error: err } = await supabase.from("cars").insert(payload)
-      if (err) { setError(err.message); toast(err.message, "error"); setSaving(false); return }
-      toast("Véhicule ajouté avec succès", "success")
-      navigate("/dashboard/cars")
+      if (isEdit) {
+        const { slug: _omitSlug, ...editPayload } = payload
+        const { error: err } = await supabase.from("cars").update(editPayload).eq("slug", slug)
+        if (err) { setError(err.message); toast(err.message, "error"); setSaving(false); return }
+        setSuccess(t("dashboard.carForm.modifieSucces") || "Véhicule modifié avec succès")
+        toast(t("dashboard.carForm.modifieSucces") || "Véhicule modifié avec succès", "success")
+        setSaving(false)
+        setTimeout(() => navigate("/dashboard/cars"), 1200)
+      } else {
+        const { error: err } = await supabase.from("cars").insert(payload)
+        if (err) { setError(err.message); toast(err.message, "error"); setSaving(false); return }
+        toast("Véhicule ajouté avec succès", "success")
+        navigate("/dashboard/cars")
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Une erreur est survenue")
+      toast(err instanceof Error ? err.message : "Une erreur est survenue", "error")
     }
     setSaving(false)
   }
