@@ -370,7 +370,7 @@ function DashboardCarForm() {
         <div className="space-y-6">
           <Card>
             <CardContent className="p-6">
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
                 {success && (
                   <div className="rounded-lg bg-emerald-500/10 p-3 text-sm text-emerald-600 dark:text-emerald-400">
                     {success}
@@ -379,6 +379,16 @@ function DashboardCarForm() {
                 {error && (
                   <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">
                     {error}
+                  </div>
+                )}
+                {Object.values(errors).some(Boolean) && (
+                  <div className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">
+                    {t("dashboard.carForm.erreursValidation")}
+                    <ul className="mt-1 list-inside list-disc">
+                      {Object.entries(errors).map(([key, msg]) => (
+                        <li key={key}>{msg}</li>
+                      ))}
+                    </ul>
                   </div>
                 )}
 
@@ -393,7 +403,7 @@ function DashboardCarForm() {
                       <Input
                         id="name"
                         value={form.name}
-                        onChange={(e) => { setForm({ ...form, name: e.target.value }); setErrors({ ...errors, name: undefined }) }}
+                        onChange={(e) => { setForm({ ...form, name: e.target.value }); setErrors(({ name: _, ...rest }) => rest) }}
                         className={errors.name ? "border-destructive" : ""}
                         placeholder={t("dashboard.carForm.nomPlaceholder")}
                       />
@@ -417,7 +427,7 @@ function DashboardCarForm() {
                           min={0}
                           step={5}
                           value={form.price}
-                          onChange={(e) => { setForm({ ...form, price: e.target.value }); setErrors({ ...errors, price: undefined }) }}
+                          onChange={(e) => { setForm({ ...form, price: e.target.value }); setErrors(({ price: _, ...rest }) => rest) }}
                           className={`pl-8 ${errors.price ? "border-destructive" : ""}`}
                           placeholder="89"
                         />
@@ -434,7 +444,7 @@ function DashboardCarForm() {
                           min={1}
                           max={9}
                           value={form.seats}
-                          onChange={(e) => { setForm({ ...form, seats: e.target.value }); setErrors({ ...errors, seats: undefined }) }}
+                          onChange={(e) => { setForm({ ...form, seats: e.target.value }); setErrors(({ seats: _, ...rest }) => rest) }}
                           className={`pl-8 ${errors.seats ? "border-destructive" : ""}`}
                         />
                       </div>
@@ -444,7 +454,7 @@ function DashboardCarForm() {
                       <label className="text-sm font-medium">{t("dashboard.carForm.carburant")}</label>
                       <Select
                         value={form.fuel}
-                        onValueChange={(v) => { setForm({ ...form, fuel: v ?? "" }); setErrors({ ...errors, fuel: undefined }) }}
+                        onValueChange={(v) => { setForm({ ...form, fuel: v ?? "" }); setErrors(({ fuel: _, ...rest }) => rest) }}
                       >
                         <SelectTrigger className={`h-8 rounded-lg ${errors.fuel ? "border-destructive" : ""}`}>
                           <SelectValue placeholder={t("dashboard.carForm.carburantPlaceholder")} />
@@ -461,7 +471,7 @@ function DashboardCarForm() {
                       <label className="text-sm font-medium">{t("dashboard.carForm.categorie")}</label>
                       <Select
                         value={form.badge}
-                        onValueChange={(v) => { setForm({ ...form, badge: v ?? "" }); setErrors({ ...errors, badge: undefined }) }}
+                        onValueChange={(v) => { setForm({ ...form, badge: v ?? "" }); setErrors(({ badge: _, ...rest }) => rest) }}
                       >
                         <SelectTrigger className={`h-8 rounded-lg ${errors.badge ? "border-destructive" : ""}`}>
                           <SelectValue placeholder={t("dashboard.carForm.categoriePlaceholder")} />
